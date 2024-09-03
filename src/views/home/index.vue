@@ -4,7 +4,7 @@
 
 <template>
   <div>
-    <router-view/>
+     主页
   </div>
 </template>
 
