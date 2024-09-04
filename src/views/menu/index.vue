@@ -17,10 +17,11 @@ const state = reactive({
       <el-aside width="200px">
         <div class="title">遗珍非往</div>
         <el-menu
-            default-active="1"
+            default-active="home"
             class="el-menu-vertical-demo"
+            router
         >
-          <el-menu-item index="1">
+          <el-menu-item index="home">
             <el-icon>
               <icon-menu/>
             </el-icon>
@@ -77,7 +78,7 @@ const state = reactive({
               <ChatLineSquare/>
             </el-icon>
             <el-avatar :size="24" :src="state.circleUrl"/>
-            <el-dropdown>
+            <el-dropdown trigger="click">
               <span class="el-dropdown-link">
                 设置
               </span>
@@ -146,6 +147,9 @@ const state = reactive({
     justify-content: space-around;
     align-items: center;
   }
+}
+.el-main{
+  --el-main-padding: 0px
 }
 .el-menu-item:hover {
   background: #006eff;

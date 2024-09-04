@@ -70,7 +70,7 @@ const switchToLogin = () => {
           <el-tab-pane label="登录" name="Login">
             <el-card shadow="never">
               <h1 class="user-name">登录</h1>
-              <el-form :rules="LoginRules" status-icon :model="LoginRuleForm">
+              <el-form ref="loginForm" :rules="LoginRules" status-icon :model="LoginRuleForm">
                 <el-form-item prop="LoginUserName" class="user-Count">
                   <el-input
                       v-model="LoginRuleForm.LoginUserName"
@@ -82,7 +82,11 @@ const switchToLogin = () => {
                       v-model="LoginRuleForm.LoginPassword"
                       placeholder="请输入密码"
                       type="password"
-                  />
+                      show-password
+                  >
+
+                  </el-input>
+
                 </el-form-item>
                 <el-form-item
                     prop="isAgree"
@@ -112,7 +116,7 @@ const switchToLogin = () => {
 
           <el-tab-pane label="注册" name="Register">
             <el-card shadow="never">
-              <el-form  :rules="RegisterRules" status-icon :model="RegisterRuleForm">
+              <el-form ref="registerForm"  :rules="RegisterRules" status-icon :model="RegisterRuleForm">
                 <h1 class="user-name">注册</h1>
                 <el-form-item prop="RegisterUserName" class="user-Count">
                   <el-input
@@ -125,6 +129,7 @@ const switchToLogin = () => {
                       type="password"
                       placeholder="请输入密码"
                       v-model="RegisterRuleForm.RegisterPassword"
+                      show-password
                   />
                 </el-form-item>
                 <el-form-item prop="RegisterPasswordAgain" style="margin-top: 30px">
@@ -132,6 +137,7 @@ const switchToLogin = () => {
                       type="password"
                       placeholder="再次确认密码"
                       v-model="RegisterRuleForm.RegisterPasswordAgain"
+                      show-password
                   />
                 </el-form-item>
                 <el-form-item
@@ -139,7 +145,9 @@ const switchToLogin = () => {
                     class="userAgree"
                     style="display: flex; align-items: center"
                 >
-                  <el-checkbox class="check-item"
+                  <el-checkbox
+                      class="check-item"
+                      v-model="RegisterRuleForm.isAgree"
                   >平台使用协议
                   </el-checkbox
                   >
