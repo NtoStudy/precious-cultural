@@ -10,7 +10,7 @@ const routes = [
         path: '/login',
         component: () => import('@/views/login/index.vue')
     },
-    {
+                                                                                                                                                                                                        {
         name: 'menu',
         path: '/menu',
         component: () => import('@/views/menu/index.vue'),
@@ -19,12 +19,40 @@ const routes = [
             {
                 name:'home',
                 path:'home',
-                component: () => import('@/views/home/index.vue')
-            }
+                component: () => import('@/views/home/index.vue'),
+            },
+            {
+                name:'heritage',
+                path:'heritage',
+                component: () => import('@/views/home/heritage/index.vue')
+            },
+            {
+                name:'route',
+                path:'route',
+                component: () => import('@/views/home/route/index.vue')
+            },
+            {
+                name:'fictitious',
+                path:'fictitious',
+                component: () => import('@/views/fictitious/index.vue')
+            },
+            {
+                name:'forum',
+                path:'forum',
+                component: () => import('@/views/forum/index.vue')
+            },
+            {
+                name:'about',
+                path:'about',
+                component: () => import('@/views/about/index.vue')
+            },
+            {
+                name:'shopping',
+                path:'shopping',
+                component: () => import('@/views/shopping/index.vue')
+            },
         ]
     },
-
-
 ]
 
 

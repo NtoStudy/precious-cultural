@@ -1,11 +1,7 @@
 <script setup>
-import {
-  Menu as IconMenu,
-  Location as location,
-} from '@element-plus/icons-vue'
+import {reactive, ref} from 'vue'
 
-import {reactive} from 'vue'
-
+const activeIndex = ref('home')
 const state = reactive({
   circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
 })
@@ -14,67 +10,29 @@ const state = reactive({
 <template>
   <div class="common-layout">
     <el-container>
-      <el-aside width="200px">
-        <div class="title">遗珍非往</div>
-        <el-menu
-            default-active="home"
-            class="el-menu-vertical-demo"
-            router
-        >
-          <el-menu-item index="home">
-            <el-icon>
-              <icon-menu/>
-            </el-icon>
-            <span>首页</span>
-          </el-menu-item>
-          <el-menu-item index="2">
-            <el-icon>
-              <icon-menu/>
-            </el-icon>
-            <span>第二页</span>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <el-icon>
-              <icon-menu/>
-            </el-icon>
-            <span>第三页</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <el-icon>
-              <icon-menu/>
-            </el-icon>
-            <span>第四页</span>
-          </el-menu-item>
-          <el-sub-menu index="5">
-            <template #title>
-              <el-icon>
-                <location/>
-              </el-icon>
-              <span>Navigator One</span>
-            </template>
-            <el-menu-item-group title="Group One">
-              <el-menu-item index="5-1">item one</el-menu-item>
-              <el-menu-item index="5-2">item two</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="Group Two">
-              <el-menu-item index="5-3">item three</el-menu-item>
-            </el-menu-item-group>
-            <el-sub-menu index="5-4">
-              <template #title>item four</template>
-              <el-menu-item index="5-4-1">item one</el-menu-item>
+      <el-header class="header">
+        <div class="left-header">遗珍非往</div>
+        <div class="right-header">
+          <el-menu
+              :default-active="activeIndex"
+              class="el-menu-demo"
+              mode="horizontal"
+              :ellipsis="false"
+              active-text-color="#ffd04b"
+              router
+          >
+            <el-sub-menu index="home">
+              <template #title>首页</template>
+              <el-menu-item index="heritage">文化遗产</el-menu-item>
+              <el-menu-item index="route">旅游路线</el-menu-item>
             </el-sub-menu>
-          </el-sub-menu>
-        </el-menu>
-
-
-      </el-aside>
-      <el-container>
-        <el-header>
-          <span class="header-left-content">
-            尊敬的 xx 欢迎您登录本系统
-          </span>
+            <el-menu-item index="fictitious">vr展厅</el-menu-item>
+            <el-menu-item index="forum">论坛</el-menu-item>
+            <el-menu-item index="about">关于</el-menu-item>
+            <el-menu-item index="shopping">购物</el-menu-item>
+          </el-menu>
           <div class="header-right-content">
-            <el-icon :size="20">
+            <el-icon :size="24">
               <ChatLineSquare/>
             </el-icon>
             <el-avatar :size="24" :src="state.circleUrl"/>
@@ -91,75 +49,72 @@ const state = reactive({
               </template>
             </el-dropdown>
           </div>
-        </el-header>
-        <el-main>
-          <router-view/>
-        </el-main>
-      </el-container>
+        </div>
+
+      </el-header>
+      <el-main>
+        <router-view/>
+      </el-main>
     </el-container>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.el-aside {
+.common-layout{
+  background-image: url('/src/assets/home.jpg');
+  background-size: cover;
   height: 100vh;
-  background: #2b303b;
-  overflow-x: hidden;
-  width: 210px;
-
-  .el-menu {
-    background: #2b303b;
-    width: 210px;
-    border-right: 0;
-  }
-
-  .title {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    color: #fff;
-    background: #2b303b;
-  }
-
-  .el-menu-item {
-    color: #fff
-  }
-
-  :deep(.el-sub-menu__title) {
-    color: #fff
-  }
-
-
 }
-.el-header {
+.el-header{
+  --el-header-padding: 0;
+  --el-header-height: 70px;
+  --el-menu-text-color : rgb(104, 109, 139);
+  --el-menu-active-color: rgb(201, 176, 154);
+  --el-menu-bg-color:  rgb(201, 176, 154);
+}
+.header{
   display: flex;
-  height: 55px;
   justify-content: space-between;
-  background: #262f3e;
-  color: #c1c6c8;
-  align-items: center;
-  .header-left-content {
-    font-size: 14px;
+  background-color: rgba(204, 204, 204,0.6) !important;
+  .left-header{
+    line-height: 70px;
+    font-size: 23px;
+    margin-left: 80px;
   }
-  .header-right-content {
-    width: 160px;
+  .right-header{
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    font-weight: 550;
+    .header-right-content {
+      margin-left: 100px;
+      margin-right: 20px;
+      width: 150px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .el-dropdown-link{
+        font-size: 16px;
+      }
+    }
   }
 }
 .el-main{
-  --el-main-padding: 0px
+  --el-main-padding:0
 }
-.el-menu-item:hover {
-  background: #006eff;
+.el-menu--horizontal {
+  --el-menu-horizontal-height: 70px;
+}
+.el-menu--horizontal.el-menu {
+   border-bottom: 0 solid var(--el-menu-border-color);
+}
+.el-menu {
+    background-color: transparent !important;
+}
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus, .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+  background-color: transparent !important;
+  color: rgb(201, 176, 154);
+}
+.el-menu--horizontal>.el-sub-menu .el-sub-menu title:hover{
+  background-color:rgb(201, 176, 154) !important;
 }
 
-:deep(.el-sub-menu__title:hover) {
-  background: #006eff;
-}
-
-:deep(.el-menu--inline) {
-  background: #2b303b;
-}
 </style>

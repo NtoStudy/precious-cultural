@@ -20,5 +20,17 @@ export default defineConfig({
     alias: {
       '@': pathResolve('./src')
     }
+  },
+  css: {
+    // 是否使用css分离插件 ExtractTextPlugin
+    extract: true,
+    // 开启 CSS source maps?
+    sourceMap: false,
+    // css预设器配置项
+    loaderOptions: {
+      scss: {
+        prependData: `@import "./src/styles/main.scss";`
+      }
+    }
   }
 })

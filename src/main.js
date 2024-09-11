@@ -7,7 +7,7 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import router from './router'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-
+import "./styles/normalize.scss"
 // 创建Vue应用实例
 const app = createApp(App)
 // 注册Element Plus图标组件
