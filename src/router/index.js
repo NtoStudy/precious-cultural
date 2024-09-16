@@ -10,7 +10,7 @@ const routes = [
         path: '/login',
         component: () => import('@/views/login/index.vue')
     },
-                                                                                                                                                                                                        {
+                                                                                                                                                                         {
         name: 'menu',
         path: '/menu',
         component: () => import('@/views/menu/index.vue'),
@@ -20,6 +20,7 @@ const routes = [
                 name:'home',
                 path:'home',
                 component: () => import('@/views/home/index.vue'),
+                meta: { hasBackground: true } // 添加元信息
             },
             {
                 name:'heritage',
@@ -50,6 +51,11 @@ const routes = [
                 name:'shopping',
                 path:'shopping',
                 component: () => import('@/views/shopping/index.vue')
+            },
+            {
+                path: '/detail/:id',
+                name: 'detail',
+                component: () => import( '@/views/detail/index.vue'),
             },
         ]
     },

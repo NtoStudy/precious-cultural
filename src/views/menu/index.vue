@@ -1,14 +1,29 @@
 <script setup>
-import {reactive, ref} from 'vue'
-
+import {onMounted, onUnmounted, reactive, ref} from 'vue'
+// 实现router切换路由信息
 const activeIndex = ref('home')
+// 实现默认头像
 const state = reactive({
   circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
 })
+// 用来实现只有主页有背景图片
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const hasBackground = computed(() => route.meta.hasBackground);
+// 用来实现背景图的轮播
+const images = ref([
+  '/src/assets/home.jpg',
+]);
+const currentBackground = ref(images.value[0]);
+
 </script>
 
 <template>
-  <div class="common-layout">
+  <div class="common-layout"
+       :style="{ backgroundImage: hasBackground ?`url(${currentBackground})` : '' }"
+       style="background-size: cover; height: 100vh;"
+  >
     <el-container>
       <el-header class="header">
         <div class="left-header">遗珍非往</div>
@@ -23,6 +38,7 @@ const state = reactive({
           >
             <el-sub-menu index="home">
               <template #title>首页</template>
+              <el-menu-item index="home">首页</el-menu-item>
               <el-menu-item index="heritage">文化遗产</el-menu-item>
               <el-menu-item index="route">旅游路线</el-menu-item>
             </el-sub-menu>
@@ -50,20 +66,25 @@ const state = reactive({
             </el-dropdown>
           </div>
         </div>
-
       </el-header>
       <el-main>
         <router-view/>
       </el-main>
     </el-container>
   </div>
+
 </template>
 
 <style lang="scss" scoped>
-.common-layout{
-  background-image: url('/src/assets/home.jpg');
-  background-size: cover;
+.common-layout {
+  transition: background-image 0.5s ease-in-out;
+}
+.carousel-image {
+  /* 轮播图每个项目的样式 */
+  width: 100%;
   height: 100vh;
+  background-size: cover;
+  background-position: center;
 }
 .el-header{
   --el-header-padding: 0;
