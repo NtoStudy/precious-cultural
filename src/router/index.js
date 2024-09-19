@@ -20,17 +20,16 @@ const routes = [
                 name:'home',
                 path:'home',
                 component: () => import('@/views/home/index.vue'),
-                meta: { hasBackground: true } // 添加元信息
             },
             {
                 name:'heritage',
                 path:'heritage',
-                component: () => import('@/views/home/heritage/index.vue')
+                component: () => import('@/views/heritage/index.vue')
             },
             {
                 name:'route',
                 path:'route',
-                component: () => import('@/views/home/route/index.vue')
+                component: () => import('@/views/route/index.vue')
             },
             {
                 name:'fictitious',
@@ -55,7 +54,8 @@ const routes = [
             {
                 path: '/detail/:id',
                 name: 'detail',
-                component: () => import( '@/views/detail/index.vue'),
+                component: () => import('@/views/detail/index.vue'),
+                alias: '/menu/detail/:id' // 设置别名
             },
         ]
     },

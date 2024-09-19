@@ -42,7 +42,7 @@ const currentImages = computed(() => imagesByCategory[activeItem.value] || []);
 
 // 点击图片跳转到详情页
 const goToDetail = (caption) => {
-  const path = `/detail/${encodeURIComponent(caption)}`;
+  const path = `/menu/detail/${encodeURIComponent(caption)}`;
   router.push(path);
 };
 
