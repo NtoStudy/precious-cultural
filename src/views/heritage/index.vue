@@ -1,6 +1,7 @@
 <script setup>
 import {ref, computed } from 'vue';
 import {useRouter} from "vue-router";
+import Pagination from "@/components/Pagination.vue";
 const router = useRouter();
 
 const navItems = ['传统技艺', '民俗', '传统戏剧', '传统舞蹈', '曲艺'];
@@ -70,24 +71,18 @@ const goToDetail = (caption) => {
         <div class="gallery-item" v-for="(image, index) in currentImages" :key="index"
              @click="() => goToDetail(image.caption)">
           <img :src="image.src" :alt="image.alt"/>
-          <div class="caption">{{ image.caption }}</div>
+          <div class="caption">
+           {{ image.caption }}
+          </div>
         </div>
       </div>
-      <div class="pagination-container">
-        <el-pagination
-            :page-size="6"
-            :pager-count="5"
-            background
-            layout="prev, pager, next"
-            :total="66"
-        />
-      </div>
+      <Pagination/>
     </main>
   </div>
 </template>
 
 
-<style scoped>
+<style lang="scss" scoped>
 .heritage-page {
   text-align: center;
   padding: 0 80px;
@@ -149,16 +144,11 @@ const goToDetail = (caption) => {
       border-radius: 20px;
       bottom: 10px;
       right: 10px;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.4);
       color: white;
       padding: 5px;
     }
   }
 }
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  margin: 40px auto;
-  width: 100%;
-}
+
 </style>
