@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-const requests  = axios.create({
-  baseURL: '',
-  timeout: 5000,
-  headers: {
-      'Content-Type': 'application/json'
-  }
+const requests = axios.create({
+    baseURL: 'http://localhost:8080',
+    timeout: 5000,
+    headers: {
+        'Content-Type': 'application/json'
+    }
 })
 
 // 添加请求拦截器
@@ -14,6 +14,7 @@ requests.interceptors.request.use(function (config) {
     return config;
 }, function (error) {
     // 对请求错误做些什么
+    alert(error);
     return Promise.reject(error);
 });
 

@@ -1,18 +1,21 @@
 <script setup>
 import {ref} from "vue";
-
+import {userLoginApi} from "@/api/index.js";
+import router from "@/router/index.js";
+import {useUserInfoStore} from "@/store/modules/user.js";
+import {ElMessage} from "element-plus";
+// 选项卡切换 默认为登录页面
 const activeName = ref('Login')
-
 // 登录表单验证规则
 const LoginRuleForm = ref({
-  LoginUserName: '',
-  LoginPassword: '',
+  LoginUserName: '2202066',
+  LoginPassword: '123456',
   isAgree: false
 })
 const LoginRules = ref({
   LoginUserName: [
     {required: true, message: '请输入用户名', trigger: 'blur'},
-    {min: 2, max: 6, message: '名字长度在 2 到 6 个字符', trigger: 'blur'},
+    {min: 2, max: 10, message: '名字长度在 2 到 10 个字符', trigger: 'blur'},
   ],
   LoginPassword: [
     {required: true, message: '请输入密码', trigger: 'blur'},
@@ -23,15 +26,13 @@ const LoginRules = ref({
 const switchToRegister = () => {
   activeName.value = 'Register';
 }
-
+// 注册表单验证规则
 const RegisterRuleForm = ref({
   RegisterUserName: '',
   RegisterPassword: '',
   RegisterPasswordAgain: '',
   isAgree: false
 })
-
-
 const RegisterRules = ref({
   RegisterUserName: [
     {required: true, message: '请输入用户名', trigger: 'blur'},
@@ -44,17 +45,33 @@ const RegisterRules = ref({
   RegisterPasswordAgain: [
     {required: true, message: '请再次输入密码', trigger: 'blur'},
     {min: 4, max: 10, message: '密码长度在 4 到 10 个字符', trigger: 'blur'},
-    {validator: (rule, value, callback) => {
-      if (value !== RegisterRuleForm.value.RegisterPassword) {
-        callback(new Error('两次输入的密码不一致!'));
-      } else {
-        callback();
-      }
-    }, trigger: 'blur'}
+    {
+      validator: (rule, value, callback) => {
+        if (value !== RegisterRuleForm.value.RegisterPassword) {
+          callback(new Error('两次输入的密码不一致!'));
+        } else {
+          callback();
+        }
+      }, trigger: 'blur'
+    }
   ]
 })
+// 切换到登录页面
 const switchToLogin = () => {
   activeName.value = 'Login';
+}
+// 用于控制登录信息的持久化处理
+
+// 登录
+const login = async () => {
+  const UserLogin = await userLoginApi(LoginRuleForm.value.LoginUserName, LoginRuleForm.value.LoginPassword)
+  if(UserLogin.data.code === 1){
+    const userStore = useUserInfoStore()
+    userStore.setUserInfo(UserLogin.data.data)
+    ElMessage.success('登录成功')
+    console.log(UserLogin.data)
+    router.push('/menu')
+  }
 }
 
 </script>
@@ -67,6 +84,7 @@ const switchToLogin = () => {
       </div>
       <div class="login-container_right">
         <el-tabs class="top-tab" v-model="activeName" :stretch="true">
+          <!-- 这里是登录的选项卡 -->
           <el-tab-pane label="登录" name="Login">
             <el-card shadow="never">
               <h1 class="user-name">登录</h1>
@@ -84,7 +102,6 @@ const switchToLogin = () => {
                       type="password"
                       show-password
                   >
-
                   </el-input>
 
                 </el-form-item>
@@ -107,16 +124,15 @@ const switchToLogin = () => {
                   >
                 </el-form-item>
                 <el-form-item style="margin-top: 40px">
-                  <el-button type="primary">登录</el-button>
+                  <el-button type="primary" @click="login">登录</el-button>
                 </el-form-item>
               </el-form>
             </el-card>
           </el-tab-pane>
-
-
+          <!-- 这里是注册的选项卡 -->
           <el-tab-pane label="注册" name="Register">
             <el-card shadow="never">
-              <el-form ref="registerForm"  :rules="RegisterRules" status-icon :model="RegisterRuleForm">
+              <el-form ref="registerForm" :rules="RegisterRules" status-icon :model="RegisterRuleForm">
                 <h1 class="user-name">注册</h1>
                 <el-form-item prop="RegisterUserName" class="user-Count">
                   <el-input

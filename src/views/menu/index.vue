@@ -1,18 +1,32 @@
 <script setup>
 import { reactive, ref} from 'vue'
+// 导入pinia的useStore
+import { useUserInfoStore } from '@/store/modules/user'
+const userStore = useUserInfoStore()
 // 实现router切换路由信息
 const activeIndex = ref('home')
 // 实现默认头像
 const state = reactive({
   circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
 })
-
+const isDropdownVisible = ref(false);
+const toggleDropdown = () => {
+  isDropdownVisible.value = !isDropdownVisible.value;
+};
+// 调用pinia的clearUserInfo方法实现退出登录
+const logout = () => {
+  userStore.clearUserInfo()
+}
 </script>
 
 <template>
   <el-container>
     <el-header class="header">
       <div class="left-header">遗珍非往</div>
+      <div class="left-header-text" v-if="userStore.userInfo">尊敬的 {{ userStore.userInfo.username }} ，欢迎来到遗珍非往！</div>
+      <div class="left-header-text" v-else>欢迎来到遗珍非往！点这里进行
+        <router-link to="/login">登录</router-link>
+      </div>
       <div class="right-header">
         <el-menu
             :default-active="activeIndex"
@@ -34,15 +48,15 @@ const state = reactive({
             <ChatLineSquare/>
           </el-icon>
           <el-avatar :size="24" :src="state.circleUrl"/>
-          <el-dropdown trigger="click">
+          <el-dropdown trigger="click" :visible.sync="isDropdownVisible" @visible-change="toggleDropdown">
               <span class="el-dropdown-link">
                 设置
               </span>
             <template #dropdown>
-              <el-dropdown-menu>
+              <el-dropdown-menu :aria-hidden="!isDropdownVisible">
                 <el-dropdown-item>设置账号</el-dropdown-item>
                 <el-dropdown-item>更改头像</el-dropdown-item>
-                <el-dropdown-item>退出登录</el-dropdown-item>
+                <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -79,6 +93,9 @@ const state = reactive({
     line-height: 60px;
     font-size: 23px;
     margin-left: 80px;
+  }
+  .left-header-text{
+    line-height: 60px;
   }
   .right-header{
     display: flex;
