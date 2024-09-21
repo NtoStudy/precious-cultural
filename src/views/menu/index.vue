@@ -39,9 +39,9 @@ const logout = () => {
           <el-menu-item index="home">首页</el-menu-item>
           <el-menu-item index="heritage">文化遗产</el-menu-item>
           <el-menu-item index="route">旅游路线</el-menu-item>
+          <el-menu-item index="fictitious">vr展厅</el-menu-item>
           <el-menu-item index="forum">论坛</el-menu-item>
           <el-menu-item index="about">关于</el-menu-item>
-          <el-menu-item index="shopping">购物</el-menu-item>
         </el-menu>
         <div class="header-right-content">
           <el-icon :size="24">
