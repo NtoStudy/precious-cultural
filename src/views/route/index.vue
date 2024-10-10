@@ -34,7 +34,7 @@ const currentImages = [{src: bg1, alt: 'bg1' ,id: 1}, {src: bg2, alt: 'bg2', id:
             <p class="route-gallery-item-title">线路标题</p>
             <p class="route-gallery-item-text">线路内容，线路内容，线路内容，线路内容，线路内容，线路内容，线路内容</p>
             <div class="link-container">
-              <router-link :to='`/menu/route/detail/${image.id}`'>查看更多 -></router-link>
+              <router-link :to='`/menu/route/routeDetail/${image.id}`'>查看更多 -></router-link>
             </div>
           </div>
 

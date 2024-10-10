@@ -15,26 +15,28 @@ const viewportHeight = ref(window.innerHeight);
 onMounted(() => {
   // 使用window.innerHeight获取视口高度
   carouselHeight.value = `calc(${viewportHeight}px - 60px)`;
+  // console.log(viewportHeight.value)
+  // console.log(carouselHeight.value)
 })
 
 // 页面发生变化的时候 动态设置高度
 // 监听viewportHeight变化并根据窗口高度调整carousel高度
 watchEffect(() => {
   // 监听viewportHeight变化
-  if (viewportHeight.value !== window.innerHeight) {
-    viewportHeight.value = window.innerHeight;
-    carouselHeight.value = `calc(${viewportHeight.value}px - 60px)`;
-  }
+  viewportHeight.value = window.innerHeight;
+  carouselHeight.value = `calc(${viewportHeight.value}px - 60px)`;
 });
 // 监听窗口大小变化事件
 window.addEventListener('resize', () => {
   viewportHeight.value = window.innerHeight;
   carouselHeight.value = `calc(${viewportHeight.value}px - 60px)`;
+
 });
 // 监听方向变化事件
 window.addEventListener('orientationchange', () => {
   viewportHeight.value = window.innerHeight;
   carouselHeight.value = `calc(${viewportHeight.value}px - 60px)`;
+
 });
 
 

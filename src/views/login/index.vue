@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {userLoginApi} from "@/api/index.js";
 import router from "@/router/index.js";
 import {useUserInfoStore} from "@/store/modules/user.js";
@@ -8,8 +8,8 @@ import {ElMessage} from "element-plus";
 const activeName = ref('Login')
 // 登录表单验证规则
 const LoginRuleForm = ref({
-  LoginUserName: '2202066',
-  LoginPassword: '123456',
+  LoginUserName: '1234',
+  LoginPassword: '1234',
   isAgree: false
 })
 const LoginRules = ref({
@@ -69,11 +69,19 @@ const login = async () => {
     const userStore = useUserInfoStore()
     userStore.setUserInfo(UserLogin.data.data)
     ElMessage.success('登录成功')
-    console.log(UserLogin.data)
+    // console.log(UserLogin.data)
     router.push('/menu')
   }
 }
-
+//
+// const loginAA = async () => {
+//   const UserLogin = await userLoginApiAA(LoginRuleForm.value.LoginUserName, LoginRuleForm.value.LoginPassword)
+//   console.log(UserLogin.data)
+// }
+//
+// onMounted(() => {
+//   loginAA()
+// })
 </script>
 
 <template>

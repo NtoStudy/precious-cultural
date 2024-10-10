@@ -47,16 +47,16 @@ const routes = [
                 component: () => import('@/views/about/index.vue')
             },
             {
-                path: '/heritage/detail/:id',
+                path: '/heritage/heritageDetail/:id',
                 name: 'heritageDetail',
-                component: () => import('@/views/heritage/detail/index.vue'),
-                alias: '/menu/heritage/detail/:id' // 设置别名
+                component: () => import('@/views/heritage/heritageDetail/index.vue'),
+                alias: '/menu/heritage/heritageDetail/:id' // 设置别名
             },
             {
-                path: '/route/detail/:id',
+                path: '/route/heritageDetail/:id',
                 name: 'routeDetail',
-                component: () => import('@/views/route/detail/index.vue'),
-                alias: '/menu/route/detail/:id' // 设置别名
+                component: () => import('@/views/route/routeDetail/index.vue'),
+                alias: '/menu/route/routeDetail/:id' // 设置别名
             },
         ]
     },
