@@ -1,52 +1,46 @@
 <script setup>
-import {ref, computed } from 'vue';
+import {ref, computed, onMounted,watch} from 'vue';
 import {useRouter} from "vue-router";
-import Pagination from "@/components/Pagination.vue";
+import {userNonHeritagePageApi} from "@/api/index.js";
 const router = useRouter();
 
-const navItems = ['传统技艺', '民俗', '传统戏剧', '传统舞蹈', '曲艺'];
+const navItems = ['民间文学', '传统戏剧', '传统美术', '传统医药', '传统音乐'];
 const activeItem = ref(navItems[0]);
-
+// 计算属性来获取 activeItem 的索引
+const activeItemIndex = computed(() => navItems.indexOf(activeItem.value));
 // 定义每个分类的图片集合
-const imagesByCategory = {
-  '传统技艺': [
-    {src: 'path/to/image1.jpg', alt: 'Image 1', caption: '手工陶瓷'},
-    {src: 'path/to/image2.jpg', alt: 'Image 2', caption: '木雕艺术'},
-    {src: 'path/to/image3.jpg', alt: 'Image 3', caption: '织锦工艺'},
-    {src: 'path/to/image1.jpg', alt: 'Image 1', caption: '手工陶瓷'},
-    {src: 'path/to/image2.jpg', alt: 'Image 2', caption: '木雕艺术'},
-    {src: 'path/to/image3.jpg', alt: 'Image 3', caption: '织锦工艺'},
-  ],
-  '民俗': [
-    {src: 'path/to/image4.jpg', alt: 'Image 4', caption: '春节'},
-    {src: 'path/to/image5.jpg', alt: 'Image 5', caption: '端午节'},
-    {src: 'path/to/image6.jpg', alt: 'Image 6', caption: '中秋节'}
-  ],
-  '传统戏剧': [
-    {src: 'path/to/image7.jpg', alt: 'Image 7', caption: '京剧'},
-    {src: 'path/to/image8.jpg', alt: 'Image 8', caption: '川剧变脸'},
-    {src: 'path/to/image9.jpg', alt: 'Image 9', caption: '黄梅戏'}
-  ],
-  '传统舞蹈': [
-    {src: 'path/to/image10.jpg', alt: 'Image 10', caption: '龙舞'},
-    {src: 'path/to/image11.jpg', alt: 'Image 11', caption: '狮舞'},
-    {src: 'path/to/image12.jpg', alt: 'Image 12', caption: '秧歌'}
-  ],
-  '曲艺': [
-    {src: 'path/to/image13.jpg', alt: 'Image 13', caption: '相声'},
-    {src: 'path/to/image14.jpg', alt: 'Image 14', caption: '评书'},
-    {src: 'path/to/image15.jpg', alt: 'Image 15', caption: '快板'}
-  ]
-};
-// 获取当前激活分类的图片
-const currentImages = computed(() => imagesByCategory[activeItem.value] || []);
+const imagesByCategory = ref([]);
 
+// 分页器相关内容
+const pageSize = ref(6)
+const currentPage = ref(1)
+const total = ref(10)
+const handleCurrentChange = () => {
+  getUserNonHeritagePageApi()
+}
 // 点击图片跳转到详情页
 const goToDetail = (caption) => {
   const path = `/menu/heritage/heritageDetail/${encodeURIComponent(caption)}`;
   router.push(path);
 };
 
+// 调取接口，获取分页数据
+const userNonHeritagePageData = ref(null)
+const getUserNonHeritagePageApi = async () => {
+  userNonHeritagePageData.value = await userNonHeritagePageApi(currentPage.value, pageSize.value, activeItemIndex.value + 1);
+  total.value = userNonHeritagePageData.value.data.data.total
+  imagesByCategory.value = userNonHeritagePageData.value.data.data.records
+
+}
+onMounted(() => {
+  getUserNonHeritagePageApi()
+})
+watch(activeItemIndex, () => {
+  getUserNonHeritagePageApi()
+  console.log(activeItemIndex.value + 1)
+  console.log(userNonHeritagePageData.value.data.data)
+  console.log(imagesByCategory.value)
+})
 </script>
 
 <template>
@@ -68,17 +62,28 @@ const goToDetail = (caption) => {
       <h1 class="title">HERITAGE.</h1>
       <p class="subtitle">名录代表 -- {{ activeItem }}</p>
       <div class="gallery">
-        <div class="gallery-item" v-for="(image, index) in currentImages" :key="index"
-             @click="() => goToDetail(image.caption)">
-          <img :src="image.src" :alt="image.alt"/>
+        <div class="gallery-item" v-for="(image, index) in imagesByCategory" :key="index"
+             @click="() => goToDetail(image.id)">
+          <img :src="image.imgUrl" :alt="image.alt"/>
           <div class="caption">
-           {{ image.caption }}
+           {{ image.name }}
           </div>
         </div>
       </div>
-      <Pagination/>
+      <div class="pagination-container">
+        <el-pagination
+            v-model:current-page="currentPage"
+            v-model:page-size="pageSize"
+            :total="total"
+            background
+            layout="prev, pager, next"
+            @current-change="handleCurrentChange"
+        />
+      </div>
     </main>
+
   </div>
+
 </template>
 
 
@@ -150,5 +155,10 @@ const goToDetail = (caption) => {
     }
   }
 }
-
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin: 40px auto;
+  width: 100%;
+}
 </style>

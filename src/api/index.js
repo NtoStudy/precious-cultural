@@ -41,9 +41,10 @@ export const userNonHeritageByIdApi = (id) => requests({
  * 分页查询用户非遗信息
  * @returns {*}
  */
-export const userNonHeritagePageApi = () => requests({
+export const userNonHeritagePageApi = (current, size,categories) => requests({
     url:'/user/nonHeritage/page',
-    method: 'get'
+    method: 'get',
+    params: { current, size, categories }
 })
 
 /**

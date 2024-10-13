@@ -15,8 +15,6 @@ const viewportHeight = ref(window.innerHeight);
 onMounted(() => {
   // 使用window.innerHeight获取视口高度
   carouselHeight.value = `calc(${viewportHeight}px - 60px)`;
-  // console.log(viewportHeight.value)
-  // console.log(carouselHeight.value)
 })
 
 // 页面发生变化的时候 动态设置高度

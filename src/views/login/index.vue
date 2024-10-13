@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import { ref} from "vue";
 import {userLoginApi} from "@/api/index.js";
 import router from "@/router/index.js";
 import {useUserInfoStore} from "@/store/modules/user.js";
@@ -73,15 +73,7 @@ const login = async () => {
     router.push('/menu')
   }
 }
-//
-// const loginAA = async () => {
-//   const UserLogin = await userLoginApiAA(LoginRuleForm.value.LoginUserName, LoginRuleForm.value.LoginPassword)
-//   console.log(UserLogin.data)
-// }
-//
-// onMounted(() => {
-//   loginAA()
-// })
+
 </script>
 
 <template>
