@@ -4,7 +4,7 @@
 // 写死的数据
 import {ref, computed, watch} from 'vue';
 import {useRouter} from "vue-router";
-import Pagination from "@/components/Pagination.vue";
+
 const router = useRouter();
 
 const navItems = ['传统技艺', '民俗', '传统戏剧', '传统舞蹈', '曲艺'];
@@ -28,16 +28,17 @@ import msbg3 from '@/assets/heritage/minsu/3.webp';
 import msbg4 from '@/assets/heritage/minsu/4.webp';
 import msbg5 from '@/assets/heritage/minsu/5.webp';
 import msbg6 from '@/assets/heritage/minsu/6.webp';
+import LastPage from "@/components/lastPage.vue";
 
 // 定义每个分类的图片集合
 const imagesByCategory = {
   '传统技艺': [
-    {src: jybg1, alt: '手工陶瓷', caption: '手工陶瓷'},
-    {src: jybg2, alt: '木雕艺术', caption: '木雕艺术'},
-    {src: jybg3, alt: '织锦工艺', caption: '织锦工艺'},
-    { src: jybg4, alt: '剪纸艺术', caption: '剪纸艺术' },
-    { src: jybg5, alt: '书法艺术', caption: '书法艺术' },
-    { src: jybg6, alt: '古琴', caption: '古琴' },
+    {src: jybg1, alt: '手工陶瓷', caption: '1'},
+    {src: jybg2, alt: '木雕艺术', caption: '2'},
+    {src: jybg3, alt: '织锦工艺', caption: '3'},
+    {src: jybg4, alt: '剪纸艺术', caption: '剪纸艺术'},
+    {src: jybg5, alt: '书法艺术', caption: '书法艺术'},
+    {src: jybg6, alt: '古琴', caption: '古琴'},
     {src: jybg7, alt: '传统面塑', caption: '传统面塑'},
     {src: jybg8, alt: '漆器工艺', caption: '漆器工艺'},
     {src: jybg9, alt: '竹编艺术', caption: '竹编艺术'},
@@ -46,36 +47,36 @@ const imagesByCategory = {
     {src: jybg12, alt: '传统铜艺', caption: '传统铜艺'}
   ],
   '民俗': [
-    { src: msbg1, alt: '春节', caption: '春节' },
-    { src: msbg2, alt: '端午节', caption: '端午节' },
-    { src: msbg3, alt: '中秋节', caption: '中秋节' },
-    { src: msbg4, alt: '元宵节', caption: '元宵节' },
-    { src: msbg5, alt: '七夕节', caption: '七夕节' },
-    { src: msbg6, alt: '重阳节', caption: '重阳节' }
+    {src: msbg1, alt: '春节', caption: '春节'},
+    {src: msbg2, alt: '端午节', caption: '端午节'},
+    {src: msbg3, alt: '中秋节', caption: '中秋节'},
+    {src: msbg4, alt: '元宵节', caption: '元宵节'},
+    {src: msbg5, alt: '七夕节', caption: '七夕节'},
+    {src: msbg6, alt: '重阳节', caption: '重阳节'}
   ],
   '传统戏剧': [
-    { src: 'path/to/opera1.jpg', alt: '京剧', caption: '京剧' },
-    { src: 'path/to/opera2.jpg', alt: '越剧', caption: '越剧' },
-    { src: 'path/to/opera3.jpg', alt: '黄梅戏', caption: '黄梅戏' },
-    { src: 'path/to/opera4.jpg', alt: '川剧', caption: '川剧' },
-    { src: 'path/to/opera5.jpg', alt: '豫剧', caption: '豫剧' },
-    { src: 'path/to/opera6.jpg', alt: '评剧', caption: '评剧' }
+    {src: 'path/to/opera1.jpg', alt: '京剧', caption: '京剧'},
+    {src: 'path/to/opera2.jpg', alt: '越剧', caption: '越剧'},
+    {src: 'path/to/opera3.jpg', alt: '黄梅戏', caption: '黄梅戏'},
+    {src: 'path/to/opera4.jpg', alt: '川剧', caption: '川剧'},
+    {src: 'path/to/opera5.jpg', alt: '豫剧', caption: '豫剧'},
+    {src: 'path/to/opera6.jpg', alt: '评剧', caption: '评剧'}
   ],
   '传统舞蹈': [
-    { src: 'path/to/dance1.jpg', alt: '孔雀舞', caption: '孔雀舞' },
-    { src: 'path/to/dance2.jpg', alt: '扇子舞', caption: '扇子舞' },
-    { src: 'path/to/dance3.jpg', alt: '秧歌舞', caption: '秧歌舞' },
-    { src: 'path/to/dance4.jpg', alt: '腰鼓舞', caption: '腰鼓舞' },
-    { src: 'path/to/dance5.jpg', alt: '龙舞', caption: '龙舞' },
-    { src: 'path/to/dance6.jpg', alt: '狮子舞', caption: '狮子舞' }
+    {src: 'path/to/dance1.jpg', alt: '孔雀舞', caption: '孔雀舞'},
+    {src: 'path/to/dance2.jpg', alt: '扇子舞', caption: '扇子舞'},
+    {src: 'path/to/dance3.jpg', alt: '秧歌舞', caption: '秧歌舞'},
+    {src: 'path/to/dance4.jpg', alt: '腰鼓舞', caption: '腰鼓舞'},
+    {src: 'path/to/dance5.jpg', alt: '龙舞', caption: '龙舞'},
+    {src: 'path/to/dance6.jpg', alt: '狮子舞', caption: '狮子舞'}
   ],
   '曲艺': [
-    { src: 'path/to/crosstalk.jpg', alt: '相声', caption: '相声' },
-    { src: 'path/to/storytelling.jpg', alt: '评书', caption: '评书' },
-    { src: 'path/to/clapperTalk.jpg', alt: '快板', caption: '快板' },
-    { src: 'path/to/balladSinging.jpg', alt: '大鼓', caption: '大鼓' },
-    { src: 'path/to/comicDialogue.jpg', alt: '双簧', caption: '双簧' },
-    { src: 'path/to/improvisationalTalk.jpg', alt: '即兴说唱', caption: '即兴说唱' }
+    {src: 'path/to/crosstalk.jpg', alt: '相声', caption: '相声'},
+    {src: 'path/to/storytelling.jpg', alt: '评书', caption: '评书'},
+    {src: 'path/to/clapperTalk.jpg', alt: '快板', caption: '快板'},
+    {src: 'path/to/balladSinging.jpg', alt: '大鼓', caption: '大鼓'},
+    {src: 'path/to/comicDialogue.jpg', alt: '双簧', caption: '双簧'},
+    {src: 'path/to/improvisationalTalk.jpg', alt: '即兴说唱', caption: '即兴说唱'}
   ]
 };
 // 获取当前激活分类的图片
@@ -83,8 +84,12 @@ const imagesByCategory = {
 
 // 点击图片跳转到详情页
 const goToDetail = (caption) => {
-  const path = `/menu/heritage/heritageDetail/${encodeURIComponent(caption)}`;
-  router.push(path);
+  router.push({
+    name: 'heritageDetail',
+    params: {
+      id: caption
+    }
+  })
 };
 
 // 分页相关
@@ -95,16 +100,17 @@ const pageSize = ref(6);
 // 获取当前激活分类的图片
 const currentImages = computed(() => {
   const images = imagesByCategory[activeItem.value] || [];
-  console.log(images);
+  // console.log(images);
   const start = (currentPage.value - 1) * pageSize.value;
   const end = start + pageSize.value;
   return images.slice(start, end);
 });
-console.log(currentImages);
+// console.log(currentImages);
 // 监听路由变化和激活分类变化，更新当前页码
 watch(activeItem, () => {
   currentPage.value = 1;
 });
+
 // 处理分页器的更改事件
 function handlePageChange(newPage) {
   currentPage.value = newPage;
@@ -164,14 +170,17 @@ function handlePageChange(newPage) {
   padding: 0 80px;
   overflow: hidden; // 确保伪元素不会超出主元素的范围
 }
+
 .header {
   display: flex;
   justify-content: space-between;
   padding: 20px;
 }
+
 .logo {
   font-size: 24px;
 }
+
 .nav {
   position: absolute;
   right: 40px;
@@ -190,14 +199,17 @@ function handlePageChange(newPage) {
     }
   }
 }
+
 .title {
   font-size: 36px;
   margin-top: 20px;
 }
+
 .subtitle {
   font-size: 18px;
   color: gray;
 }
+
 .gallery {
   display: flex;
   justify-content: center;
@@ -212,12 +224,14 @@ function handlePageChange(newPage) {
     height: 200px;
     width: 30%;
     position: relative;
+
     img {
       width: 100%;
       height: 100%;
       border-radius: 50px;
 
     }
+
     .caption {
       position: absolute;
       border-radius: 20px;
@@ -229,6 +243,7 @@ function handlePageChange(newPage) {
     }
   }
 }
+
 .pagination-container {
   display: flex;
   justify-content: center;

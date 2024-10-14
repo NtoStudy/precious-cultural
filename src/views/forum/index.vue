@@ -1,5 +1,6 @@
 <script setup>
 import {computed, ref} from 'vue';
+import router from "@/router/index.js";
 
 import jiyi1 from '@/assets/lt/jiyi/1.webp';
 import jiyi2 from '@/assets/lt/jiyi/2.webp';
@@ -23,6 +24,8 @@ import quyi3 from '@/assets/lt/quyi/3.webp';
 import quyi4 from '@/assets/lt/quyi/4.webp';
 
 
+
+
 const articles = ref([
   {
     id: 1,
@@ -30,8 +33,8 @@ const articles = ref([
     title: '非遗论坛聚焦：保护、传承与创新',
     content: '随着人工智能技术的飞速发展，它在各个领域的应用越来越广泛。在本次论坛中，专家们围绕人工智能的未来发展进行了深入的讨论。他们探讨了AI在医疗、教育、交通等领域的潜在影响，以及如何确保技术的伦理和安全。此外，还讨论了人工智能可能带来的社会变革和就业问题。',
     liked: false,
-    category:'传统技艺',
-    likeNumber:23,
+    category: '传统技艺',
+    likeNumber: 23,
     author: 'CulturalHeritage'
   },
   {
@@ -225,21 +228,25 @@ const articles = ref([
     author: 'QuYiHeritage'
   }
 ]);
+
 // 点赞按钮。
 function likeArticle(article) {
   article.liked = !article.liked;
-  if(article.liked === false){
+  if (article.liked === false) {
     article.likeNumber--
-  }else{
+  } else {
     article.likeNumber++
   }
 }
+
 // 当前在第几个分类
 const activeIndex = ref('1');
+
 // 增加一个方法来处理菜单项的点击事件
 function handleMenuClick(index) {
   activeIndex.value = index;
 }
+
 // 根据分类过滤文章
 const filteredArticles = computed(() => {
   switch (activeIndex.value) {
@@ -252,7 +259,7 @@ const filteredArticles = computed(() => {
     case '4':
       return articles.value.filter(article => article.category === '传统舞蹈');
     case '5':
-        return articles.value.filter(article => article.category === '曲艺');
+      return articles.value.filter(article => article.category === '曲艺');
     default:
       return articles.value;
   }
@@ -263,10 +270,18 @@ const filteredArticles = computed(() => {
 const currentPage = ref(1);
 // 每页显示的文章数量
 const pageSize = ref(6);
+// 总文章数量
 function handlePageChange(newPage) {
   currentPage.value = newPage;
 }
-
+// 处理点击事件并跳转到文章详情页
+function goToArticleDetail(article, event) {
+  event.stopPropagation(); // 阻止事件冒泡
+  router.push({
+    name: 'forumDetail',
+    params: { articleId: encodeURIComponent(article.id) }
+  });
+}
 </script>
 <template>
 
@@ -277,9 +292,9 @@ function handlePageChange(newPage) {
           :default-active="activeIndex"
           class="image-navigation"
           background-color="#fff"
-          text-color="##3f7ef7"
+          text-color="#3f7ef7"
       >
-        <el-menu-item index="1"  @click="handleMenuClick('1')">传统技艺</el-menu-item>
+        <el-menu-item index="1" @click="handleMenuClick('1')">传统技艺</el-menu-item>
         <el-menu-item index="2" @click="handleMenuClick('2')">民俗</el-menu-item>
         <el-menu-item index="3" @click="handleMenuClick('3')">传统戏剧</el-menu-item>
         <el-menu-item index="4" @click="handleMenuClick('4')">传统舞蹈</el-menu-item>
@@ -289,7 +304,11 @@ function handlePageChange(newPage) {
     <div class="article-right">
       <el-row :gutter="20" justify="center">
         <el-col :span="22">
-          <el-card v-for="article in filteredArticles" :key="article.id" class="article-card">
+          <el-card v-for="article in filteredArticles"
+                   :key="article.id"
+                   @click="goToArticleDetail(article, $event)"
+                   class="article-card"
+          >
             <div class="article-content">
               <img :src="article.image" alt="Article Image" class="article-image">
               <div class="article-info">
@@ -325,7 +344,6 @@ function handlePageChange(newPage) {
 </template>
 
 
-
 <style scoped lang="scss">
 .article-list-container {
   max-width: 1200px;
@@ -333,9 +351,11 @@ function handlePageChange(newPage) {
   margin: auto;
   padding: 20px;
   text-align: center;
-  .article-left{
+
+  .article-left {
     margin: 20px 0;
     width: 20%;
+
     .image-navigation .el-menu-item {
       transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */
     }
@@ -344,25 +364,30 @@ function handlePageChange(newPage) {
       background-color: #f5f5f5; /* 悬停时的背景颜色 */
       color: #3f7ef7; /* 悬停时的文字颜色 */
     }
+
     .image-navigation .el-menu-item.is-active {
       background-color: #ebf2fe; /* 激活项的背景颜色 */
     }
+
     /* 如果你想要悬停效果也改变图标的颜色，可以添加以下样式 */
     .image-navigation .el-menu-item:hover i {
       color: #3f7ef7; /* 悬停时的图标颜色 */
     }
   }
+
   .article-right {
     .article-card {
       display: flex;
       align-items: center;
       margin: 20px 0;
       width: 900px;
+
       .article-content {
         max-height: 150px; /* 设置最大高度为100px，你可以根据需要调整这个值 */
         overflow: hidden; /* 隐藏超出部分 */
         text-overflow: ellipsis; /* 添加省略号 */
         display: flex;
+
         .article-image {
           width: 200px;
           height: 150px;
@@ -373,14 +398,17 @@ function handlePageChange(newPage) {
         .article-info {
           position: relative;
           flex: 1;
+
           .article-title {
             margin: 10px 0;
             font-size: 18px;
             font-weight: 600;
           }
+
           p {
             margin-bottom: 10px;
           }
+
           .article-actions {
             display: flex;
             align-items: center;
@@ -399,12 +427,14 @@ function handlePageChange(newPage) {
   }
 
 }
+
 .pagination-container {
   display: flex;
   justify-content: center;
   margin: 40px auto;
   width: 100%;
 }
+
 /* 未点赞状态 */
 .unliked {
   background-color: white;

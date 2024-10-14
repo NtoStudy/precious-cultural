@@ -2,9 +2,16 @@
 import { reactive, ref} from 'vue'
 // 导入pinia的useStore
 import { useUserInfoStore } from '@/store/modules/user'
+import {useRoute} from "vue-router";
 const userStore = useUserInfoStore()
 // 实现router切换路由信息
 const activeIndex = ref('home')
+const route = useRoute();
+// console.log(route)
+if(route.name){
+  activeIndex.value = route.name;
+}
+
 // 实现默认头像
 const state = reactive({
   circleUrl: 'https://takeaway-hei.oss-cn-hangzhou.aliyuncs.com/tx.png',

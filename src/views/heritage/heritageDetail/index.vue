@@ -1,4 +1,5 @@
 <template>
+  <last-page/>
   <div class="article-container">
     <div class="article-header">
       <h1>田青：幽兰春晓 古琴复兴
@@ -20,6 +21,7 @@
 import {ElDivider} from 'element-plus'
 import {str} from "./content.js"
 import {ref} from "vue";
+import LastPage from "@/components/lastPage.vue";
 const str1 = ref('')
 str1.value = str
 </script>
