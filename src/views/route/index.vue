@@ -1,8 +1,8 @@
 <script setup>
 import Pagination from "@/components/Pagination.vue";
-import bg1 from '@/assets/bg1.jpg';
-import bg2 from '@/assets/bg2.jpg';
-import bg3 from '@/assets/bg3.jpg';
+import bg1 from '@/assets/home/bg1.jpg';
+import bg2 from '@/assets/home/bg2.jpg';
+import bg3 from '@/assets/home/bg3.jpg';
 const currentImages = [{src: bg1, alt: 'bg1' ,id: 1}, {src: bg2, alt: 'bg2', id: 2}, {src: bg3, alt: 'bg3', id: 3}]
 </script>
 <template>

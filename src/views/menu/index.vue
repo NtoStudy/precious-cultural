@@ -7,7 +7,7 @@ const userStore = useUserInfoStore()
 const activeIndex = ref('home')
 // 实现默认头像
 const state = reactive({
-  circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+  circleUrl: 'https://takeaway-hei.oss-cn-hangzhou.aliyuncs.com/tx.png',
 })
 const isDropdownVisible = ref(false);
 const toggleDropdown = () => {
@@ -38,7 +38,7 @@ const logout = () => {
         >
           <el-menu-item index="home">首页</el-menu-item>
           <el-menu-item index="heritage">文化遗产</el-menu-item>
-          <el-menu-item index="route">旅游路线</el-menu-item>
+<!--          <el-menu-item index="route">旅游路线</el-menu-item>-->
           <el-menu-item index="fictitious">vr展厅</el-menu-item>
           <el-menu-item index="forum">论坛</el-menu-item>
           <el-menu-item index="about">关于</el-menu-item>

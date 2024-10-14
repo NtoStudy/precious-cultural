@@ -26,11 +26,11 @@ const routes = [
                 path:'heritage',
                 component: () => import('@/views/heritage/index.vue')
             },
-            {
-                name:'route',
-                path:'route',
-                component: () => import('@/views/route/index.vue')
-            },
+            // {
+            //     name:'route',
+            //     path:'route',
+            //     component: () => import('@/views/route/index.vue')
+            // },
             {
                 name:'fictitious',
                 path:'fictitious',

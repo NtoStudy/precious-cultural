@@ -1,11 +1,14 @@
 <script setup>
 import {ref, onMounted, watchEffect} from 'vue';
 // 导入图片资源 作为轮播图
-import bg1 from '@/assets/bg1.jpg';
-import bg2 from '@/assets/bg2.jpg';
-import bg3 from '@/assets/bg3.jpg';
+import bg1 from '@/assets/home/bg1.jpg';
+import bg2 from '@/assets/home/bg2.jpg';
+import bg3 from '@/assets/home/bg3.jpg';
+import bg4 from '@/assets/home/bg4.jpg';
+import bg5 from '@/assets/home/bg5.jpg';
 
-const images = [bg1, bg2, bg3];
+
+const images = [bg1, bg2, bg3,bg4,bg5];
 // 设置轮播间隔时间
 const interval = ref(3000);
 // 控制背景图为视口高度减去60px
@@ -34,7 +37,6 @@ window.addEventListener('resize', () => {
 window.addEventListener('orientationchange', () => {
   viewportHeight.value = window.innerHeight;
   carouselHeight.value = `calc(${viewportHeight.value}px - 60px)`;
-
 });
 
 

@@ -1,30 +1,27 @@
 <template>
   <div class="article-container">
     <div class="article-header">
-      <h1>非遗名称：这里是非遗名称</h1>
+      <h1>田青：幽兰春晓 古琴复兴
+        ——《幽兰春晓——“古琴艺术”申遗二十周年纪念文集》序</h1>
       <div class="article-meta">
-        <span>来源：这里填写非遗所在地</span>
-        <span> 作者：这里填写非遗专家名字 </span>
+        <span>来源：中国艺术报</span>
+        <span>作者：田青</span>
       </div>
       <el-divider/>
     </div>
-    <div class="article-content">
-      <p>
-        内容：这里填写非遗的详细内容内容： 这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：
-        这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：
-        这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：
-        这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：
-        这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：
-        这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：
-        这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容内容：这里填写非遗的详细内容
-      </p>
-      <img src="" alt="这里是图片，" />
+    <div class="article-content" v-html="str1">
     </div>
+
   </div>
+
 </template>
 
 <script setup>
 import {ElDivider} from 'element-plus'
+import {str} from "./content.js"
+import {ref} from "vue";
+const str1 = ref('')
+str1.value = str
 </script>
 
 <style lang="scss" scoped>
@@ -56,7 +53,10 @@ import {ElDivider} from 'element-plus'
     }
   }
   .article-content{
-    padding: 0 40px;
+    padding:0 100px;
+    font-family: Arial, sans-serif; /* 设置字体 */
+    line-height: 1.8; /* 设置行高 */
+    letter-spacing: 1px; /* 增加字间距 */
     img{
       height: 200px;
       width: 400px;

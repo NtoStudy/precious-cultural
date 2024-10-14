@@ -1,49 +1,118 @@
 <script setup>
-import {ref, computed, onMounted,watch} from 'vue';
+
+
+// 写死的数据
+import {ref, computed, watch} from 'vue';
 import {useRouter} from "vue-router";
-import {userNonHeritagePageApi} from "@/api/index.js";
+import Pagination from "@/components/Pagination.vue";
 const router = useRouter();
 
-const navItems = ['民间文学', '传统戏剧', '传统美术', '传统医药', '传统音乐'];
+const navItems = ['传统技艺', '民俗', '传统戏剧', '传统舞蹈', '曲艺'];
 const activeItem = ref(navItems[0]);
-// 计算属性来获取 activeItem 的索引
-const activeItemIndex = computed(() => navItems.indexOf(activeItem.value));
-// 定义每个分类的图片集合
-const imagesByCategory = ref([]);
+import jybg1 from '@/assets/heritage/jiyi/1.png';
+import jybg2 from '@/assets/heritage/jiyi/2.jpg';
+import jybg3 from '@/assets/heritage/jiyi/3.jpg';
+import jybg4 from '@/assets/heritage/jiyi/4.jpg';
+import jybg5 from '@/assets/heritage/jiyi/5.jpg';
+import jybg6 from '@/assets/heritage/jiyi/6.webp';
+import jybg7 from '@/assets/heritage/jiyi/7.webp';
+import jybg8 from '@/assets/heritage/jiyi/8.webp';
+import jybg9 from '@/assets/heritage/jiyi/9.webp';
+import jybg10 from '@/assets/heritage/jiyi/10.webp';
+import jybg11 from '@/assets/heritage/jiyi/11.webp';
+import jybg12 from '@/assets/heritage/jiyi/12.webp';
 
-// 分页器相关内容
-const pageSize = ref(6)
-const currentPage = ref(1)
-const total = ref(10)
-const handleCurrentChange = () => {
-  getUserNonHeritagePageApi()
-}
+import msbg1 from '@/assets/heritage/minsu/1.jpg';
+import msbg2 from '@/assets/heritage/minsu/2.webp';
+import msbg3 from '@/assets/heritage/minsu/3.webp';
+import msbg4 from '@/assets/heritage/minsu/4.webp';
+import msbg5 from '@/assets/heritage/minsu/5.webp';
+import msbg6 from '@/assets/heritage/minsu/6.webp';
+
+// 定义每个分类的图片集合
+const imagesByCategory = {
+  '传统技艺': [
+    {src: jybg1, alt: '手工陶瓷', caption: '手工陶瓷'},
+    {src: jybg2, alt: '木雕艺术', caption: '木雕艺术'},
+    {src: jybg3, alt: '织锦工艺', caption: '织锦工艺'},
+    { src: jybg4, alt: '剪纸艺术', caption: '剪纸艺术' },
+    { src: jybg5, alt: '书法艺术', caption: '书法艺术' },
+    { src: jybg6, alt: '古琴', caption: '古琴' },
+    {src: jybg7, alt: '传统面塑', caption: '传统面塑'},
+    {src: jybg8, alt: '漆器工艺', caption: '漆器工艺'},
+    {src: jybg9, alt: '竹编艺术', caption: '竹编艺术'},
+    {src: jybg10, alt: '传统年画', caption: '传统年画'},
+    {src: jybg11, alt: '刺绣工艺', caption: '刺绣工艺'},
+    {src: jybg12, alt: '传统铜艺', caption: '传统铜艺'}
+  ],
+  '民俗': [
+    { src: msbg1, alt: '春节', caption: '春节' },
+    { src: msbg2, alt: '端午节', caption: '端午节' },
+    { src: msbg3, alt: '中秋节', caption: '中秋节' },
+    { src: msbg4, alt: '元宵节', caption: '元宵节' },
+    { src: msbg5, alt: '七夕节', caption: '七夕节' },
+    { src: msbg6, alt: '重阳节', caption: '重阳节' }
+  ],
+  '传统戏剧': [
+    { src: 'path/to/opera1.jpg', alt: '京剧', caption: '京剧' },
+    { src: 'path/to/opera2.jpg', alt: '越剧', caption: '越剧' },
+    { src: 'path/to/opera3.jpg', alt: '黄梅戏', caption: '黄梅戏' },
+    { src: 'path/to/opera4.jpg', alt: '川剧', caption: '川剧' },
+    { src: 'path/to/opera5.jpg', alt: '豫剧', caption: '豫剧' },
+    { src: 'path/to/opera6.jpg', alt: '评剧', caption: '评剧' }
+  ],
+  '传统舞蹈': [
+    { src: 'path/to/dance1.jpg', alt: '孔雀舞', caption: '孔雀舞' },
+    { src: 'path/to/dance2.jpg', alt: '扇子舞', caption: '扇子舞' },
+    { src: 'path/to/dance3.jpg', alt: '秧歌舞', caption: '秧歌舞' },
+    { src: 'path/to/dance4.jpg', alt: '腰鼓舞', caption: '腰鼓舞' },
+    { src: 'path/to/dance5.jpg', alt: '龙舞', caption: '龙舞' },
+    { src: 'path/to/dance6.jpg', alt: '狮子舞', caption: '狮子舞' }
+  ],
+  '曲艺': [
+    { src: 'path/to/crosstalk.jpg', alt: '相声', caption: '相声' },
+    { src: 'path/to/storytelling.jpg', alt: '评书', caption: '评书' },
+    { src: 'path/to/clapperTalk.jpg', alt: '快板', caption: '快板' },
+    { src: 'path/to/balladSinging.jpg', alt: '大鼓', caption: '大鼓' },
+    { src: 'path/to/comicDialogue.jpg', alt: '双簧', caption: '双簧' },
+    { src: 'path/to/improvisationalTalk.jpg', alt: '即兴说唱', caption: '即兴说唱' }
+  ]
+};
+// 获取当前激活分类的图片
+// const currentImages = computed(() => imagesByCategory[activeItem.value] || []);
+
 // 点击图片跳转到详情页
 const goToDetail = (caption) => {
   const path = `/menu/heritage/heritageDetail/${encodeURIComponent(caption)}`;
   router.push(path);
 };
 
-// 调取接口，获取分页数据
-const userNonHeritagePageData = ref(null)
-const getUserNonHeritagePageApi = async () => {
-  userNonHeritagePageData.value = await userNonHeritagePageApi(currentPage.value, pageSize.value, activeItemIndex.value + 1);
-  total.value = userNonHeritagePageData.value.data.data.total
-  imagesByCategory.value = userNonHeritagePageData.value.data.data.records
-
+// 分页相关
+// 当前页码
+const currentPage = ref(1);
+// 每页显示的条目数
+const pageSize = ref(6);
+// 获取当前激活分类的图片
+const currentImages = computed(() => {
+  const images = imagesByCategory[activeItem.value] || [];
+  console.log(images);
+  const start = (currentPage.value - 1) * pageSize.value;
+  const end = start + pageSize.value;
+  return images.slice(start, end);
+});
+console.log(currentImages);
+// 监听路由变化和激活分类变化，更新当前页码
+watch(activeItem, () => {
+  currentPage.value = 1;
+});
+// 处理分页器的更改事件
+function handlePageChange(newPage) {
+  currentPage.value = newPage;
 }
-onMounted(() => {
-  getUserNonHeritagePageApi()
-})
-watch(activeItemIndex, () => {
-  getUserNonHeritagePageApi()
-  console.log(activeItemIndex.value + 1)
-  console.log(userNonHeritagePageData.value.data.data)
-  console.log(imagesByCategory.value)
-})
 </script>
 
 <template>
+
   <div class="heritage-page">
     <header class="header">
       <div class="logo">文化遗产</div>
@@ -62,35 +131,38 @@ watch(activeItemIndex, () => {
       <h1 class="title">HERITAGE.</h1>
       <p class="subtitle">名录代表 -- {{ activeItem }}</p>
       <div class="gallery">
-        <div class="gallery-item" v-for="(image, index) in imagesByCategory" :key="index"
-             @click="() => goToDetail(image.id)">
-          <img :src="image.imgUrl" :alt="image.alt"/>
+        <div class="gallery-item" v-for="(image, index) in currentImages" :key="index"
+             @click="() => goToDetail(image.caption)">
+          <img :src="image.src" :alt="image.alt"/>
           <div class="caption">
-           {{ image.name }}
+            {{ image.caption }}
           </div>
         </div>
       </div>
       <div class="pagination-container">
         <el-pagination
-            v-model:current-page="currentPage"
-            v-model:page-size="pageSize"
-            :total="total"
+            :page-size="pageSize"
+            :current-page="currentPage"
+            @current-change="handlePageChange"
             background
             layout="prev, pager, next"
-            @current-change="handleCurrentChange"
+            :total="66"
         />
       </div>
     </main>
-
   </div>
-
 </template>
 
 
 <style lang="scss" scoped>
 .heritage-page {
+  background-image: url("@/assets/img_1.png"); /* 设置背景图片 */
+  background-size: cover; /* 背景图片覆盖整个元素 */
+  background-repeat: no-repeat; /* 背景图片不重复 */
+  background-position: center center; /* 背景图片居中显示 */
   text-align: center;
   padding: 0 80px;
+  overflow: hidden; // 确保伪元素不会超出主元素的范围
 }
 .header {
   display: flex;
@@ -142,7 +214,9 @@ watch(activeItemIndex, () => {
     position: relative;
     img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      border-radius: 50px;
+
     }
     .caption {
       position: absolute;

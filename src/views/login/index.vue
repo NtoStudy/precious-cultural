@@ -80,7 +80,7 @@ const login = async () => {
   <div class="login-container">
     <div class="login-box">
       <div class="login-container_left">
-        <img src="../../assets/bg1.jpg" alt=""/>
+        <img src="../../assets/login/bg.jpg" alt=""/>
       </div>
       <div class="login-container_right">
         <el-tabs class="top-tab" v-model="activeName" :stretch="true">
