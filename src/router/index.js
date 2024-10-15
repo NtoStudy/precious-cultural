@@ -46,7 +46,7 @@ const routes = [
         ]
     },
     {
-        path: '/menu/heritage/heritageDetail/:id',
+        path: '/menu/heritage/heritageDetail/:heritageId',
         name: 'heritageDetail',
         component: () => import('@/views/heritage/heritageDetail/index.vue'),
         props: true,
@@ -55,6 +55,12 @@ const routes = [
         path: '/menu/forum/forumDetail/:articleId',
         name: 'forumDetail',
         component: () => import('@/views/forum/forumDetail/index.vue'),
+        props: true,
+    },
+    {
+        path: '/menu/fictitious/fictitiousDetail/:fictitiousId',
+        name: 'fictitiousDetail',
+        component: () => import('@/views/fictitious/fictitiousDetail/index.vue'),
         props: true,
     },
 ]

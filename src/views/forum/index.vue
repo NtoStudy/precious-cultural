@@ -286,146 +286,155 @@ function goToArticleDetail(article, event) {
 <template>
 
   <div class="article-list-container">
-    <div class="article-left">
-      <el-menu
-          mode="vertical"
-          :default-active="activeIndex"
-          class="image-navigation"
-          background-color="#fff"
-          text-color="#3f7ef7"
-      >
-        <el-menu-item index="1" @click="handleMenuClick('1')">传统技艺</el-menu-item>
-        <el-menu-item index="2" @click="handleMenuClick('2')">民俗</el-menu-item>
-        <el-menu-item index="3" @click="handleMenuClick('3')">传统戏剧</el-menu-item>
-        <el-menu-item index="4" @click="handleMenuClick('4')">传统舞蹈</el-menu-item>
-        <el-menu-item index="5" @click="handleMenuClick('5')">曲艺</el-menu-item>
-      </el-menu>
-    </div>
-    <div class="article-right">
-      <el-row :gutter="20" justify="center">
-        <el-col :span="22">
-          <el-card v-for="article in filteredArticles"
-                   :key="article.id"
-                   @click="goToArticleDetail(article, $event)"
-                   class="article-card"
-          >
-            <div class="article-content">
-              <img :src="article.image" alt="Article Image" class="article-image">
-              <div class="article-info">
-                <h2 class="article-title">{{ article.title }}</h2>
-                <p class="article-content">{{ article.content }}</p>
-                <div class="article-actions">
-                  <el-button
-                      type="primary"
-                      :class="{'liked': article.liked, 'unliked': !article.liked}"
-                      @click="likeArticle(article)"
-                  >
-                    {{ article.liked ? '已赞' : '点赞' }} {{ article.likeNumber }}
-                  </el-button>
-                  <span class="article-author">作者: {{ article.author }}</span>
+    <div class="article-container">
+      <div class="article-left">
+        <el-menu
+            mode="vertical"
+            :default-active="activeIndex"
+            class="image-navigation"
+            background-color="#fff"
+            text-color="#3f7ef7"
+        >
+          <el-menu-item index="1" @click="handleMenuClick('1')">传统技艺</el-menu-item>
+          <el-menu-item index="2" @click="handleMenuClick('2')">民俗</el-menu-item>
+          <el-menu-item index="3" @click="handleMenuClick('3')">传统戏剧</el-menu-item>
+          <el-menu-item index="4" @click="handleMenuClick('4')">传统舞蹈</el-menu-item>
+          <el-menu-item index="5" @click="handleMenuClick('5')">曲艺</el-menu-item>
+        </el-menu>
+      </div>
+      <div class="article-right">
+        <el-row :gutter="20" justify="center">
+          <el-col :span="22">
+            <el-card v-for="article in filteredArticles"
+                     :key="article.id"
+                     @click="goToArticleDetail(article, $event)"
+                     class="article-card"
+            >
+              <div class="article-content">
+                <img :src="article.image" alt="Article Image" class="article-image">
+                <div class="article-info">
+                  <h2 class="article-title">{{ article.title }}</h2>
+                  <p class="article-content">{{ article.content }}</p>
+                  <div class="article-actions">
+                    <el-button
+                        type="primary"
+                        :class="{'liked': article.liked, 'unliked': !article.liked}"
+                        @click="likeArticle(article)"
+                    >
+                      {{ article.liked ? '已赞' : '点赞' }} {{ article.likeNumber }}
+                    </el-button>
+                    <span class="article-author">作者: {{ article.author }}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-      <div class="pagination-container">
-        <el-pagination
-            :page-size="pageSize"
-            :current-page="currentPage"
-            @current-change="handlePageChange"
-            background
-            layout="prev, pager, next"
-            :total="66"
-        />
+            </el-card>
+          </el-col>
+        </el-row>
+        <div class="pagination-container">
+          <el-pagination
+              :page-size="pageSize"
+              :current-page="currentPage"
+              @current-change="handlePageChange"
+              background
+              layout="prev, pager, next"
+              :total="66"
+          />
+        </div>
       </div>
     </div>
+
   </div>
 </template>
 
 
 <style scoped lang="scss">
 .article-list-container {
-  max-width: 1200px;
-  display: flex;
-  margin: auto;
-  padding: 20px;
-  text-align: center;
+  background-image: url('@/assets/img_1.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 
-  .article-left {
-    margin: 20px 0;
-    width: 20%;
-
-    .image-navigation .el-menu-item {
-      transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */
-    }
-
-    .image-navigation .el-menu-item:hover {
-      background-color: #f5f5f5; /* 悬停时的背景颜色 */
-      color: #3f7ef7; /* 悬停时的文字颜色 */
-    }
-
-    .image-navigation .el-menu-item.is-active {
-      background-color: #ebf2fe; /* 激活项的背景颜色 */
-    }
-
-    /* 如果你想要悬停效果也改变图标的颜色，可以添加以下样式 */
-    .image-navigation .el-menu-item:hover i {
-      color: #3f7ef7; /* 悬停时的图标颜色 */
-    }
-  }
-
-  .article-right {
-    .article-card {
-      display: flex;
-      align-items: center;
+  .article-container {
+    max-width: 1200px;
+    display: flex;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+    .article-left {
       margin: 20px 0;
-      width: 900px;
+      width: 20%;
 
-      .article-content {
-        max-height: 150px; /* 设置最大高度为100px，你可以根据需要调整这个值 */
-        overflow: hidden; /* 隐藏超出部分 */
-        text-overflow: ellipsis; /* 添加省略号 */
+      .image-navigation .el-menu-item {
+        transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */
+      }
+
+      .image-navigation .el-menu-item:hover {
+        background-color: #f5f5f5; /* 悬停时的背景颜色 */
+        color: #3f7ef7; /* 悬停时的文字颜色 */
+      }
+
+      .image-navigation .el-menu-item.is-active {
+        background-color: #ebf2fe; /* 激活项的背景颜色 */
+      }
+
+      /* 如果你想要悬停效果也改变图标的颜色，可以添加以下样式 */
+      .image-navigation .el-menu-item:hover i {
+        color: #3f7ef7; /* 悬停时的图标颜色 */
+      }
+    }
+
+    .article-right {
+      .article-card {
         display: flex;
+        align-items: center;
+        margin: 20px 0;
+        width: 900px;
 
-        .article-image {
-          width: 200px;
-          height: 150px;
-          object-fit: cover;
-          margin-right: 20px;
-        }
+        .article-content {
+          max-height: 150px; /* 设置最大高度为100px，你可以根据需要调整这个值 */
+          overflow: hidden; /* 隐藏超出部分 */
+          text-overflow: ellipsis; /* 添加省略号 */
+          display: flex;
 
-        .article-info {
-          position: relative;
-          flex: 1;
-
-          .article-title {
-            margin: 10px 0;
-            font-size: 18px;
-            font-weight: 600;
+          .article-image {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            margin-right: 20px;
           }
 
-          p {
-            margin-bottom: 10px;
-          }
+          .article-info {
+            position: relative;
+            flex: 1;
 
-          .article-actions {
-            display: flex;
-            align-items: center;
-            position: absolute;
-            justify-content: space-between;
-            bottom: 0;
-            left: 0; /* 定位到左边界 */
-            right: 0; /* 定位到右边界 */
-            .article-author {
-              margin-left: 10px;
+            .article-title {
+              margin: 10px 0;
+              font-size: 18px;
+              font-weight: 600;
+            }
+
+            p {
+              margin-bottom: 10px;
+            }
+
+            .article-actions {
+              display: flex;
+              align-items: center;
+              position: absolute;
+              justify-content: space-between;
+              bottom: 0;
+              left: 0; /* 定位到左边界 */
+              right: 0; /* 定位到右边界 */
+              .article-author {
+                margin-left: 10px;
+              }
             }
           }
         }
       }
     }
-  }
 
+  }
 }
 
 .pagination-container {

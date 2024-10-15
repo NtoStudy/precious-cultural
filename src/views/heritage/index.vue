@@ -87,7 +87,7 @@ const goToDetail = (caption) => {
   router.push({
     name: 'heritageDetail',
     params: {
-      id: caption
+      heritageId: caption
     }
   })
 };
@@ -209,7 +209,6 @@ function handlePageChange(newPage) {
   font-size: 18px;
   color: gray;
 }
-
 .gallery {
   display: flex;
   justify-content: center;
@@ -217,7 +216,6 @@ function handlePageChange(newPage) {
   gap: 10px;
   margin: 40px 0;
   padding: 0 40px;
-
   .gallery-item {
     border: 1px solid black;
     border-radius: 50px;
