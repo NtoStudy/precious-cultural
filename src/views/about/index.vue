@@ -53,6 +53,10 @@ import { ElContainer, ElHeader, ElMain, ElTimeline, ElTimelineItem } from 'eleme
   flex-direction: column;
   min-height: 100vh;
   margin: 0 40px;
+  background-image: url("@/assets/aboutbg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
   .main-content {

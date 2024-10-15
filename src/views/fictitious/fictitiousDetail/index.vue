@@ -1,5 +1,5 @@
 <template>
-  <last-page/>
+<!--  <last-page/>-->
   <div class="vr">
     <!-- 全景图容器 -->
     <div id="viewer"></div>
@@ -11,7 +11,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { Viewer } from 'photo-sphere-viewer';
 import 'photo-sphere-viewer/dist/photo-sphere-viewer.css';
-import LastPage from "@/components/lastPage.vue";
+// import LastPage from "@/components/lastPage.vue";
 // 使用 useRoute 获取路由信息
 const route = useRoute();
 // 从路由查询参数中获取 imgUrl
@@ -32,7 +32,7 @@ const initViewer = () => {
       ],
       size: {
         width: '100%',
-        height: ' 90vh'
+        height: '100vh'
       }
     });
   }
@@ -48,7 +48,7 @@ onMounted(() => {
 <style scoped>
 .vr {
   position: relative;
-
   overflow: hidden;
 }
+
 </style>

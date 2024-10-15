@@ -194,6 +194,10 @@ const login = async () => {
   height: 100vh;
   align-items: center;
   justify-content: center;
+  background-image: url('@/assets/aboutbg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 
   .login-box {
     display: flex;
@@ -225,6 +229,7 @@ const login = async () => {
     right: 100px;
     top: 50%;
     border: 1px solid #ccc;
+    background-color: #fff;
 
     .user-name {
       text-align: center;

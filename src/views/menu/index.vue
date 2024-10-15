@@ -98,11 +98,13 @@ const logout = () => {
   background-color: rgba(255, 255, 255) !important;
   .left-header{
     line-height: 60px;
-    font-size: 23px;
+    font-size: 28px;
     margin-left: 80px;
+    font-family: "STXingkai", "华文行楷", "Xingkai SC", "KaiTi",serif;
   }
   .left-header-text{
     line-height: 60px;
+    font-size: 16px;
   }
   .right-header{
     display: flex;

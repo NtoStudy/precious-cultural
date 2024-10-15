@@ -28,15 +28,18 @@ str1.value = str
 
 <style lang="scss" scoped>
 .article-container {
-  height: 100vh;
+  background-image: url("@/assets/detailbg.png");
+  background-size: cover;
+  background-position: center;
+
   .article-header {
     padding: 20px;
     text-align: center;
-
     h1 {
-      font-size: 24px;
+      font-size: 26px;
       margin-top: 20px;
       margin-bottom: 20px;
+      font-family: "STLiti", "华文隶书", sans-serif; /* 设置为华文隶书 */
     }
 
     .article-meta {

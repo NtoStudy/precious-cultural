@@ -33,9 +33,9 @@ import LastPage from "@/components/lastPage.vue";
 // 定义每个分类的图片集合
 const imagesByCategory = {
   '传统技艺': [
-    {src: jybg1, alt: '手工陶瓷', caption: '1'},
-    {src: jybg2, alt: '木雕艺术', caption: '2'},
-    {src: jybg3, alt: '织锦工艺', caption: '3'},
+    {src: jybg1, alt: '手工陶瓷', caption: '手工陶瓷'},
+    {src: jybg2, alt: '木雕艺术', caption: '木雕艺术'},
+    {src: jybg3, alt: '织锦工艺', caption: '织锦工艺'},
     {src: jybg4, alt: '剪纸艺术', caption: '剪纸艺术'},
     {src: jybg5, alt: '书法艺术', caption: '书法艺术'},
     {src: jybg6, alt: '古琴', caption: '古琴'},
