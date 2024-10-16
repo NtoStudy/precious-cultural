@@ -1,3 +1,58 @@
+<script setup>
+import { ref } from 'vue';
+import router from '@/router/index.js';
+
+const currentPage = ref(1);
+const pageSize = ref(6);
+const total = ref(66);
+
+function handlePageChange(newPage) {
+  currentPage.value = newPage;
+}
+
+const fictitiousList = [
+  {
+    id: 1,
+    imgUrl: 'https://takeaway-hei.oss-cn-hangzhou.aliyuncs.com/qjt.jpg',
+    description: '贵州大娄山'
+  },
+  {
+    id: 2,
+    imgUrl: 'https://web-frame-spring.oss-cn-hangzhou.aliyuncs.com/1.jpg',
+    description: '北京故宫'
+  },
+  {
+    id: 3,
+    imgUrl: 'https://web-frame-spring.oss-cn-hangzhou.aliyuncs.com/2.jpg',
+    description: '湖南吊脚楼'
+
+  },
+  {
+    id: 4,
+    imgUrl: 'https://web-frame-spring.oss-cn-hangzhou.aliyuncs.com/3.jpg',
+    description: '内蒙古乌兰察布'
+  },
+  {
+    id: 5,
+    imgUrl: 'https://web-frame-spring.oss-cn-hangzhou.aliyuncs.com/4.jpg',
+    description: '贵州乌蒙山'
+  },
+  {
+    id: 6,
+    imgUrl: 'https://web-frame-spring.oss-cn-hangzhou.aliyuncs.com/5.jpg',
+    description: '广西壮族自治区'
+  }
+]
+function goToDetail(item) {
+  router.push({
+    name: 'fictitiousDetail',
+    params: { fictitiousId: encodeURIComponent(item.id) },
+    query: { imgUrl: item.imgUrl } // 将 imgUrl 作为 query 参数传递
+  });
+}
+
+
+</script>
 <template>
   <div class="fictitious-container">
     <h2 class="header-title">vr展厅</h2>
@@ -29,58 +84,6 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import router from '@/router/index.js';
-
-const currentPage = ref(1);
-const pageSize = ref(6);
-const total = ref(66);
-
-function handlePageChange(newPage) {
-  currentPage.value = newPage;
-}
-
-const fictitiousList = [
-  {
-    id: 1,
-    imgUrl: 'https://takeaway-hei.oss-cn-hangzhou.aliyuncs.com/qjt.jpg',
-    description: '贵州'
-  },
-  {
-    id: 2,
-    imgUrl: 'https://web-frame-spring.oss-cn-hangzhou.aliyuncs.com/1.jpg',
-    description: '这是一家休闲。'
-  },
-  {
-    id: 3,
-    imgUrl: 'https://web-frame-spring.oss-cn-hangzhou.aliyuncs.com/2.jpg',
-
-  },
-  {
-    id: 4,
-    imgUrl: 'https://web-frame-spring.oss-cn-hangzhou.aliyuncs.com/3.jpg',
-  },
-  {
-    id: 5,
-    imgUrl: 'https://web-frame-spring.oss-cn-hangzhou.aliyuncs.com/4.jpg',
-  },
-  {
-    id: 6,
-    imgUrl: 'https://web-frame-spring.oss-cn-hangzhou.aliyuncs.com/5.jpg',
-  }
-]
-function goToDetail(item) {
-  router.push({
-    name: 'fictitiousDetail',
-    params: { fictitiousId: encodeURIComponent(item.id) },
-    query: { imgUrl: item.imgUrl } // 将 imgUrl 作为 query 参数传递
-  });
-}
-
-
-</script>
-
 <style lang="scss" scoped>
 .fictitious-container {
   background-image: url('@/assets/img_1.png');
@@ -105,10 +108,17 @@ function goToDetail(item) {
       flex-wrap: wrap;
       justify-content: space-evenly;
       width: 100%;
-
+      .overlay{
+        position: absolute;
+        bottom: 10px;
+        left: 25%;
+        font-size: 18px;
+        font-weight: bold;
+      }
       .el-card {
         --el-card-padding: 0px;
       }
+
 
       .elCard-item {
         width: 28%;
@@ -116,13 +126,16 @@ function goToDetail(item) {
         border-radius: 20px;
         margin-bottom: 20px;
         cursor: pointer;
+        position: relative;
+
+        img {
+          width: 100%;
+          height: 100%;
+          transition: transform 0.5s ease;
+        }
 
       }
-      img {
-        width: 100%;
-        height: 100%;
-        transition: transform 0.5s ease;
-      }
+
 
     }
   }

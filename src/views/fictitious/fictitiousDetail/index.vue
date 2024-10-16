@@ -11,7 +11,6 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { Viewer } from 'photo-sphere-viewer';
 import 'photo-sphere-viewer/dist/photo-sphere-viewer.css';
-// import LastPage from "@/components/lastPage.vue";
 // 使用 useRoute 获取路由信息
 const route = useRoute();
 // 从路由查询参数中获取 imgUrl
