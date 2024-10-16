@@ -23,9 +23,6 @@ import quyi2 from '@/assets/lt/quyi/2.webp';
 import quyi3 from '@/assets/lt/quyi/3.webp';
 import quyi4 from '@/assets/lt/quyi/4.webp';
 
-
-
-
 const articles = ref([
   {
     id: 1,
@@ -319,7 +316,7 @@ function goToArticleDetail(article, event) {
                     <el-button
                         type="primary"
                         :class="{'liked': article.liked, 'unliked': !article.liked}"
-                        @click="likeArticle(article)"
+                        @click.stop="likeArticle(article)"
                     >
                       {{ article.liked ? '已赞' : '点赞' }} {{ article.likeNumber }}
                     </el-button>

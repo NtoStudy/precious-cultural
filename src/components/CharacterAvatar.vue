@@ -1,6 +1,6 @@
 <template>
   <div class="character-avatar" @click="openDialog">
-    <el-avatar :src=characterImageUrl style="width: 80px; height: 80px;"/>
+    <el-avatar :src=characterImageUrl style="width: 80px; height: 80px;" title="点我可以进行AI对话哦"/>
   </div>
 </template>
 
