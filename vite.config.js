@@ -12,15 +12,15 @@ export default defineConfig({
       patterns: []
     }
   },
-  // server: {
-  //   proxy: {
-  //     '^/api': {
-  //       target: "http://192.168.43.174:8080", //目标源，目标服务器，真实请求地址
-  //       changeOrigin: true, //支持跨域
-  //
-  //     }
-  //   }
-  // },
+  server: {
+    proxy: {
+      '^/api': {
+        // target: "http://maddfu.natappfree.cc",
+        changeOrigin: true, //支持跨域
+
+      }
+    }
+  },
   resolve:{
     alias: {
       '@': pathResolve('./src')

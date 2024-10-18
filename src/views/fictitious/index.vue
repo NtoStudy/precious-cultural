@@ -122,7 +122,7 @@ function goToDetail(item) {
 
       .elCard-item {
         width: 28%;
-        height: 220px;
+        height: 210px;
         border-radius: 20px;
         margin-bottom: 20px;
         cursor: pointer;

@@ -61,3 +61,5 @@ export const userInheritorsByIdApi = (id)=> requests({
     url:`/user/inheritors/${id}`,
     method: 'get'
 })
+
+

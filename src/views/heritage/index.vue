@@ -185,6 +185,7 @@ function handlePageChange(newPage) {
   position: absolute;
   right: 40px;
 
+
   ul {
     list-style: none;
     display: flex;

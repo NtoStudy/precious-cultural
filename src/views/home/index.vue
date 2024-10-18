@@ -56,6 +56,9 @@ function prevItem() {
   currentTitle.value = data[currentIndex].title;
   currentText.value = data[currentIndex].text;
 }
+
+
+
 </script>
 
 <style lang="scss" scoped>
