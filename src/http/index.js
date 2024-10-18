@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const requests = axios.create({
-    // baseURL: 'http://192.168.43.174:8080',
-    baseURL: 'http://localhost:8080',
+    // baseURL: 'http://maddfu.natappfree.cc',
+    // baseURL: 'http://localhost:8080',
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json'

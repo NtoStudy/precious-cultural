@@ -204,7 +204,7 @@ const login = async () => {
     justify-content: center;
     align-items: center;
     position: relative;
-    height: 700px;
+    height: 500px;
     width: 1200px;
 
     .login-container_left {
@@ -240,9 +240,8 @@ const login = async () => {
     }
 
     .top-tab {
-      margin: 20px;
       font-size: 30px;
-      margin-top: 70px;
+      margin: 70px 20px 20px;
     }
 
     .el-card {
@@ -257,13 +256,14 @@ const login = async () => {
         border-left: none;
 
         :deep(.el-input__inner) {
-          background: #f4f5fb;
+          background: #fff;
         }
 
       }
 
       input.el-input__inner {
         border-left: none;
+
       }
 
       .el-checkbox {
@@ -276,6 +276,7 @@ const login = async () => {
 
       .user-Count {
         border: none;
+        background-color: #ffffff;
       }
     }
   }
