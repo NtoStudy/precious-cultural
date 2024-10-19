@@ -12,15 +12,15 @@ export default defineConfig({
       patterns: []
     }
   },
-  server: {
-    proxy: {
-      '^/api': {
-        // target: "http://maddfu.natappfree.cc",
-        changeOrigin: true, //支持跨域
-
-      }
-    }
-  },
+  // server: {
+  //   proxy: {
+  //     '^/api': {
+  //       target: "http://maddfu.natappfree.cc",
+  //       changeOrigin: true, //支持跨域
+  //
+  //     }
+  //   }
+  // },
   resolve:{
     alias: {
       '@': pathResolve('./src')
