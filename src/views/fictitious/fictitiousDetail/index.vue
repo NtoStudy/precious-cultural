@@ -14,14 +14,15 @@ import 'photo-sphere-viewer/dist/photo-sphere-viewer.css';
 // 使用 useRoute 获取路由信息
 const route = useRoute();
 // 从路由查询参数中获取 imgUrl
-const imgUrl = ref(route.query.imgUrl);
+const url = ref(route.query.url);
+
 
 // 初始化全景图的函数
 const initViewer = () => {
-  if (imgUrl.value) {
+  if (url.value) {
     const viewer = new Viewer({
       container: document.querySelector('#viewer'),
-      panorama: imgUrl.value,
+      panorama: url.value,
       navbar: [
         'autorotate',
         'zoom',
