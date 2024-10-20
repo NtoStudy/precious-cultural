@@ -3,18 +3,17 @@ import { reactive, ref} from 'vue'
 // 导入pinia的useStore
 import { useUserInfoStore } from '@/store/modules/user'
 import {useRoute} from "vue-router";
+import router from "@/router/index.js";
 const userStore = useUserInfoStore()
 // 实现router切换路由信息
 const activeIndex = ref('home')
 const route = useRoute();
-// console.log(route)
 if(route.name){
   activeIndex.value = route.name;
 }
-
 // 实现默认头像
 const state = reactive({
-  circleUrl: 'https://takeaway-hei.oss-cn-hangzhou.aliyuncs.com/tx.png',
+  circleUrl: 'https://takeaway-hei.oss-cn-hangzhou.aliyuncs.com/tx.png' || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
 })
 const isDropdownVisible = ref(false);
 const toggleDropdown = () => {
@@ -23,6 +22,14 @@ const toggleDropdown = () => {
 // 调用pinia的clearUserInfo方法实现退出登录
 const logout = () => {
   userStore.clearUserInfo()
+}
+// 实现个人中心路由跳转
+const goToUserManage = () => {
+  if(userStore.userInfo.username){
+    router.push({name: 'userManage', params: {infoId: userStore.userInfo.username}})
+  }else{
+    router.push('/login')
+  }
 }
 </script>
 
@@ -50,11 +57,42 @@ const logout = () => {
           <el-menu-item index="forum">论坛</el-menu-item>
           <el-menu-item index="about">关于</el-menu-item>
         </el-menu>
-        <div class="header-right-content">
+        <div class="header-right-content" >
           <el-icon :size="24">
             <ChatLineSquare/>
           </el-icon>
-          <el-avatar :size="24" :src="state.circleUrl"/>
+          <el-popover placement="bottom" :width="240" trigger="hover">
+            <template #reference>
+              <el-avatar slot="reference" :size="26" :src="state.circleUrl" />
+            </template>
+            <template #default>
+              <div slot="header" style="text-align: center; font-size: 18px;">
+                <p>{{ userStore.userInfo ? userStore.userInfo.username : '未登录' }}</p>
+              </div>
+              <el-divider style="margin: 10px 0;"/>
+              <div slot="body" style="display: flex; justify-content: space-around;">
+                <div>
+                  <p style="font-weight: bold; font-size: 20px;">100</p>
+                  <p style="text-align: center; font-size: 14px;">粉丝</p>
+                </div>
+                <div>
+                  <p style="font-weight: bold; font-size: 20px;">100</p>
+                  <p style="text-align: center; font-size: 14px;">关注</p>
+                </div>
+                <div>
+                  <p style="font-weight: bold; font-size: 20px;">100</p>
+                  <p style="text-align: center; font-size: 14px;">获赞</p>
+                </div>
+              </div>
+              <el-divider style="margin: 10px 0;"/>
+              <div slot="footer">
+                <div style="display: flex; cursor: pointer; " @click="goToUserManage()">
+                  <el-icon size="20"  style="margin-left: 20px;margin-right: 10px;"><User /></el-icon>
+                  <p style="font-size: 16px;">个人中心</p>
+                </div>
+              </div>
+            </template>
+          </el-popover>
           <el-dropdown trigger="click" :visible.sync="isDropdownVisible" @visible-change="toggleDropdown">
               <span class="el-dropdown-link">
                 设置
@@ -62,7 +100,6 @@ const logout = () => {
             <template #dropdown>
               <el-dropdown-menu :aria-hidden="!isDropdownVisible">
                 <el-dropdown-item>设置账号</el-dropdown-item>
-                <el-dropdown-item>更改头像</el-dropdown-item>
                 <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -112,12 +149,16 @@ const logout = () => {
     .header-right-content {
       margin-left: 100px;
       margin-right: 20px;
-      width: 150px;
+      width: 180px;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-evenly;
       align-items: center;
       .el-dropdown-link{
         font-size: 16px;
+      }
+      .user-info{
+        display: flex;
+
       }
     }
   }
