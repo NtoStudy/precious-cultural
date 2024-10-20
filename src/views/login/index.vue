@@ -65,11 +65,11 @@ const switchToLogin = () => {
 // 登录
 const login = async () => {
   const UserLogin = await userLoginApi(LoginRuleForm.value.LoginUserName, LoginRuleForm.value.LoginPassword)
+  console.log(UserLogin)
   if(UserLogin.data.code === 1){
     const userStore = useUserInfoStore()
     userStore.setUserInfo(UserLogin.data.data)
     ElMessage.success('登录成功')
-    // console.log(UserLogin.data)
     router.push('/menu')
   }
 }

@@ -1,30 +1,44 @@
+<script setup>
+import {ElDivider} from 'element-plus'
+import {defineProps, onMounted, ref} from 'vue';
+import {userNonHeritageByIdApi} from "@/api/index.js";
+
+const props = defineProps({
+  heritageId: String
+});
+
+const userNonHeritageData = ref({})
+const userNonHeritageById = async () => {
+   const res = await userNonHeritageByIdApi(props.heritageId);
+  userNonHeritageData.value = res.data.data
+   console.log(userNonHeritageData.value)
+}
+onMounted(()=>{
+  userNonHeritageById()
+})
+
+</script>
+
 <template>
-  <last-page/>
   <div class="article-container">
     <div class="article-header">
-      <h1>田青：幽兰春晓 古琴复兴
-        ——《幽兰春晓——“古琴艺术”申遗二十周年纪念文集》序</h1>
+      <h1>田青：幽兰春晓 古琴复兴 ——《幽兰春晓——“古琴艺术”申遗二十周年纪念文集》序</h1>
       <div class="article-meta">
-        <span>来源：中国艺术报</span>
-        <span>作者：田青</span>
+        <span>诞生时间：{{userNonHeritageData.inheritanceBirth}}</span>
+        <span>项目传承单位：{{userNonHeritageData.protectionUnit}}</span>
+        <span>级别：{{userNonHeritageData.level}}</span>
+      </div>
+      <div class="article-meta">
+        <span>项目分布：{{userNonHeritageData.declaringArea}}</span>
+        <span>申报单位：{{userNonHeritageData.geographicDistribution}}</span>
       </div>
       <el-divider/>
     </div>
-    <div class="article-content" v-html="str1">
-    </div>
+
 
   </div>
 
 </template>
-
-<script setup>
-import {ElDivider} from 'element-plus'
-import {str} from "./content.js"
-import {ref} from "vue";
-import LastPage from "@/components/lastPage.vue";
-const str1 = ref('')
-str1.value = str
-</script>
 
 <style lang="scss" scoped>
 .article-container {
@@ -57,17 +71,7 @@ str1.value = str
       line-height: 1.6;
     }
   }
-  .article-content{
-    padding:0 100px;
-    font-family: Arial, sans-serif; /* 设置字体 */
-    line-height: 1.8; /* 设置行高 */
-    letter-spacing: 1px; /* 增加字间距 */
-    img{
-      height: 200px;
-      width: 400px;
-      border: 1px solid #ddd;
-    }
-  }
+
 }
 
 

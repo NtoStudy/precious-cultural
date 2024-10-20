@@ -42,15 +42,15 @@ const routes = [
                 path: 'about',
                 component: () => import('@/views/about/index.vue')
             },
-
+            {
+                path: '/menu/heritage/heritageDetail/:heritageId',
+                name: 'heritageDetail',
+                component: () => import('@/views/heritage/heritageDetail/index.vue'),
+                props: true,
+            },
         ]
     },
-    {
-        path: '/menu/heritage/heritageDetail/:heritageId',
-        name: 'heritageDetail',
-        component: () => import('@/views/heritage/heritageDetail/index.vue'),
-        props: true,
-    },
+
     {
         path: '/menu/forum/forumDetail/:articleId',
         name: 'forumDetail',

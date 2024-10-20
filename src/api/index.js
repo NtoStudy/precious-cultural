@@ -15,7 +15,17 @@ export const userLoginApi = (username, password) => requests({
         password: password
     }
 })
-
+/**
+ * 分页查询用户全景图
+ * @param current
+ * @param size
+ * @returns {*}
+ */
+export const userPanoramaPageApi = (current, size) => requests({
+    url:'/user/panorama/page',
+    method: 'get',
+    params: { current, size }
+})
 /**
  * 根据非遗id查询全景图
  * @param id
@@ -23,8 +33,30 @@ export const userLoginApi = (username, password) => requests({
  */
 export const userPanoramaByIdApi = (id) => requests({
     url:`/user/panorama/${id}`,
-    method: 'get'
+    method: 'get',
 })
+/**
+ * 分页查询用户非遗信息
+ * @returns {*}
+ */
+export const userNonHeritagePageApi = ( current , size , categories ) => requests({
+    url:'/user/nonHeritage/page',
+    method: 'get',
+    params: { current, size, categories }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /**
@@ -35,16 +67,6 @@ export const userPanoramaByIdApi = (id) => requests({
 export const userNonHeritageByIdApi = (id) => requests({
     url:`/user/nonHeritage/${id}`,
     method: 'get'
-})
-
-/**
- * 分页查询用户非遗信息
- * @returns {*}
- */
-export const userNonHeritagePageApi = (current, size,categories) => requests({
-    url:'/user/nonHeritage/page',
-    method: 'get',
-    params: { current, size, categories }
 })
 
 /**
