@@ -21,6 +21,11 @@ import quyi1 from "@/assets/lt/quyi/1.webp";
 import quyi2 from "@/assets/lt/quyi/2.webp";
 import quyi3 from "@/assets/lt/quyi/3.webp";
 import quyi4 from "@/assets/lt/quyi/4.webp";
+import {useUserInfoStore} from "@/store/modules/user.js";
+import router from "@/router/index.js";
+
+const userStore = useUserInfoStore();
+console.log(userStore.userInfo)
 const activeIndex = ref('1')
 const articles = ref([
   {
@@ -224,20 +229,101 @@ const articles = ref([
     author: 'QuYiHeritage'
   }
 ]);
+const achievement = ref([
+  {
+    url: '#',
+    text: '获得过100次点赞'
+  },
+  {
+    url: '#',
+    text: '获得过50次分享'
+  },
+  {
+    url: '#',
+    text: '被收藏20次'
+  }
+  ,
+  {
+    url: '#',
+    text: '获得过200次评论'
+  },
+  {
+    url: '#',
+    text: '浏览量达到1000次'
+  },
+  {
+    url: '#',
+    text: '被标记为有用10次'
+  }
+])
+const interest = ref(['民间文学','传统音乐','传统舞蹈','传统戏剧','曲艺','传统体育','传统美术','传统技艺','传统医药','民俗'])
+const myInterest = ref(['民间文学','传统音乐','传统舞蹈','传统戏剧','曲艺','传统体育'])
+const dialogTableVisible = ref(false)
+const goToUserInfo = () => {
+  router.push({name: 'userInfo', params: {infoId: userStore.userInfo.username}})
+}
 </script>
 <template>
   <div class="container">
     <!-- 用户信息卡片 -->
     <el-card class="user-info-card">
+      <div style="display: flex">
+        <div class="user-avatar">
+          <img src='https://takeaway-hei.oss-cn-hangzhou.aliyuncs.com/tx.png' alt="用户头像"/>
+        </div>
+        <div>
+          <div class="user-info">
+            <p>用户名：{{ userStore.userInfo.username }}</p>
+            <div class="manageBtn">
+              <el-button @click="goToUserInfo">
+                <el-icon>
+                  <Edit/>
+                </el-icon>
+                编辑资料
+              </el-button>
+              <el-button>
+                <el-icon>
+                  <MessageBox/>
+                </el-icon>
+                管理文章
+              </el-button>
+              <el-button>
+                <el-icon>
+                  <Setting/>
+                </el-icon>
+                设置
+              </el-button>
+            </div>
+          </div>
+          <div class="user-info-number">
+            <p>39299 总访问量</p>
+            <p>45 原创</p>
+            <p>503 粉丝</p>
+            <p>0 铁粉</p>
+          </div>
+          <p style="margin-left: 24px; margin-top: 10px">IP属地：江西省</p>
+        </div>
+      </div>
     </el-card>
     <div class="article-container">
       <div class="article-left">
         <el-card class="interest-card">
-          <p>兴趣领域</p>
-          <p>管理</p>
+          <div class="interest-title">
+            <p>兴趣领域</p>
+            <p style="cursor: pointer" @click="dialogTableVisible = true">管理></p>
+          </div>
+          <el-divider style="margin: 16px 0;"/>
+          <div v-for="(item, index) in myInterest" :key="index">
+            <p style="line-height: 25px;margin-bottom: 4px;">{{item}}</p>
+          </div>
         </el-card>
         <el-card class="achievement-card">
           <p>个人成就</p>
+          <el-divider style="margin: 16px 0;"/>
+          <div class="achievement-card-list" v-for="(item, index) in achievement" :key="index">
+            <img :src=item.url alt="" width="25px" height="25px"/>
+            <p style="line-height: 25px; margin-left: 10px;">{{item.text}}</p>
+          </div>
         </el-card>
       </div>
       <div class="article-right">
@@ -253,20 +339,26 @@ const articles = ref([
               <el-menu-item index="4">收藏列表</el-menu-item>
             </el-menu>
           </template>
-            <div class="article-list" v-for="(item, index) in articles" :key="index">
-              <h2 class="article-title">我是标题</h2>
-              <p class="article-content">我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容</p>
-              <div class="article-footer">
-                <p>123阅读 ·</p>
-                <p>12点赞 ·</p>
-                <p>1评论 ·</p>
-                <p>6收藏</p>
-              </div>
+          <div class="article-list" v-for="(item, index) in articles" :key="index">
+            <h2 class="article-title">我是标题</h2>
+            <p class="article-content">
+              我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容</p>
+            <div class="article-footer">
+              <p>123阅读 ·</p>
+              <p>12点赞 ·</p>
+              <p>1评论 ·</p>
+              <p>6收藏</p>
             </div>
-
+          </div>
         </el-card>
       </div>
     </div>
+
+    <el-dialog v-model="dialogTableVisible" title="选择喜欢的兴趣领域" width="600" >
+       <ul style="display: flex;flex-wrap: wrap;">
+         <li v-for="(item, index) in interest" :key="index" style="margin-bottom: 18px;margin-right: 20px; cursor: pointer;font-size: 16px; border: 1px solid #ccc;padding: 6px">{{item}}<i style="margin-left: 10px;" @click="myInterest.push(item)">x</i></li>
+       </ul>
+    </el-dialog>
   </div>
 </template>
 
@@ -278,7 +370,46 @@ const articles = ref([
 
   .user-info-card {
     background-color: skyblue;
-    height: 160px;
+    height: 140px;
+
+    .user-avatar {
+      img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+      }
+    }
+
+    .user-info {
+      display: flex;
+      width: 1050px;
+      height: 35px;
+      line-height: 35px;
+      justify-content: space-between;
+
+      p {
+        margin-left: 24px;
+        font-weight: 500;
+        font-size: 20px;
+      }
+
+      button, [type=button], [type=reset], [type=submit] {
+        -webkit-appearance: button;
+        border-radius: 50px;
+      }
+    }
+
+    .user-info-number {
+      display: flex;
+      font-size: 18px;
+      width: 600px;
+      height: 30px;
+      line-height: 30px;
+
+      p {
+        margin-left: 24px;
+      }
+    }
   }
 
   .article-container {
@@ -288,13 +419,21 @@ const articles = ref([
       width: 300px;
 
       .interest-card {
-        display: flex;
-        justify-content: space-between; /* 这将使子元素分别位于容器的两侧 */
         margin: 20px 20px 20px 0;
+        .interest-title {
+          display: flex;
+          justify-content: space-between;
+        }
+
+
       }
 
       .achievement-card {
         margin: 20px 20px 20px 0;
+        .achievement-card-list {
+          display: flex;
+          margin-bottom: 10px;
+        }
       }
     }
 
@@ -303,21 +442,28 @@ const articles = ref([
 
       .article-card {
         margin-top: 20px;
-        .article-list{
-           margin-bottom: 20px;
+        height: 1200px;
+        overflow-y: auto;
+
+        .article-list {
+          margin-bottom: 25px;
+
           .article-title {
-             font-size: 22px;
+            font-size: 22px;
           }
+
           .article-content {
-             font-size: 16px;
-             margin-top: 6px;
-             margin-bottom: 12px;
+            font-size: 16px;
+            margin-top: 6px;
+            margin-bottom: 12px;
           }
+
           .article-footer {
-             display: flex;
-             p{
-                margin-right: 20px;
-             }
+            display: flex;
+
+            p {
+              margin-right: 20px;
+            }
           }
         }
       }

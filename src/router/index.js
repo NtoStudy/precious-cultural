@@ -48,11 +48,18 @@ const routes = [
                 component: () => import('@/views/userManage/index.vue')
             },
             {
+                name: 'userInfo',
+                path:'userInfo/:infoId',
+                component: () => import('@/views/userInfo/index.vue'),
+
+            },
+            {
                 path: '/menu/heritage/heritageDetail/:heritageId',
                 name: 'heritageDetail',
                 component: () => import('@/views/heritage/heritageDetail/index.vue'),
                 props: true,
             },
+
         ]
     },
     {
