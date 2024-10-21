@@ -25,10 +25,13 @@ const logout = () => {
 }
 // 实现个人中心路由跳转
 const goToUserManage = () => {
-  if(userStore.userInfo.username){
+  console.log(userStore.userInfo)
+  if(userStore.userInfo === null){
+    console.log('未登录')
+    router.push({name: 'login'})
+  }
+  else {
     router.push({name: 'userManage', params: {infoId: userStore.userInfo.username}})
-  }else{
-    router.push('/login')
   }
 }
 </script>
@@ -61,26 +64,26 @@ const goToUserManage = () => {
           <el-icon :size="24">
             <ChatLineSquare/>
           </el-icon>
-          <el-popover placement="bottom" :width="240" trigger="hover">
+          <el-popover placement="bottom" :width="220" trigger="hover">
             <template #reference>
               <el-avatar slot="reference" :size="26" :src="state.circleUrl" />
             </template>
             <template #default>
-              <div slot="header" style="text-align: center; font-size: 18px;">
+              <div slot="header" style="text-align: center; font-size: 16px;">
                 <p>{{ userStore.userInfo ? userStore.userInfo.username : '未登录' }}</p>
               </div>
               <el-divider style="margin: 10px 0;"/>
               <div slot="body" style="display: flex; justify-content: space-around;">
                 <div>
-                  <p style="font-weight: bold; font-size: 20px;">100</p>
+                  <p style="font-weight: bold; font-size: 18px;">100</p>
                   <p style="text-align: center; font-size: 14px;">粉丝</p>
                 </div>
                 <div>
-                  <p style="font-weight: bold; font-size: 20px;">100</p>
+                  <p style="font-weight: bold; font-size: 18px;">100</p>
                   <p style="text-align: center; font-size: 14px;">关注</p>
                 </div>
                 <div>
-                  <p style="font-weight: bold; font-size: 20px;">100</p>
+                  <p style="font-weight: bold; font-size: 18px;">100</p>
                   <p style="text-align: center; font-size: 14px;">获赞</p>
                 </div>
               </div>
@@ -158,7 +161,6 @@ const goToUserManage = () => {
       }
       .user-info{
         display: flex;
-
       }
     }
   }
