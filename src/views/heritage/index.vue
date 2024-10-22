@@ -326,5 +326,6 @@ watch(activeItemIndex, () => {
   justify-content: center;
   margin: 40px auto;
   width: 100%;
+
 }
 </style>
