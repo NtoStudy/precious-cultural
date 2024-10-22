@@ -59,6 +59,12 @@ const routes = [
                 component: () => import('@/views/heritage/heritageDetail/index.vue'),
                 props: true,
             },
+            {
+                path: '/menu/forum/forumDetail/:articleId',
+                name: 'forumDetail',
+                component: () => import('@/views/forum/forumDetail/index.vue'),
+                props: true,
+            },
 
         ]
     },
@@ -68,12 +74,7 @@ const routes = [
         component: () => import('@/views/fictitious/fictitiousDetail/index.vue'),
         props: true,
     },
-    {
-        path: '/menu/forum/forumDetail/:articleId',
-        name: 'forumDetail',
-        component: () => import('@/views/forum/forumDetail/index.vue'),
-        props: true,
-    },
+
 
 ]
 
