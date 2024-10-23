@@ -20,6 +20,9 @@ importers:
       element-plus:
         specifier: ^2.8.1
         version: 2.8.1(vue@3.4.38)
+      highlight.js:
+        specifier: ^11.10.0
+        version: 11.10.0
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0

@@ -1,7 +1,6 @@
 <script setup>
 import CharacterAvatar from '@/components/CharacterAvatar.vue';
 import {ref} from 'vue';
-
 const messages = ref([]);
 const inputMessage = ref('');
 const dialogVisible = ref(false);
