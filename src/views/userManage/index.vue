@@ -1,6 +1,6 @@
 <script setup>
 import {ref} from 'vue';
-import {ElCard} from 'element-plus';
+import {ElCard, ElMessage} from 'element-plus';
 import jiyi1 from "@/assets/lt/jiyi/1.webp";
 import jiyi2 from "@/assets/lt/jiyi/2.webp";
 import jiyi3 from "@/assets/lt/jiyi/3.png";
@@ -25,7 +25,6 @@ import {useUserInfoStore} from "@/store/modules/user.js";
 import router from "@/router/index.js";
 
 const userStore = useUserInfoStore();
-console.log(userStore.userInfo)
 const activeIndex = ref('1')
 const articles = ref([
   {
@@ -259,9 +258,15 @@ const achievement = ref([
 const interest = ref(['民间文学','传统音乐','传统舞蹈','传统戏剧','曲艺','传统体育','传统美术','传统技艺','传统医药','民俗'])
 const myInterest = ref(['民间文学','传统音乐','传统舞蹈','传统戏剧','曲艺','传统体育'])
 const dialogTableVisible = ref(false)
+// 判断用户是否登录
+if (!userStore.userInfo) {
+  ElMessage.error('请先登录！')
+  router.push({name: 'login'})
+}
 const goToUserInfo = () => {
   router.push({name: 'userInfo', params: {infoId: userStore.userInfo.username}})
 }
+
 </script>
 <template>
   <div class="container">

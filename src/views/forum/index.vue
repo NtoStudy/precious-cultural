@@ -1,6 +1,5 @@
 <script setup>
 import {computed, ref} from 'vue';
-import router from "@/router/index.js";
 
 import jiyi1 from '@/assets/lt/jiyi/1.webp';
 import jiyi2 from '@/assets/lt/jiyi/2.webp';
@@ -22,7 +21,6 @@ import quyi1 from '@/assets/lt/quyi/1.webp';
 import quyi2 from '@/assets/lt/quyi/2.webp';
 import quyi3 from '@/assets/lt/quyi/3.webp';
 import quyi4 from '@/assets/lt/quyi/4.webp';
-
 const articles = ref([
   {
     id: 1,
@@ -272,12 +270,12 @@ function handlePageChange(newPage) {
   currentPage.value = newPage;
 }
 // 处理点击事件并跳转到文章详情页
-function goToArticleDetail(article, event) {
+import router from "@/router/index.js";
+const goToArticleDetail = (article, event) => {
   event.stopPropagation(); // 阻止事件冒泡
-  router.push({
-    name: 'forumDetail',
-    params: { articleId: encodeURIComponent(article.id) }
-  });
+  // 跳转到文章详情页
+  console.log(article)
+  router.push(`/menu/forum/forumDetail/:${article.id}`)
 }
 </script>
 <template>

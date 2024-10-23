@@ -73,10 +73,7 @@ const routes = [
         name: 'fictitiousDetail',
         component: () => import('@/views/fictitious/fictitiousDetail/index.vue'),
         props: true,
-    },
-
-
-]
+    }]
 
 
 // 创建路由实例

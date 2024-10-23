@@ -3,28 +3,34 @@
 </template>
 
 <script setup>
-import MarkdownRenderer from "@/components/MarkdownRenderer.vue"
-const markdown = `
-# 一. WebSocket 基本概念
-## WebSocket是什么？
+import MarkdownRenderer from "./MarkdownRenderer/index.vue"
+const markdown =
+`# 一. WebSocket 基本概念
+WebSocket是什么？
 
 WebSocket 是基于 TCP 的一种新的应用层网络协议。它提供了一个全双工的通道，允许服务器和客户端之间实时双向通信。因此，在 WebSocket 中，浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输，客户端和服务器之间的数据交换变得更加简单。
 
 与 HTTP 协议的区别\n\n与 HTTP 协议相比，WebSocket 具有以下优点：
+
+\`\`\`javascript
+function helloWorld() {
+  console.log('Hello, world!');
+}
+\`\`\`
 
 - 更高的实时性能：WebSocket 允许服务器和客户端之间实时双向通信，从而提高了实时通信场景中的性能
 - 更少的网络开销：HTTP 请求和响应之间需要额外的数据传输，而 WebSocket 通过在同一个连接上双向通信，减少了网络开销
 - 更灵活的通信方式：HTTP 请求和响应通常是一一对应的，而 WebSocket 允许服务器和客户端之间以多种方式进行通信，例如消息 Push、事件推送等
 - 更简洁的 API：WebSocket 提供了简洁的 API，使得客户端开发人员可以更轻松地进行实时通信
 
-当然肯定有缺点的：
+## 当然肯定有缺点的：
 
 - 不支持无连接: WebSocket 是一种持久化的协议，这意味着连接不会在一次请求之后立即断开。这是有利的，因为它消除了建立连接的开销，但是也可能导致一些资源泄漏的问题
 - 不支持广泛: WebSocket 是 HTML5 中的一种标准协议，虽然现代浏览器都支持，但是一些旧的浏览器可能不支持 WebSocket
 - 需要特殊的服务器支持: WebSocket 需要服务端支持，只有特定的服务器才能够实现 WebSocket 协议。这可能会增加系统的复杂性和部署的难度
 - 数据流不兼容: WebSocket 的数据流格式与 HTTP 不同，这意味着在不同的网络环境下，WebSocket 的表现可能会有所不同
 
-WebSocket工作原理
+## WebSocket工作原理
 
 握手阶段
 
@@ -50,7 +56,7 @@ WebSocket工作原理
 
 ping 、pong 的操作，对应的是 WebSocket 的两个控制帧
 
-3. 关闭阶段
+## 3. 关闭阶段
 当不再需要WebSocket连接时，需要进行关闭阶段。关闭阶段包括以下几个步骤：
 
 - 客户端向服务端发送关闭请求，请求中包含一个WebSocket的随机密钥
@@ -101,12 +107,11 @@ WebSocket 对象的属性和方法：
 3. 接收来自 WebSocket 的消息：
 
 使用 WebSocket.onmessage 事件处理程序接收来自 WebSocket 的消息。
-
+\`\`\`
      socket.onmessage = function(event) {
         console.log('WebSocket message:', event.data);
     };
-
-
+\`\`\`
 
 4. 向 WebSocket 发送消息：
 
@@ -121,8 +126,6 @@ WebSocket 对象的属性和方法：
     socket.close();
 
 注意：在 WebSocket 连接成功打开和关闭时，会分别触发 WebSocket.onopen 和 WebSocket.onclose 事件。在接收到来自 WebSocket 的消息时，会触发 WebSocket.onmessage 事件。当 WebSocket 发生错误时，会触发 WebSocket.onerror 事件。
-
-
 
 四. webSocket简单示例
 
@@ -144,10 +147,11 @@ const messageBox = document.getElementById('messageBox');
 const socket = new WebSocket('ws://echo.websocket.org'); // 使用一个 WebSocket 服务器进行测试
 
 // 设置 WebSocket 连接打开时的回调函数
+\`\`\`javascript
 socket.onopen = function() {
 console.log('WebSocket 连接已打开');
 };
-
+\`\`\`
 // 设置 WebSocket 接收到消息时的回调函数
 socket.onmessage = function(event) {
 console.log('WebSocket 接收到消息:', event.data);
@@ -155,9 +159,14 @@ messageBox.value += event.data + '\\n';
 };
 
 // 设置 WebSocket 发生错误时的回调函数
-socket.onerror = function() {
-console.log('WebSocket 发生错误');
-};
+
+\`\`\`
+# include <stdio.h>
+int main() {
+  printf("WebSocket error!");
+  return 0;
+}
+\`\`\`
 
 // 设置 WebSocket 连接关闭时的回调函数
 socket.onclose = function() {
@@ -313,7 +322,6 @@ export default webSocketClass;
 
 
 `
-
 </script>
 
 <style lang="less">

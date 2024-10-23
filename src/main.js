@@ -8,6 +8,7 @@ import router from './router'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import "./styles/normalize.scss"
+import 'highlight.js/scss/atom-one-dark.scss'
 // 创建Vue应用实例
 const app = createApp(App)
 // 注册Element Plus图标组件
