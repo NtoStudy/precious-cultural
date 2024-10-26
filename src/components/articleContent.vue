@@ -3,9 +3,9 @@
 </template>
 
 <script setup>
-import MarkdownRenderer from "./MarkdownRenderer/index.vue"
-const markdown =
-`# 一. WebSocket 基本概念
+import MarkdownRenderer from "@/components/MarkdownRenderer.vue"
+const markdown = `
+# 一. WebSocket 基本概念
 WebSocket是什么？
 
 WebSocket 是基于 TCP 的一种新的应用层网络协议。它提供了一个全双工的通道，允许服务器和客户端之间实时双向通信。因此，在 WebSocket 中，浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输，客户端和服务器之间的数据交换变得更加简单。
@@ -98,7 +98,7 @@ WebSocket 对象的属性和方法：
 
 2. 连接 WebSocket：
 
-使用 WebSocket.onopen 事件处理程序检查 WebSocket 是否成功连接。
+## 使用 WebSocket.onopen 事件处理程序检查 WebSocket 是否成功连接。
 
     socket.onopen = function() {
         console.log('WebSocket connected');
@@ -127,7 +127,7 @@ WebSocket 对象的属性和方法：
 
 注意：在 WebSocket 连接成功打开和关闭时，会分别触发 WebSocket.onopen 和 WebSocket.onclose 事件。在接收到来自 WebSocket 的消息时，会触发 WebSocket.onmessage 事件。当 WebSocket 发生错误时，会触发 WebSocket.onerror 事件。
 
-四. webSocket简单示例
+## 四. webSocket简单示例
 
 以下是一个简单的 WebSocket 编程示例，通过 WebSocket 向服务器发送数据，并接收服务器返回的数据：
 
@@ -322,6 +322,7 @@ export default webSocketClass;
 
 
 `
+
 </script>
 
 <style lang="less">

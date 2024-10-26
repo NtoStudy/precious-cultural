@@ -274,8 +274,7 @@ import router from "@/router/index.js";
 const goToArticleDetail = (article, event) => {
   event.stopPropagation(); // 阻止事件冒泡
   // 跳转到文章详情页
-  console.log(article)
-  router.push(`/menu/forum/forumDetail/:${article.id}`)
+  router.push(`/menu/forum/forumDetail/${article.id}`)
 }
 </script>
 <template>

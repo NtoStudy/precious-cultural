@@ -3,15 +3,15 @@ import requests from "@/http/index.js";
 
 /**
  * 用户登录接口
- * @param username
+ * @param account
  * @param password
  * @returns {*}
  */
-export const userLoginApi = (username, password) => requests({
+export const userLoginApi = (account, password) => requests({
     url: '/user/login',
     method: 'post',
     data:{
-        username: username,
+        account: account,
         password: password
     }
 })
