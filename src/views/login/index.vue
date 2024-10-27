@@ -1,6 +1,6 @@
 <script setup>
 import { ref} from "vue";
-import {userLoginApi} from "@/api/index.js";
+import {userLoginPostApi} from "@/api/login.js";
 import router from "@/router/index.js";
 import {useUserInfoStore} from "@/store/modules/user.js";
 import {ElMessage} from "element-plus";
@@ -64,8 +64,7 @@ const switchToLogin = () => {
 
 // 登录
 const login = async () => {
-  const UserLogin = await userLoginApi(LoginRuleForm.value.LoginUserName, LoginRuleForm.value.LoginPassword)
-  console.log(UserLogin)
+  const UserLogin = await userLoginPostApi(LoginRuleForm.value.LoginUserName, LoginRuleForm.value.LoginPassword)
   if(UserLogin.data.code === 1){
     const userStore = useUserInfoStore()
     userStore.setUserInfo(UserLogin.data.data)

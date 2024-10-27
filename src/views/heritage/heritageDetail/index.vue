@@ -1,7 +1,7 @@
 <script setup>
 import {ElDivider} from 'element-plus'
 import {defineProps, onMounted, ref} from 'vue';
-import {userNonHeritageByIdApi} from "@/api/index.js";
+import {userNonHeritageByIdApi} from "@/api/user.js";
 
 const props = defineProps({
   heritageId: String

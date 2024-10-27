@@ -1,12 +1,10 @@
 <script setup>
 import {ref, watchEffect} from 'vue';
-import { useNavStore } from '@/store/modules/nav.js'
 import MarkdownIt from 'markdown-it';
 import MarkdownItAnchor from 'markdown-it-anchor';
 import MarkdownItToc from 'markdown-it-toc-done-right';
 import MarkdownItHighLightJs from "markdown-it-highlightjs";
 import hljs from "highlight.js";
-const store = useNavStore()
 
 const props = defineProps({
   source: {
@@ -27,22 +25,8 @@ const markdown = new MarkdownIt({
     return '<pre class="hljs"><code>' + this.utils.escapeHtml(str) + '</code></pre>';
   }
 })
-    .use(MarkdownItAnchor, {
-      permalink: true,
-      permalinkBefore: true,
-      permalinkClass: 'header-anchor',
-      permalinkSymbol: '#',
-    })
-    .use(MarkdownItToc, {
-      containerClass: 'toc',
-      containerId: 'toc',
-      listType: 'ul',
-      linkClass: 'toc-link',
-      itemClass: 'toc-item',
-      callback: (html, ast) => {
-        tocHtml.value = html;
-      }
-    })
+    .use(MarkdownItAnchor)
+    .use(MarkdownItToc)
     .use(MarkdownItHighLightJs)
 
 const compiledMarkdown = ref('');
@@ -50,48 +34,67 @@ const tocHtml = ref('');
 
 watchEffect(() => {
   compiledMarkdown.value = markdown.render(props.source);
-  store.setTocHtml(tocHtml.value)
+  console.log(compiledMarkdown.value); // 检查渲染后的 HTML
 });
 </script>
 
 <template>
   <div class="markdown-container">
-<!--    <div class="sidebar">-->
-<!--      <nav v-html="tocHtml"></nav>-->
-<!--    </div>-->
     <div class="content" v-html="compiledMarkdown"></div>
   </div>
 </template>
 
 
-<style scoped>
+<style lang="scss" scoped>
 .markdown-container {
   display: flex;
-}
-
-.sidebar {
-  width: 200px;
-  margin-right: 20px;
-
-  display: inline-block;
-  margin-left: 10px; /* 锚点和文本之间的距离 */
-  font-size: 16px; /* 锚点的字体大小 */
-  cursor: pointer; /* 鼠标悬停时的光标样式 */
-
-  ::v-deep(ul) {
-    list-style-type: none;
-    a {
-      text-decoration: none;
-      color: #262932; /* 默认链接颜色 */
+  .content {
+    :deep(h1, h2, h3, h4, h5, h6) {
+      margin-top: 0.5em; /* 上边距 */
+      margin-bottom: 0.5em; /* 下边距 */
     }
-    a:hover {
-      color: #3f8ef9; /* 鼠标悬停时的链接颜色 */
+    :deep(h1){
+      font-size: 20px ;
+      line-height: 30px ;
+    }
+    :deep(h2){
+      font-size: 20px;
+      line-height: 30px;
+    }
+    :deep(h3){
+      font-size: 1.75em; /* 28px */
+    }
+    :deep(h4){
+      font-size: 1.5em; /* 24px */
+    }
+    :deep(h5){
+      font-size: 1.25em; /* 20px */
+    }
+    :deep(h2){
+      font-size: 1em; /* 16px */
+    }
+    :deep(p) {
+      margin-top: 1em; /* 上边距 */
+      margin-bottom: 1em; /* 下边距 */
+      line-height: 1.5; /* 行高 */
+    }
+    :deep(ul, ol) {
+      list-style-type: disc; /* ul为实心圆点，ol根据类型而定 */
+      margin-top: 1em;       /* 上边距 */
+      margin-bottom: 1em;     /* 下边距 */
+      padding-left: 40px;     /* 左边距，用于缩进列表项 */
+    }
+    :deep(ol){
+      list-style-type: decimal; /* 有序列表的默认符号是数字 */
+    }
+    :deep(ul ul, ul ol, ol ul, ol ol) {
+      margin-top: 0; /* 嵌套列表的上边距 */
+      margin-bottom: 0; /* 嵌套列表的下边距 */
+    }
+    :deep(li) {
+      margin-bottom: 0.5em; /* 列表项之间的间隔 */
     }
   }
 }
-.content {
-  flex-grow: 1;
-}
-
 
 </style>

@@ -3,10 +3,7 @@ import {onMounted, ref} from "vue";
 import comment from "./comment/index.vue"
 import articleContent from '@/components/articleContent.vue'
 import { useNavStore} from "@/store/modules/nav.js";
-import router from "@/router/index.js";
-const store = useNavStore()
-const tocHtml = ref('')
-tocHtml.value = store.tocHtml
+
 // 定义反应式数据，用于存储文章信息
 const data = ref({
   title: '陶瓷艺术的创新之路',
@@ -40,22 +37,6 @@ const updateContent = () => {
   judgeContent.value = !judgeContent.value; // 切换状态
 }
 
-const activeSection = ref(null);
-onMounted(() => {
-  tocHtml.value = store.tocHtml;
-});
-
-const handleAnchorClick = (event) => {
-  console.log(event)
-  if (event.target.tagName === 'A' && event.target.getAttribute('href').startsWith('#')) {
-    event.preventDefault();
-    const href = event.target.getAttribute('href');
-    const section = document.querySelector(href);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-};
 </script>
 
 <template>
@@ -64,7 +45,7 @@ const handleAnchorClick = (event) => {
       <el-card class="article-card">
         <h1 class="article-title">{{ data.title }}</h1>
         <p class="article-meta">作者: {{ data.author }} · {{ data.date }}</p>
-        <articleContent/>
+        <articleContent />
       </el-card>
       <comment moment-id="123" post-add-comment-form="[{wq:123},{wq:123},{wq:123}]"/>
     </div>
@@ -83,10 +64,10 @@ const handleAnchorClick = (event) => {
             <p>10k 阅读</p>
             <p>{{ data.like }} 粉丝</p></div>
           <div class="buttons">
-            <el-button type="primary" @click="AddLike" style="height: 40px; width: 100px;">
+            <el-button type="primary" @click="AddLike" style="height: 40px; width: 120px;">
               {{ data.isLiked ? '取消关注' : '关注' }}
             </el-button>
-            <el-button size="large" style="height: 40px; width: 100px;">私信</el-button>
+            <el-button size="large" style="height: 40px; width: 120px;">私信</el-button>
           </div>
         </div>
       </el-card>
@@ -107,10 +88,9 @@ const handleAnchorClick = (event) => {
           </div>
         </div>
         <el-divider style="margin: 16px 0"/>
-<!--        <div v-for="(item,index) in contents" :key="index" style="margin-bottom: 16px; margin-left: 5px;">-->
-<!--          <p>{{ item }}</p>-->
-<!--        </div>-->
-        <div v-html="tocHtml" @click="handleAnchorClick"/>
+        <div v-for="(item,index) in contents" :key="index" style="margin-bottom: 16px; margin-left: 5px;">
+          <p>{{ item }}</p>
+        </div>
 
       </el-card>
       <el-card calss="contents-card" style="margin-top: 30px;">
@@ -118,7 +98,7 @@ const handleAnchorClick = (event) => {
           <h2>相关文章</h2>
         </div>
         <el-divider style="margin: 16px 0"/>
-        <div v-for="(item,index) in contents" :key="index"
+        <div v-for="(item,index) in 5" :key="index"
              style="margin-bottom: 16px; margin-left: 5px; cursor: pointer;">
           <h3 style="margin-bottom: 10px; ">这是文章标题</h3>
           <div style="display: flex; color: #666;">

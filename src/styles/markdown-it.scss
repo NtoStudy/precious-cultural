@@ -1,0 +1,79 @@
+html, address,
+blockquote,
+body, dd, div,
+dl, dt, fieldset, form,
+frame, frameset,
+h1, h2, h3, h4,
+h5, h6, noframes,
+ol, p, ul, center,
+dir, hr, menu, pre { display: block }/*上面列表元素默认状态下以块状显示，未显示的将以内联元素显示，该列表针对HTML4版本，部分元素在XHTML1中将被废弃*/
+li { display: list-item }/*默认为列表显示*/
+head { display: none }/*默认不显示*/
+table { display: table }/*默认为表格显示*/
+tr { display: table-row }/*默认为表格行显示*/
+thead { display: table-header-group }/*默认为表格头部分组显示*/
+tbody { display: table-row-group }/*默认为表格行分组显示*/
+tfoot { display: table-footer-group }/*默认为表格底部分组显示*/
+col { display: table-column }/*默认为表格列显示*/
+colgroup { display: table-column-group }/*默认为表格列分组显示*/
+td, th { display: table-cell }/*默认为单元格显示*/
+caption { display: table-caption }/*默认为表格标题显示*/
+th { font-weight: bolder; text-align: center }/*默认为列标题显示，呈现居中加粗状态*/
+caption { text-align: center }/*默认为表格标题显示，呈现居中显示*/
+body { margin: 8px }/*默认页边距，定义body边界宽度为8像素*/
+h1 { font-size: 2em; margin: .67em 0 }/*默认一级标题样式，2倍字体大小，上下边界为0.67倍标题高度*/
+h2 { font-size: 1.5em; margin: .75em 0 }/*默认二级标题模式，1.5倍字体大小，上下边界为0.75倍标题高度*/
+h3 { font-size: 1.17em; margin: .83em 0 }/*默认三级标题模式，1.5倍字体大小，上下边界为0.83倍标题高度*/
+h4, p,
+blockquote, ul,
+fieldset, form,
+ol, dl, dir,
+menu { margin: 1.12em 0 }/*定义以上元素的默认上下边界*/
+h5 { font-size: .83em; margin: 1.5em 0 }/*默认五级标题样式，0.83倍字体大小，上下边界为1.5倍标题高度*/
+h6 { font-size: .75em; margin: 1.67em 0 }/*默认六级标题样式，0.75倍字体大小，上下边界为1.67倍标题高度*/
+h1, h2, h3, h4,
+h5, h6, b,
+strong { font-weight: bolder }/*定义所有标题及粗体元素默认显示*/
+blockquote { margin-left: 40px; margin-right: 40px }/*定义文本引用元素左右边界默认为40像素，即定义左右缩进*/
+i, cite, em,
+var, address { font-style: italic }/*定义这些元素默认为斜体显示*/
+pre, tt, code,
+kbd, samp { font-family: monospace }/*定义这些元素默认为等宽字体显示*/
+pre { white-space: pre }/*定义pre元素默认为代码预定义格式显示*/
+button, textarea,
+input, select { display: inline-block }/*定义这些表单元素默认为内联元素显示*/
+big { font-size: 1.17em }/*定义big元素默认为1.17倍字体大小显示*/
+small, sub, sup { font-size: .83em }/*定义这些元素默认为0.83倍字体大小显示*/
+sub { vertical-align: sub }/*定义sub元素默认为下标对齐显示*/
+sup { vertical-align: super }/*定义sup元素默认为上标对齐显示*/
+table { border-spacing: 2px; }/*定义表格边距默认为2像素*/
+thead, tbody,
+tfoot { vertical-align: middle }/*定义表头、主体表和表脚元素默认为垂直对齐显示*/
+td, th { vertical-align: inherit }/*定义单元格、列标题垂直对齐方式默认为继承*/
+s, strike, del { text-decoration: line-through }/*定义这些元素默认为删除线显示*/
+hr { border: 1px inset }/*定义分割线默认为1像素宽的3D凹边效果*/
+ol, ul, dir,
+menu, dd { margin-left: 40px }/*定义列表元素左边默认为40像素宽，即左缩进效果*/
+ol { list-style-type: decimal }/*定义有序列表符号默认样式*/
+ol ul, ul ol,
+ul ul, ol ol { margin-top: 0; margin-bottom: 0 }/*定义列表元素的上下边界默认为0*/
+u, ins { text-decoration: underline }/*定义这些元素默认为下划线效果*/
+br:before { content: "\A" }/*定义换行元素的伪对象内容样式*/
+:before, :after { white-space: pre-line }/*定义这些伪对象空格字符的默认样式*/
+center { text-align: center }/*定义center元素默认为水平居中*/
+:link, :visited { text-decoration: underline }/*定义这些伪类默认为下划线样式*/
+:focus { outline: thin dotted invert }/*定义焦点伪类的默认外轮廓样式*/
+
+/* Begin bidirectionality settings (do not change) */
+BDO[DIR="ltr"] { direction: ltr; unicode-bidi: bidi-override }/*定义BDO元素当其属性为DIR="ltr"时的默认文本读写显示顺序*/
+BDO[DIR="rtl"] { direction: rtl; unicode-bidi: bidi-override }/*定义BDO元素当其属性为DIR="rtl"时的默认文本读写显示顺序*/
+
+*[DIR="ltr"] { direction: ltr; unicode-bidi: embed }/*定义任何元素当其属性为DIR="ltr"时的默认文本读写显示顺序*/
+*[DIR="rtl"] { direction: rtl; unicode-bidi: embed }/*定义任何元素当其属性为DIR="rtl"时的默认文本读写显示顺序*/
+
+@media print { /*定义标题和列表默认的打印样式*/
+  h1 { page-break-before: always }
+  h1, h2, h3,
+  h4, h5, h6 { page-break-after: avoid }
+  ul, ol, dl { page-break-before: avoid }
+}

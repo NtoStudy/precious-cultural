@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from 'vue';
 import router from '@/router/index.js';
-import {userPanoramaPageApi} from "@/api/index.js";
+import {userPanoramaPageApi} from "@/api/user.js";
 const currentPage = ref(1);
 const pageSize = ref(6);
 const total = ref(0);

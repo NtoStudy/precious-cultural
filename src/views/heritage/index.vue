@@ -3,7 +3,7 @@
 // 调用接口的数据
 import {ref, computed, onMounted,watch} from 'vue';
 import {useRouter} from "vue-router";
-import {userNonHeritagePageApi} from "@/api/index.js";
+import {userNonHeritagePageApi} from "@/api/user.js";
 const router = useRouter();
 
 // 标签
