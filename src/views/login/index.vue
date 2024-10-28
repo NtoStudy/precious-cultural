@@ -1,6 +1,6 @@
 <script setup>
 import { ref} from "vue";
-import {userLoginPostApi} from "@/api/login.js";
+import {userLoginPostApi, userRegisterPostApi} from "@/api/login.js";
 import router from "@/router/index.js";
 import {useUserInfoStore} from "@/store/modules/user.js";
 import {ElMessage} from "element-plus";
@@ -70,6 +70,19 @@ const login = async () => {
     userStore.setUserInfo(UserLogin.data.data)
     ElMessage.success('登录成功')
     router.push('/menu')
+  }
+}
+
+// 注册
+const register = async () => {
+  const UserRegister = await userRegisterPostApi(RegisterRuleForm.value.RegisterUserName, RegisterRuleForm.value.RegisterPassword)
+  console.log(UserRegister)
+  if(UserRegister.data.code === 1){
+    ElMessage.success('注册成功')
+    switchToLogin()
+    // 登录页面的账户和密码变成注册页面的账户和密码
+    LoginRuleForm.value.LoginUserName = RegisterRuleForm.value.RegisterUserName
+    LoginRuleForm.value.LoginPassword = RegisterRuleForm.value.RegisterPassword
   }
 }
 
@@ -176,7 +189,7 @@ const login = async () => {
                   >
                 </el-form-item>
                 <el-form-item style="margin-top: 40px">
-                  <el-button type="primary">注册</el-button>
+                  <el-button type="primary" @click="register">注册</el-button>
                 </el-form-item>
               </el-form>
             </el-card>

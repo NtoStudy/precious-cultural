@@ -1,7 +1,7 @@
 <script setup>
 import {ElDivider} from 'element-plus'
 import {defineProps, onMounted, ref} from 'vue';
-import {userNonHeritageByIdApi} from "@/api/user.js";
+import {hallNonHeritageByIdGetApi} from "@/api/heritage/nonHertage.js";
 
 const props = defineProps({
   heritageId: String
@@ -9,7 +9,7 @@ const props = defineProps({
 
 const userNonHeritageData = ref({})
 const userNonHeritageById = async () => {
-   const res = await userNonHeritageByIdApi(props.heritageId);
+   const res = await hallNonHeritageByIdGetApi(props.heritageId);
   userNonHeritageData.value = res.data.data
    console.log(userNonHeritageData.value)
 }
@@ -22,7 +22,7 @@ onMounted(()=>{
 <template>
   <div class="article-container">
     <div class="article-header">
-      <h1>田青：幽兰春晓 古琴复兴 ——《幽兰春晓——“古琴艺术”申遗二十周年纪念文集》序</h1>
+      <h1>{{userNonHeritageData.name}}</h1>
       <div class="article-meta">
         <span>诞生时间：{{userNonHeritageData.inheritanceBirth}}</span>
         <span>项目传承单位：{{userNonHeritageData.protectionUnit}}</span>
