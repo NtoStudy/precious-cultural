@@ -29,6 +29,7 @@
     "markdown-it-sup": "^2.0.0",
     "markdown-it-task-lists": "^2.1.1",
     "markdown-it-toc-done-right": "^4.2.0",
+    "mavon-editor": "3.0.1",
     "mitt": "^3.0.1",
     "photo-sphere-viewer": "4.3.0",
     "pinia": "^2.2.2",

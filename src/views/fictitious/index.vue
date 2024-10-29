@@ -36,7 +36,7 @@ onMounted(()=>{
             :key="item.id"
             @click="goToDetail(item)"
         >
-          <img :src="item.url" alt="image" />
+          <img :src="item.url" alt="image" style="width: 100%; height: 175px;"/>
           <div class="overlay">
             <div class="text">项目介绍：{{ item.description }}</div>
           </div>
@@ -62,14 +62,15 @@ onMounted(()=>{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
+  height: 100%;
   padding: 20px 0;
 
   .header-title {
     text-align: center;
     font-weight: bold;
     font-size: 22px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    margin-top: 10px;
   }
 
   .fictitious-container-list {
@@ -83,7 +84,7 @@ onMounted(()=>{
       .overlay{
         position: absolute;
         bottom: 10px;
-        left: 25%;
+        left: 80px;
         font-size: 18px;
         font-weight: bold;
       }
@@ -99,6 +100,7 @@ onMounted(()=>{
         margin-bottom: 20px;
         cursor: pointer;
         position: relative;
+
 
         img {
           width: 100%;

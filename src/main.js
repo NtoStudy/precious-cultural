@@ -7,9 +7,12 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import router from './router'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import mavonEditor from 'mavon-editor'
 import "./styles/normalize.scss"
 import 'highlight.js/scss/atom-one-dark.scss'
 import "./styles/highLight.scss"
+import 'mavon-editor/dist/css/index.css'
+
 // 创建Vue应用实例
 const app = createApp(App)
 // 注册Element Plus图标组件
@@ -22,6 +25,7 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 // 使用Pinia
 app.use(pinia)
+app.use(mavonEditor)
 // 使用路由
 app.use(router)
 // 使用Element Plus并设置语言为中文

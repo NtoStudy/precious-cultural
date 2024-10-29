@@ -43,6 +43,11 @@ const routes = [
                 component: () => import('@/views/about/index.vue')
             },
             {
+                name: 'editor',
+                path:'editor',
+                component: () => import('@/views/editor/index.vue')
+            },
+            {
                 name: 'userManage',
                 path: 'userManage/:infoId',
                 component: () => import('@/views/userManage/index.vue')
@@ -65,6 +70,7 @@ const routes = [
                 component: () => import('@/views/forum/forumDetail/index.vue'),
                 props: true,
             },
+
 
         ]
     },

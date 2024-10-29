@@ -16,6 +16,7 @@ const openDialog = () => {
 <style scoped lang="scss">
 .character-avatar {
   cursor: pointer;
+  z-index: 999999;
   transition: transform 0.3s ease;
 
   &:hover {

@@ -34,6 +34,10 @@ const goToUserManage = () => {
     router.push({name: 'userManage', params: {infoId: userStore.userInfo.username}})
   }
 }
+
+const goToEdit = () => {
+   router.push('/menu/editor')
+}
 </script>
 
 <template>
@@ -55,12 +59,16 @@ const goToUserManage = () => {
         >
           <el-menu-item index="home">首页</el-menu-item>
           <el-menu-item index="heritage">文化遗产</el-menu-item>
-<!--          <el-menu-item index="route">旅游路线</el-menu-item>-->
           <el-menu-item index="fictitious">vr展厅</el-menu-item>
           <el-menu-item index="forum">论坛</el-menu-item>
           <el-menu-item index="about">关于</el-menu-item>
         </el-menu>
         <div class="header-right-content" >
+          <el-button type="primary" round @click="goToEdit">
+              <el-icon style="margin-right: 10px;"><Plus /></el-icon>
+            发布
+          </el-button>
+
           <el-icon :size="24">
             <ChatLineSquare/>
           </el-icon>
@@ -150,9 +158,9 @@ const goToUserManage = () => {
     display: flex;
     font-weight: 550;
     .header-right-content {
-      margin-left: 100px;
+      margin-left: 140px;
       margin-right: 20px;
-      width: 180px;
+      width: 300px;
       display: flex;
       justify-content: space-evenly;
       align-items: center;
