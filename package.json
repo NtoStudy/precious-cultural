@@ -9,12 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "@element-plus/icons-vue": "^2.3.1",
     "axios": "^1.7.7",
     "countup.js": "^2.8.0",
     "echarts": "^5.5.1",
     "element-plus": "^2.8.1",
     "highlight.js": "^11.10.0",
+    "immutable": "^4.3.7",
     "markdown-it": "^14.1.0",
     "markdown-it-abbr": "^2.0.0",
     "markdown-it-anchor": "^9.2.0",

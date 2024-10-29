@@ -10,7 +10,7 @@ import pageFour from './pageFour/index.vue'
     <pageOne style="height: 100vh;"/>
     <pageTwo style="height: 100vh;"/>
     <pageThree style="height: 100vh;"/>
-<!--    <pageFour style="height: 100vh;"/>-->
+    <pageFour style="height: 100vh;"/>
   </div>
 </template>
 
