@@ -11,11 +11,19 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { Viewer } from 'photo-sphere-viewer';
 import 'photo-sphere-viewer/dist/photo-sphere-viewer.css';
+import {hallPanoramaByIdGetApi} from "@/api/heritage/panorama.js";
 // 使用 useRoute 获取路由信息
 const route = useRoute();
 // 从路由查询参数中获取 imgUrl
-const url = ref(route.query.url);
+const url = ref();
 
+const hallPanoramaById = async () =>{
+  const res = await hallPanoramaByIdGetApi(route.params.fictitiousId)
+  url.value = res.data.data[0].url
+  console.log(url.value)
+  initViewer();
+}
+hallPanoramaById()
 
 // 初始化全景图的函数
 const initViewer = () => {
@@ -38,10 +46,6 @@ const initViewer = () => {
   }
 };
 
-// 在组件挂载后调用 initViewer 函数
-onMounted(() => {
-  initViewer();
-});
 
 </script>
 

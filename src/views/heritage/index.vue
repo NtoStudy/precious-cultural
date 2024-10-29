@@ -110,7 +110,7 @@ const changeItemActive = (index) => {
         <div class="gallery-item" v-for="(item, index) in NonHeritagePageData" :key="index"
              @mouseenter="handleMouseEnter(index)"
              @mouseleave="handleMouseLeave"
-             @click="() => goToDetail(item.id)">
+             @click="() => goToDetail(item)">
           <img :src="item.imgUrl" :alt="item.name"/>
           <div class="caption" v-if="!hoveredIndex === index">
             {{ item.name }}

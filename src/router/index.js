@@ -80,14 +80,6 @@ const routes = [
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
-    scrollBehavior (to, from, savedPosition) {
-        if (to.hash) {
-            return {
-                selector: to.hash,
-                behavior: 'smooth'
-            };
-        }
-    }
 })
 
 export default router

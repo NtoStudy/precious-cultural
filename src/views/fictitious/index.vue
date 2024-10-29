@@ -12,16 +12,11 @@ function handlePageChange() {
 const fictitiousList = ref([])
 // 点击跳转到景点详情页
 function goToDetail(item) {
-  router.push({
-    name: 'fictitiousDetail',
-    params: { fictitiousId: encodeURIComponent(item.id) },
-    query: { url: item.url } // 将 imgUrl 作为 query 参数传递
-  });
+  router.push(`/menu/fictitious/fictitiousDetail/${item.id}`);
 }
 // 获取用户的景点列表
 const userPanoramaPage = async ()=>{
   const res = await hallPanoramaPageGetApi(currentPage.value, pageSize.value)
-  console.log(res)
   const data = res.data.data
   total.value = data.total
   fictitiousList.value = data.records

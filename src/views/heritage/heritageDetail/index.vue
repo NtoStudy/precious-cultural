@@ -11,7 +11,6 @@ const userNonHeritageData = ref({})
 const userNonHeritageById = async () => {
    const res = await hallNonHeritageByIdGetApi(props.heritageId);
   userNonHeritageData.value = res.data.data
-   console.log(userNonHeritageData.value)
 }
 onMounted(()=>{
   userNonHeritageById()
