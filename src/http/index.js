@@ -8,15 +8,13 @@ const requests = axios.create({
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
+        'token': userStore.userInfo?.token
     }
 })
 
-// 添加请求拦截器
 requests.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
-    if (userStore.info.token) {
-        config.headers['token'] = userStore.info.token;
-    }
+    config.headers['token'] = userStore.userInfo?.token || '';
     return config;
 }, function (error) {
     // 对请求错误做些什么

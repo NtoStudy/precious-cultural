@@ -17,12 +17,17 @@
     <!-- 添加两个按钮来控制标题的文字内容的更改 -->
     <el-button class="control-button" @click="prevItem"> < </el-button>
     <el-button class="control-button" @click="nextItem"> > </el-button>
+    <div class="footer">
+      目前活跃用户：<span ref="userCount"></span>,
+      访问量：<span ref="writeCount"></span> ,
+      帖子发布量：<span ref="viewCount"></span>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
+import {onMounted, ref} from 'vue';
+import {CountUp} from "countup.js";
 // 标题和文字数据
 const data = [
   {
@@ -60,8 +65,15 @@ function prevItem() {
   currentText.value = data[currentIndex].text;
 }
 
+const userCount = ref()
+const writeCount = ref()
+const viewCount = ref()
 
-
+onMounted(()=>{
+  new CountUp(userCount.value,13212 ).start()
+  new CountUp(writeCount.value, 12312).start()
+  new CountUp(viewCount.value, 52331231).start()
+})
 </script>
 
 <style lang="scss" scoped>
@@ -152,6 +164,14 @@ function prevItem() {
     &:last-of-type {
       right: 10px;
     }
+  }
+
+  & .footer {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 22px;
   }
 }
 </style>

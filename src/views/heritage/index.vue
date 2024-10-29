@@ -3,13 +3,16 @@
 import {ref, computed, onMounted, watch} from 'vue';
 import {useRouter} from "vue-router";
 import {hallNonHeritagePageGetApi} from "@/api/heritage/nonHertage.js";
+import {forumLabelGetApi} from "@/api/forum/label.js";
 
 const router = useRouter();
 
 // 定义导航项
-const navItems = ['民间文学', '传统戏剧', '传统美术', '传统医药', '传统音乐'];
+const navItems = ref([]); // 导航项数组
 const activeItem = ref(navItems[0]); // 当前激活的导航项
-const activeItemIndex = computed(() => navItems.indexOf(activeItem.value)); // 计算激活项的索引
+const showAll = ref(false); // 是否显示所有导航项
+const visibleItems = computed(() => showAll.value ? navItems.value : navItems.value.slice(0, 5)); // 计算可见的导航项
+const activeItemIndex = computed(() => navItems.value.indexOf(activeItem.value));
 const pageSize = ref(6); // 每页显示的数量
 const currentPage = ref(1); // 当前页码
 const total = ref(10); // 总记录数
@@ -29,6 +32,12 @@ const userNonHeritagePage = async () => {
   NonHeritagePageData.value = data.records;
 };
 
+const forumLabel = async () => {
+  const res = await forumLabelGetApi();
+  const data = res.data.data;
+  navItems.value = data.map(item => item.labelName);
+}
+
 // 跳转到详情页面
 const goToDetail = (item) => {
   router.push(`/menu/heritage/heritageDetail/${item.id}`);
@@ -36,24 +45,29 @@ const goToDetail = (item) => {
 
 // 组件挂载时获取数据
 onMounted(() => {
-  userNonHeritagePage();
-});
+  userNonHeritagePage()
+  forumLabel()
+})
 
 // 监听激活项索引变化
 watch(activeItemIndex, () => {
-  userNonHeritagePage();
-});
+  userNonHeritagePage()
+})
 
 // 处理鼠标进入事件
 const handleMouseEnter = (index) => {
-  hoveredIndex.value = index;
-};
+  hoveredIndex.value = index
+}
 
 // 处理鼠标离开事件
 const handleMouseLeave = () => {
   hoveredIndex.value = null;
 };
 
+// 处理下拉菜单点击事件
+const changeItemActive = (index) => {
+  activeItem.value = navItems.value[index];
+}
 </script>
 
 <template>
@@ -63,13 +77,31 @@ const handleMouseLeave = () => {
     </header>
     <nav class="nav">
       <ul>
-        <li v-for="(item, index) in navItems"
+        <li v-for="(item, index) in visibleItems"
             :key="index"
             :class="{ active: activeItem === item }"
             @click="activeItem = item">
           {{ item }}
         </li>
+        <el-dropdown trigger="click" style="cursor: pointer">
+      <span class="el-dropdown-link">
+        更多
+        <el-icon class="el-icon--right">
+          <arrow-down/>
+        </el-icon>
+      </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item @click="changeItemActive(5)">{{ navItems[5] }}</el-dropdown-item>
+              <el-dropdown-item @click="changeItemActive(6)">{{ navItems[6] }}</el-dropdown-item>
+              <el-dropdown-item @click="changeItemActive(7)">{{ navItems[7] }}</el-dropdown-item>
+              <el-dropdown-item @click="changeItemActive(8)">{{ navItems[8] }}</el-dropdown-item>
+              <el-dropdown-item @click="changeItemActive(9)">{{ navItems[9] }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </ul>
+
     </nav>
     <main>
       <h1 class="title">HERITAGE.</h1>

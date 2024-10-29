@@ -1,5 +1,5 @@
 <script setup>
-import {computed, reactive, ref} from 'vue';
+import { reactive, ref} from 'vue';
 import router from "@/router/index.js";
 import { ElMessage } from 'element-plus'
 const activeIndex = ref('1');
@@ -129,6 +129,7 @@ const accountSetting = [
     <el-card class="last-page" @click="router.push({name: 'userManage', params: {infoId: userInfo.userInfo.username}})">
       < 返回个人主页
     </el-card>
+
     <div class="info-container">
       <div class="info-left">
         <el-menu
@@ -158,7 +159,7 @@ const accountSetting = [
               <el-form-item label="用户名" prop="name" required style="width: 600px">
                 <el-input v-model="ruleForm.name"/>
               </el-form-item>
-              <el-form-item label="出生日期" prop="name">
+              <el-form-item label="出生日期" prop="date">
                 <el-date-picker
                     v-model="ruleForm.date"
                     type="date"
@@ -166,19 +167,19 @@ const accountSetting = [
                     style="width: 100%"
                 />
               </el-form-item>
-              <el-form-item label="职业方向" prop="name">
+              <el-form-item label="职业方向" prop='careerPath'>
                 <el-input v-model="ruleForm.careerPath" placeholder="请输入职业方向"></el-input>
               </el-form-item>
-              <el-form-item label="职位" prop="name">
+              <el-form-item label="职位" prop="position">
                 <el-input v-model="ruleForm.position" placeholder="请输入职位" maxlength="50" show-word-limit/>
               </el-form-item>
-              <el-form-item label="家庭地址" prop="name">
+              <el-form-item label="家庭地址" prop="address">
                 <el-input v-model="ruleForm.address" placeholder="请输入家庭地址" maxlength="50" show-word-limit/>
               </el-form-item>
-              <el-form-item label="公司" prop="name">
+              <el-form-item label="公司" prop="company">
                 <el-input v-model="ruleForm.company" placeholder="请输入公司" maxlength="50" show-word-limit/>
               </el-form-item>
-              <el-form-item label="个人介绍" prop="name">
+              <el-form-item label="个人介绍" prop="desc">
                 <el-input v-model="ruleForm.desc" type="textarea" placeholder="请输入个人介绍" maxlength="200"
                           show-word-limit :autosize="{ minRows: 2, maxRows: 4 }"/>
               </el-form-item>
@@ -188,7 +189,7 @@ const accountSetting = [
             <div class="avatar-uploader">
               <el-upload
                   class="avatar-uploader"
-                  action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+                  action="http://localhost:8080/upload"
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   :before-upload="beforeAvatarUpload"
