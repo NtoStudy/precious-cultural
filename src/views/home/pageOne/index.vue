@@ -14,7 +14,6 @@
         {{ currentText }}
       </p>
     </div>
-    <!-- 添加两个按钮来控制标题的文字内容的更改 -->
     <el-button class="control-button" @click="prevItem"> < </el-button>
     <el-button class="control-button" @click="nextItem"> > </el-button>
     <div class="footer">
@@ -26,8 +25,10 @@
 </template>
 
 <script setup>
+// 导入Vue的功能和计数库
 import {onMounted, ref} from 'vue';
 import {CountUp} from "countup.js";
+
 // 标题和文字数据
 const data = [
   {
@@ -48,32 +49,45 @@ const data = [
   }
 ];
 
-/**
- * 控制标题的文字内容的更改
- */
+
+// 控制标题的文字内容的更改
 let currentIndex = 0;
 const currentTitle = ref(data[currentIndex].title);
 const currentText = ref(data[currentIndex].text);
-function nextItem() {
-  currentIndex = (currentIndex + 1) % data.length;
-  currentTitle.value = data[currentIndex].title;
-  currentText.value = data[currentIndex].text;
-}
-function prevItem() {
-  currentIndex = (currentIndex - 1 + data.length) % data.length;
-  currentTitle.value = data[currentIndex].title;
-  currentText.value = data[currentIndex].text;
+
+// 更新当前标题和文本内容
+function updateContent() {
+  currentTitle.value = data[currentIndex]?.title || '未知标题';
+  currentText.value = data[currentIndex]?.text || '未知内容';
 }
 
+// 显示下一个内容项
+function nextItem() {
+  currentIndex = (currentIndex + 1) % data.length;
+  updateContent();
+}
+
+// 显示上一个内容项
+function prevItem() {
+  currentIndex = (currentIndex - 1 + data.length) % data.length;
+  updateContent();
+}
+
+// 用于引用用户计数、写作计数和查看计数的响应式变量
 const userCount = ref()
 const writeCount = ref()
 const viewCount = ref()
 
-onMounted(()=>{
-  new CountUp(userCount.value,13212 ).start()
-  new CountUp(writeCount.value, 12312).start()
-  new CountUp(viewCount.value, 52331231).start()
-})
+// 组件挂载后初始化计数动画
+onMounted(() => {
+  try {
+    new CountUp(userCount.value, 13212).start();
+    new CountUp(writeCount.value, 12312).start();
+    new CountUp(viewCount.value, 52331231).start();
+  } catch (error) {
+    console.error('计数动画启动失败:', error);
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -86,7 +100,8 @@ onMounted(()=>{
   background-position: center;
   opacity: 0.8;
   z-index: -1;
-  & .search-box {
+
+  .search-box {
     position: absolute;
     top: 25%;
     left: 50%;
@@ -95,7 +110,7 @@ onMounted(()=>{
     display: flex;
     align-items: center;
 
-    & .search-input {
+    .search-input {
       width: 580px;
       height: 30px;
       padding: 10px;
@@ -112,7 +127,7 @@ onMounted(()=>{
     }
   }
 
-  & .intro-box {
+  .intro-box {
     position: absolute;
     top: 60%;
     left: 50%;
@@ -125,15 +140,14 @@ onMounted(()=>{
 
     h2 {
       font-size: 36px;
-      margin-top: 10px;
-      margin-bottom: 20px;
+      margin: 10px 0 20px;
       font-family: '华文新魏', sans-serif;
       text-align: center;
     }
 
-    & .intro-text {
+    .intro-text {
       font-size: 17px;
-      text-indent: 2em; // 控制首行缩进两个字符
+      text-indent: 2em;
       padding: 0 10px;
       letter-spacing: 1px;
       line-height: 1.5;
@@ -142,7 +156,7 @@ onMounted(()=>{
     }
   }
 
-  & .control-button {
+  .control-button {
     position: absolute;
     top: 60%;
     transform: translateY(-50%);
@@ -166,7 +180,7 @@ onMounted(()=>{
     }
   }
 
-  & .footer {
+  .footer {
     position: absolute;
     bottom: 40px;
     left: 50%;

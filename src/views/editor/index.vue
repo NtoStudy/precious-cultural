@@ -1,4 +1,5 @@
 <script setup>
+// 引入 Vue 相关的响应式 API
 import { reactive, ref, watch, nextTick } from "vue";
 import { ElForm, ElFormItem, ElInput, ElButton, ElMessage } from 'element-plus';
 import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue';
@@ -33,7 +34,6 @@ const blogForm = ref({
   desc: ''
 });
 
-
 // 提交表单
 const submitForm = () => {
   if (!blogForm.title || !blogForm.desc) {
@@ -67,6 +67,7 @@ const handleClose = (tag) => {
   }
 };
 
+// 显示输入框
 const showInput = () => {
   inputVisible.value = true;
   nextTick(() => {
@@ -74,6 +75,7 @@ const showInput = () => {
   });
 };
 
+// 确认输入标签
 const handleInputConfirm = () => {
   if (inputValue.value) {
     dynamicTags.value.push(inputValue.value);

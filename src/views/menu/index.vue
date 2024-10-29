@@ -1,42 +1,58 @@
 <script setup>
-import { reactive, ref} from 'vue'
-// 导入pinia的useStore
+import { reactive, ref } from 'vue'
 import { useUserInfoStore } from '@/store/modules/user'
-import {useRoute} from "vue-router";
+import { useRoute } from "vue-router";
 import router from "@/router/index.js";
+
+// 使用状态管理获取用户信息
 const userStore = useUserInfoStore()
-// 实现router切换路由信息
 const activeIndex = ref('home')
 const route = useRoute();
-if(route.name){
+
+// 初始化激活的菜单索引
+if (route.name) {
   activeIndex.value = route.name;
 }
-// 实现默认头像
+
+// 定义响应式状态
 const state = reactive({
-  circleUrl: 'https://takeaway-hei.oss-cn-hangzhou.aliyuncs.com/tx.png' || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+  circleUrl: 'https://takeaway-hei.oss-cn-hangzhou.aliyuncs.com/tx.png',
 })
+
+// 控制下拉菜单的可见性
 const isDropdownVisible = ref(false);
+
+// 切换下拉菜单的可见性
 const toggleDropdown = () => {
   isDropdownVisible.value = !isDropdownVisible.value;
 };
-// 调用pinia的clearUserInfo方法实现退出登录
+
+// 退出登录
 const logout = () => {
-  userStore.clearUserInfo()
-}
-// 实现个人中心路由跳转
-const goToUserManage = () => {
-  console.log(userStore.userInfo)
-  if(userStore.userInfo === null){
-    console.log('未登录')
-    router.push({name: 'login'})
-  }
-  else {
-    router.push({name: 'userManage', params: {infoId: userStore.userInfo.username}})
+  try {
+    userStore.clearUserInfo()
+  } catch (error) {
+    console.error('退出登录失败：', error);
   }
 }
 
+// 导航到用户管理页面
+const goToUserManage = () => {
+  try {
+    if (!userStore.userInfo) {
+      console.log('未登录');
+      router.push({ name: 'login' });
+    } else {
+      router.push({ name: 'userManage', params: { infoId: userStore.userInfo.username } });
+    }
+  } catch (error) {
+    console.error('导航到个人中心失败：', error);
+  }
+}
+
+// 导航到编辑页面
 const goToEdit = () => {
-   router.push('/menu/editor')
+  router.push('/menu/editor')
 }
 </script>
 
@@ -44,18 +60,21 @@ const goToEdit = () => {
   <el-container>
     <el-header class="header">
       <div class="left-header">遗珍非往</div>
-      <div class="left-header-text" v-if="userStore.userInfo">尊敬的 {{ userStore.userInfo.username }} ，欢迎来到遗珍非往！</div>
-      <div class="left-header-text" v-else>欢迎来到遗珍非往！点这里进行
+      <div class="left-header-text" v-if="userStore.userInfo">
+        尊敬的 {{ userStore.userInfo.username }} ，欢迎来到遗珍非往！
+      </div>
+      <div class="left-header-text" v-else>
+        欢迎来到遗珍非往！点这里进行
         <router-link to="/login">登录</router-link>
       </div>
       <div class="right-header">
         <el-menu
-            :default-active="activeIndex"
-            class="el-menu-demo"
-            mode="horizontal"
-            :ellipsis="false"
-            active-text-color="#ffd04b"
-            router
+          :default-active="activeIndex"
+          class="el-menu-demo"
+          mode="horizontal"
+          :ellipsis="false"
+          active-text-color="#ffd04b"
+          router
         >
           <el-menu-item index="home">首页</el-menu-item>
           <el-menu-item index="heritage">文化遗产</el-menu-item>
@@ -63,14 +82,13 @@ const goToEdit = () => {
           <el-menu-item index="forum">论坛</el-menu-item>
           <el-menu-item index="about">关于</el-menu-item>
         </el-menu>
-        <div class="header-right-content" >
+        <div class="header-right-content">
           <el-button type="primary" round @click="goToEdit">
-              <el-icon style="margin-right: 10px;"><Plus /></el-icon>
+            <el-icon style="margin-right: 10px;"><Plus /></el-icon>
             发布
           </el-button>
-
           <el-icon :size="24">
-            <ChatLineSquare/>
+            <ChatLineSquare />
           </el-icon>
           <el-popover placement="bottom" :width="220" trigger="hover">
             <template #reference>
@@ -80,7 +98,7 @@ const goToEdit = () => {
               <div slot="header" style="text-align: center; font-size: 16px;">
                 <p>{{ userStore.userInfo ? userStore.userInfo.username : '未登录' }}</p>
               </div>
-              <el-divider style="margin: 10px 0;"/>
+              <el-divider style="margin: 10px 0;" />
               <div slot="body" style="display: flex; justify-content: space-around;">
                 <div>
                   <p style="font-weight: bold; font-size: 18px;">100</p>
@@ -95,19 +113,19 @@ const goToEdit = () => {
                   <p style="text-align: center; font-size: 14px;">获赞</p>
                 </div>
               </div>
-              <el-divider style="margin: 10px 0;"/>
-              <div slot="footer">
-                <div style="display: flex; cursor: pointer; " @click="goToUserManage()">
-                  <el-icon size="20"  style="margin-left: 20px;margin-right: 10px;"><User /></el-icon>
+              <el-divider style="margin: 10px 0;" />
+              <div slot="footer" @click="goToUserManage()">
+                <div style="display: flex; cursor: pointer;">
+                  <el-icon size="20" style="margin-left: 20px; margin-right: 10px;"><User /></el-icon>
                   <p style="font-size: 16px;">个人中心</p>
                 </div>
               </div>
             </template>
           </el-popover>
           <el-dropdown trigger="click" :visible.sync="isDropdownVisible" @visible-change="toggleDropdown">
-              <span class="el-dropdown-link">
-                设置
-              </span>
+            <span class="el-dropdown-link">
+              设置
+            </span>
             <template #dropdown>
               <el-dropdown-menu :aria-hidden="!isDropdownVisible">
                 <el-dropdown-item>设置账号</el-dropdown-item>
@@ -119,42 +137,40 @@ const goToEdit = () => {
       </div>
     </el-header>
     <el-main>
-      <router-view/>
+      <router-view />
     </el-main>
   </el-container>
-
 </template>
 
 <style lang="scss" scoped>
 .carousel-image {
-  /* 轮播图每个项目的样式 */
   width: 100%;
   height: 100vh;
   background-size: cover;
   background-position: center;
 }
-.el-header{
+.el-header {
   --el-header-padding: 0;
   --el-header-height: 60px;
-  --el-menu-text-color : rgb(104, 109, 139);
+  --el-menu-text-color: rgb(104, 109, 139);
   --el-menu-active-color: rgb(201, 176, 154);
-  --el-menu-bg-color:  rgb(201, 176, 154);
+  --el-menu-bg-color: rgb(201, 176, 154);
 }
-.header{
+.header {
   display: flex;
   justify-content: space-between;
   background-color: rgba(255, 255, 255) !important;
-  .left-header{
+  .left-header {
     line-height: 60px;
     font-size: 28px;
     margin-left: 80px;
-    font-family: "STXingkai", "华文行楷", "Xingkai SC", "KaiTi",serif;
+    font-family: "STXingkai", "华文行楷", "Xingkai SC", "KaiTi", serif;
   }
-  .left-header-text{
+  .left-header-text {
     line-height: 60px;
     font-size: 16px;
   }
-  .right-header{
+  .right-header {
     display: flex;
     font-weight: 550;
     .header-right-content {
@@ -164,33 +180,33 @@ const goToEdit = () => {
       display: flex;
       justify-content: space-evenly;
       align-items: center;
-      .el-dropdown-link{
+      .el-dropdown-link {
         font-size: 16px;
       }
-      .user-info{
+      .user-info {
         display: flex;
       }
     }
   }
 }
-.el-main{
-  --el-main-padding:0
+.el-main {
+  --el-main-padding: 0;
 }
 .el-menu--horizontal {
   --el-menu-horizontal-height: 60px;
 }
 .el-menu--horizontal.el-menu {
-   border-bottom: 0 solid var(--el-menu-border-color);
+  border-bottom: 0 solid var(--el-menu-border-color);
 }
 .el-menu {
-    background-color: transparent !important;
+  background-color: transparent !important;
 }
-.el-menu--horizontal .el-menu-item:not(.is-disabled):focus, .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
+.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
   background-color: transparent !important;
   color: rgb(201, 176, 154);
 }
-.el-menu--horizontal>.el-sub-menu .el-sub-menu title:hover{
-  background-color:rgb(201, 176, 154) !important;
+.el-menu--horizontal > .el-sub-menu .el-sub-menu title:hover {
+  background-color: rgb(201, 176, 154) !important;
 }
-
 </style>

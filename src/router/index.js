@@ -1,5 +1,6 @@
-import {createWebHashHistory, createRouter} from 'vue-router'
+import { createWebHashHistory, createRouter } from 'vue-router'
 
+// 定义路由配置
 const routes = [
     {
         path: '/',
@@ -35,7 +36,6 @@ const routes = [
                 name: 'forum',
                 path: 'forum',
                 component: () => import('@/views/forum/index.vue')
-
             },
             {
                 name: 'about',
@@ -44,7 +44,7 @@ const routes = [
             },
             {
                 name: 'editor',
-                path:'editor',
+                path: 'editor',
                 component: () => import('@/views/editor/index.vue')
             },
             {
@@ -54,38 +54,41 @@ const routes = [
             },
             {
                 name: 'userInfo',
-                path:'userInfo/:infoId',
+                path: 'userInfo/:infoId',
                 component: () => import('@/views/userInfo/index.vue'),
-
             },
             {
-                path: '/menu/heritage/heritageDetail/:heritageId',
                 name: 'heritageDetail',
+                path: 'heritage/heritageDetail/:heritageId',
                 component: () => import('@/views/heritage/heritageDetail/index.vue'),
                 props: true,
             },
             {
-                path: '/menu/forum/forumDetail/:articleId',
                 name: 'forumDetail',
+                path: 'forum/forumDetail/:articleId',
                 component: () => import('@/views/forum/forumDetail/index.vue'),
                 props: true,
-            },
-
-
+            }
         ]
     },
     {
-        path: '/menu/fictitious/fictitiousDetail/:fictitiousId',
         name: 'fictitiousDetail',
+        path: '/menu/fictitious/fictitiousDetail/:fictitiousId',
         component: () => import('@/views/fictitious/fictitiousDetail/index.vue'),
         props: true,
-    }]
-
+    }
+]
 
 // 创建路由实例
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
 })
+
+// 添加全局错误处理
+router.onError((error) => {
+    console.error('路由错误:', error);
+    // 这里可以添加更多的错误处理逻辑，例如通知用户
+});
 
 export default router

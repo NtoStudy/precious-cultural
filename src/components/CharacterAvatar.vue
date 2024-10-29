@@ -1,15 +1,20 @@
 <template>
-  <div class="character-avatar" @click="openDialog">
-    <el-avatar :src=characterImageUrl style="width: 80px; height: 80px;" title="点我可以进行AI对话哦"/>
+  <div class="character-avatar" @click="handleOpenDialog">
+    <el-avatar :src="characterImageUrl" style="width: 80px; height: 80px;" title="点我可以进行AI对话哦"/>
   </div>
 </template>
 
 <script setup>
 const characterImageUrl = 'https://takeaway-hei.oss-cn-hangzhou.aliyuncs.com/rw.jpg';
 
-const emits = defineEmits(['open-dialog'])
-const openDialog = () => {
-  emits('open-dialog')
+const emits = defineEmits(['open-dialog']);
+
+const handleOpenDialog = () => {
+  try {
+    emits('open-dialog');
+  } catch (error) {
+    console.error('打开对话框时出错:', error);
+  }
 }
 </script>
 

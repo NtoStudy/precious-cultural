@@ -24,13 +24,12 @@
         </section>
         <section class="project-history">
           <h2>项目历史</h2>
-          <br/>
           <el-timeline>
-          <el-timeline-item timestamp="2024-4-8">项目筹备启动</el-timeline-item>
-          <el-timeline-item timestamp="2024-6">产品原型设计完成</el-timeline-item>
-          <el-timeline-item timestamp="2024-8">首次产品测试</el-timeline-item>
-          <el-timeline-item timestamp="2024-10">产品正式发布</el-timeline-item>
-        </el-timeline>
+            <el-timeline-item timestamp="2024-4-8">项目筹备启动</el-timeline-item>
+            <el-timeline-item timestamp="2024-6">产品原型设计完成</el-timeline-item>
+            <el-timeline-item timestamp="2024-8">首次产品测试</el-timeline-item>
+            <el-timeline-item timestamp="2024-10">产品正式发布</el-timeline-item>
+          </el-timeline>
         </section>
         <section class="contact-us">
           <h2>联系我们</h2>
@@ -44,7 +43,14 @@
 </template>
 
 <script setup>
-import { ElContainer, ElHeader, ElMain, ElTimeline, ElTimelineItem } from 'element-plus';
+import { ElContainer, ElMain, ElTimeline, ElTimelineItem } from 'element-plus';
+
+// 模拟简单的错误处理
+try {
+  // 可以在这里添加逻辑来处理可能的错误
+} catch (error) {
+  console.error("加载组件时出现错误：", error);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -59,27 +65,29 @@ import { ElContainer, ElHeader, ElMain, ElTimeline, ElTimelineItem } from 'eleme
   background-repeat: no-repeat;
 }
 
-  .main-content {
-    flex: 1;
-    padding: 20px;
-    background: url("~@/assets/img_1.png") no-repeat center center / cover;
-    .introduction h3{
-      margin-top: 20px;
-       font-size: 20px;
-      font-weight: 500;
-    }
-    .mission-section li{
-      margin-top: 10px;
-    }
-    h2 {
-      margin-top: 20px;
-      font-size: 24px;
-    }
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background: url("~@/assets/img_1.png") no-repeat center center / cover;
 
-    p {
-      line-height: 1.6;
-      margin-top: 10px;
-    }
+  .introduction h3 {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 500;
   }
 
+  .mission-section li {
+    margin-top: 10px;
+  }
+
+  h2 {
+    margin-top: 20px;
+    font-size: 24px;
+  }
+
+  p {
+    line-height: 1.6;
+    margin-top: 10px;
+  }
+}
 </style>

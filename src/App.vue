@@ -1,34 +1,38 @@
 <script setup>
 import CharacterAvatar from '@/components/CharacterAvatar.vue';
-import {ref} from 'vue';
+import { ref } from 'vue';
+
 const messages = ref([]);
 const inputMessage = ref('');
 const dialogVisible = ref(false);
-const sendAIMessage = async () => {
-  const aiResponse = `AI 回复：${inputMessage.value}`;
-  messages.value.push({text: aiResponse, self: false});
-  inputMessage.value = '';
-};
-const sendMessage = () => {
-  if (inputMessage.value.trim() === '') return;
-  messages.value.push({text: inputMessage.value, self: true});
-  if(inputMessage.value === '该网站有哪些功能？'){
-    setTimeout(()=>{
-      messages.value.push({text: '网站功能包括：1. 非遗文化遗产的介绍；2. 在线使用vr虚拟体验展厅和；3. 非遗文献分享；4. 论坛讨论非遗相关内容；5. 介绍团队。', self: false});
-    },200)
-  }
-  if(inputMessage.value === '我想了解非遗文化遗产，应该去哪个页面？'){
-    setTimeout(()=>{
-      messages.value.push({text: '您可以到“文化遗产”页面了解。', self: false});
-    },200)
-  }
-  if(inputMessage.value === '好的谢谢你'){
-    setTimeout(()=>{
-      messages.value.push({text: '不客气，有什么问题都可以随时联系我们！', self: false});
-    },200)
-  }
-  inputMessage.value = '';
 
+// 预定义问答对
+const QAS = {
+  '该网站有哪些功能？': '网站功能包括：1. 非遗文化遗产的介绍；2. 在线使用vr虚拟体验展厅和；3. 非遗文献分享；4. 论坛讨论非遗相关内容；5. 介绍团队。',
+  '我想了解非遗文化遗产，应该去哪个页面？': '您可以到“文化遗产”页面了解。',
+  '好的谢谢你': '不客气，有什么问题都可以随时联系我们！',
+};
+
+const sendMessage = () => {
+  const trimmedMessage = inputMessage.value.trim();
+  if (trimmedMessage === '') return; // 输入为空直接返回
+
+  // 添加用户消息
+  messages.value.push({ text: trimmedMessage, self: true });
+
+  // 检查是否有预定义的回复
+  if (QAS[trimmedMessage]) {
+    setTimeout(() => {
+      messages.value.push({ text: QAS[trimmedMessage], self: false });
+    }, 200);
+  } else {
+    // 处理未知问题
+    setTimeout(() => {
+      messages.value.push({ text: '抱歉，我不太明白您的问题，请您换个问法。', self: false });
+    }, 200);
+  }
+
+  inputMessage.value = ''; // 清空输入框
 };
 </script>
 
@@ -39,10 +43,9 @@ const sendMessage = () => {
       title="快来找我问一些跟非遗相关的问题吧！"
       v-model="dialogVisible"
       width="50%"
-
   >
     <div class="messages-container">
-      <div v-for="message in messages" :key="message.id"
+      <div v-for="(message, index) in messages" :key="index"
            class="message"
            :class="{ 'my-message': message.self, 'ai-message': !message.self }">
         {{ message.text }}
@@ -55,7 +58,6 @@ const sendMessage = () => {
           @keyup.enter="sendMessage"
       />
       <el-button @click="sendMessage">发送</el-button>
-<!--      <el-button @click="sendAIMessage">AI回复</el-button>-->
     </div>
   </el-dialog>
 </template>
