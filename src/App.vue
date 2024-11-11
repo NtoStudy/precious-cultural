@@ -1,7 +1,7 @@
 <script setup>
 import CharacterAvatar from '@/components/CharacterAvatar.vue';
 import {computed, ref} from 'vue';
-import {aiAudioGetApi, aiChatGetApi, aiImageGetApi} from "@/api/ai/ai.js";
+import {aiAudioGetApi, aiChatGetApi, aiImageGetApi} from "@/api/common/ai/ai.js";
 
 const messages = ref([
   { text: '你好，我是非遗文化遗产网站的客服小姐姐，有什么可以帮助您？', self: false },

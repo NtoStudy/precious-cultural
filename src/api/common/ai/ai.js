@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getLocalStorage } from '@/utils/catch'
+import { getLocalStorage } from '@/utils/catch.js'
 const token = getLocalStorage('token')
 const request = axios.create({
     baseURL: 'http://localhost:8080',

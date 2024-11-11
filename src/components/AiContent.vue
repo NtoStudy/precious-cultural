@@ -1,5 +1,5 @@
 <script setup>
-import {aiAudioGetApi, aiChatGetApi, aiImageGetApi} from "@/api/ai/ai.js";
+import {aiAudioGetApi, aiChatGetApi, aiImageGetApi} from "@/api/common/ai/ai.js";
 // 处理响应结果
 const responseMessage = async() => {
   if(typeIndex.value === 1){
