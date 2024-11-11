@@ -1,17 +1,45 @@
 <script setup>
 import CharacterAvatar from '@/components/CharacterAvatar.vue';
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
+import {aiAudioGetApi, aiChatGetApi, aiImageGetApi} from "@/api/ai/ai.js";
 
-const messages = ref([]);
+const messages = ref([
+  { text: '你好，我是非遗文化遗产网站的客服小姐姐，有什么可以帮助您？', self: false },
+]);
 const inputMessage = ref('');
 const dialogVisible = ref(false);
+const typeIndex = ref(1)
 
-// 预定义问答对
-const QAS = {
-  '该网站有哪些功能？': '网站功能包括：1. 非遗文化遗产的介绍；2. 在线使用vr虚拟体验展厅和；3. 非遗文献分享；4. 论坛讨论非遗相关内容；5. 介绍团队。',
-  '我想了解非遗文化遗产，应该去哪个页面？': '您可以到“文化遗产”页面了解。',
-  '好的谢谢你': '不客气，有什么问题都可以随时联系我们！',
-};
+const currentType = computed(() => {
+  if (typeIndex.value === 1) {
+    return '文生文';
+  } else if (typeIndex.value === 2) {
+    return '文生图';
+  } else if (typeIndex.value === 3) {
+    return '文生音频';
+  }
+});
+
+// 选择ai类型
+const typeSelect = (index) => {
+  typeIndex.value = index
+}
+// 处理响应结果
+const responseMessage = async() => {
+  if(typeIndex.value === 1){
+    const data = await aiChatGetApi( inputMessage.value,1)
+    console.log(data)
+    messages.value.push({ text: data.data, self: false });
+  }else if(typeIndex.value === 2){
+    const data = await aiImageGetApi( inputMessage.value )
+    console.log(data)
+    messages.value.push({ text: data.data, self: false });
+  }else if(typeIndex.value === 3){
+    const data = await aiAudioGetApi( inputMessage.value )
+    console.log(data)
+    messages.value.push({ text: data.data, self: false });
+  }
+}
 
 const sendMessage = () => {
   const trimmedMessage = inputMessage.value.trim();
@@ -20,18 +48,8 @@ const sendMessage = () => {
   // 添加用户消息
   messages.value.push({ text: trimmedMessage, self: true });
 
-  // 检查是否有预定义的回复
-  if (QAS[trimmedMessage]) {
-    setTimeout(() => {
-      messages.value.push({ text: QAS[trimmedMessage], self: false });
-    }, 200);
-  } else {
-    // 处理未知问题
-    setTimeout(() => {
-      messages.value.push({ text: '抱歉，我不太明白您的问题，请您换个问法。', self: false });
-    }, 200);
-  }
-
+  responseMessage()
+  // 发送消息
   inputMessage.value = ''; // 清空输入框
 };
 </script>
@@ -39,11 +57,18 @@ const sendMessage = () => {
 <template>
   <router-view/>
   <CharacterAvatar @open-dialog="dialogVisible = true" />
+
   <el-dialog
-      title="快来找我问一些跟非遗相关的问题吧！"
       v-model="dialogVisible"
       width="50%"
+      height="400"
   >
+    <template #header="{ titleId, titleClass }">
+      <div class="my-header">
+        <h4 :id="titleId" :class="titleClass">快来找我问一些跟非遗相关的问题吧
+          -- 当前类型：{{ currentType }}</h4>
+      </div>
+    </template>
     <div class="messages-container">
       <div v-for="(message, index) in messages" :key="index"
            class="message"
@@ -52,12 +77,24 @@ const sendMessage = () => {
       </div>
     </div>
     <div class="dialog-input">
+
       <el-input
           v-model="inputMessage"
-          placeholder="请输入你的问题"
+          placeholder="有什么想问的你都可以畅所欲言！"
           @keyup.enter="sendMessage"
+          size="large"
+          style="width:84%"
       />
-      <el-button @click="sendMessage">发送</el-button>
+      <el-dropdown split-button type="primary" size="large" @click="sendMessage">
+        发送
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item @click="typeSelect(1)">文生文</el-dropdown-item>
+            <el-dropdown-item @click="typeSelect(2)">文生图</el-dropdown-item>
+            <el-dropdown-item @click="typeSelect(3)">文生音频</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
   </el-dialog>
 </template>
@@ -72,9 +109,10 @@ const sendMessage = () => {
 .messages-container {
   display: flex;
   flex-direction: column;
+  height: 300px;
   margin-bottom: 10px;
   .message {
-    padding: 8px;
+    padding: 12px;
     border-radius: 4px;
     max-width: 60%;
     word-wrap: break-word;
@@ -93,6 +131,7 @@ const sendMessage = () => {
 
 .dialog-input {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-top: 10px;
 }

@@ -4,6 +4,7 @@ import {userLoginPostApi, userRegisterPostApi} from "@/api/login.js";
 import router from "@/router/index.js";
 import {useUserInfoStore} from "@/store/modules/user.js";
 import {ElMessage} from "element-plus";
+import {setLocalStorage} from "@/utils/catch.js";
 // 选项卡切换 默认为登录页面
 const activeName = ref('Login')
 // 登录表单验证规则
@@ -67,6 +68,7 @@ const login = async () => {
   const UserLogin = await userLoginPostApi(LoginRuleForm.value.LoginUserName, LoginRuleForm.value.LoginPassword)
   if(UserLogin.data.code === 1){
     const userStore = useUserInfoStore()
+    setLocalStorage('token', UserLogin.data.data.token)
     userStore.setUserInfo(UserLogin.data.data)
     ElMessage.success('登录成功')
     router.push('/menu')

@@ -1,28 +1,47 @@
-import requests from "@/http/index.js";
-
+import axios from "axios";
+import { getLocalStorage } from '@/utils/catch'
+const token = getLocalStorage('token')
+const request = axios.create({
+    baseURL: 'http://localhost:8080',
+    timeout: 5000,
+    headers: {
+        'Content-Type': 'application/json',
+        'token': token
+    }
+})
 /**
  * 文生文
  * @returns {*}
  */
-export const aiChatGetApi =() => requests({
+export const aiChatGetApi =(message,chatId = 1) => request({
     url:'/ai/chat',
-    method:'get'
+    method:'get',
+    params:{
+        message,
+        chatId
+    }
 })
 
 /**
  * 文生图
  * @returns {*}
  */
-export const aiImageGetApi = () => requests({
+export const aiImageGetApi = (message) => request({
     url: '/ai/image',
-    method: 'get'
+    method: 'get',
+    params: {
+        message
+    }
 })
 
 /**
  * 文生音频
  * @returns {*}
  */
-export const aiAudioGetApi = () => requests({
+export const aiAudioGetApi = (message) => request({
     url: '/ai/audio',
-    method: 'get'
+    method: 'get',
+    params: {
+        message
+    }
 })
