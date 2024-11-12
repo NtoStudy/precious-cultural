@@ -21,6 +21,7 @@ import quyi1 from '@/assets/lt/quyi/1.webp';
 import quyi2 from '@/assets/lt/quyi/2.webp';
 import quyi3 from '@/assets/lt/quyi/3.webp';
 import quyi4 from '@/assets/lt/quyi/4.webp';
+
 const articles = ref([
   {
     id: 1,
@@ -242,6 +243,14 @@ function handleMenuClick(index) {
   activeIndex.value = index;
 }
 
+const forumLabelGetData = ref([])
+// 文章列表分类
+const getForumLabel = async () => {
+  const res = await forumLabelGetApi()
+  forumLabelGetData.value = res.data.data
+}
+getForumLabel()
+
 // 根据分类过滤文章
 const filteredArticles = computed(() => {
   switch (activeIndex.value) {
@@ -255,6 +264,16 @@ const filteredArticles = computed(() => {
       return articles.value.filter(article => article.category === '传统舞蹈');
     case '5':
       return articles.value.filter(article => article.category === '曲艺');
+    case '6':
+      return articles.value.filter(article => article.category === '传统体育');
+    case '7':
+      return articles.value.filter(article => article.category === '传统美术');
+    case '8':
+      return articles.value.filter(article => article.category === '传统技艺');
+    case '9':
+      return articles.value.filter(article => article.category === '传统医药');
+    case '10':
+      return articles.value.filter(article => article.category === '民俗');
     default:
       return articles.value;
   }
@@ -265,17 +284,23 @@ const filteredArticles = computed(() => {
 const currentPage = ref(1);
 // 每页显示的文章数量
 const pageSize = ref(6);
+
 // 总文章数量
 function handlePageChange(newPage) {
   currentPage.value = newPage;
 }
+
 // 处理点击事件并跳转到文章详情页
 import router from "@/router/index.js";
+import {forumLabelGetApi} from "@/api/forum/label.js";
+
 const goToArticleDetail = (article, event) => {
   event.stopPropagation(); // 阻止事件冒泡
   // 跳转到文章详情页
   router.push(`/menu/forum/forumDetail/${article.id}`)
 }
+
+
 </script>
 <template>
 
@@ -289,11 +314,16 @@ const goToArticleDetail = (article, event) => {
             background-color="#fff"
             text-color="#3f7ef7"
         >
-          <el-menu-item index="1" @click="handleMenuClick('1')">传统技艺</el-menu-item>
-          <el-menu-item index="2" @click="handleMenuClick('2')">民俗</el-menu-item>
-          <el-menu-item index="3" @click="handleMenuClick('3')">传统戏剧</el-menu-item>
-          <el-menu-item index="4" @click="handleMenuClick('4')">传统舞蹈</el-menu-item>
+          <el-menu-item index="1" @click="handleMenuClick('1')">民间文学</el-menu-item>
+          <el-menu-item index="2" @click="handleMenuClick('2')">传统音乐</el-menu-item>
+          <el-menu-item index="3" @click="handleMenuClick('3')">传统舞蹈</el-menu-item>
+          <el-menu-item index="4" @click="handleMenuClick('4')">传统戏剧</el-menu-item>
           <el-menu-item index="5" @click="handleMenuClick('5')">曲艺</el-menu-item>
+          <el-menu-item index="6" @click="handleMenuClick('6')">传统体育</el-menu-item>
+          <el-menu-item index="7" @click="handleMenuClick('7')">传统美术</el-menu-item>
+          <el-menu-item index="8" @click="handleMenuClick('8')">传统技艺</el-menu-item>
+          <el-menu-item index="9" @click="handleMenuClick('9')">传统医药</el-menu-item>
+          <el-menu-item index="10" @click="handleMenuClick('10')">民俗</el-menu-item>
         </el-menu>
       </div>
       <div class="article-right">
@@ -354,6 +384,7 @@ const goToArticleDetail = (article, event) => {
     margin: auto;
     padding: 20px;
     text-align: center;
+
     .article-left {
       margin: 20px 0;
       width: 20%;

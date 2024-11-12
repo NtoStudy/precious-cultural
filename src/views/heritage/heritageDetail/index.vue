@@ -101,9 +101,7 @@ onMounted(() => {
         <p style="text-align:justify;text-indent:2em;">
           本文根据笔者在第八届中国成都国际非物质文化遗产节非遗成都论坛上的发言稿修改而成，第三部分主体曾以“加强系统性保护需要法治保障”为标题，发表于《法治日报》2023年6月14日第5版。（注释略）
         </p>
-        <div class="t_line">
-          <div class="bd"></div>
-        </div>
+
       </div>
     </div>
 

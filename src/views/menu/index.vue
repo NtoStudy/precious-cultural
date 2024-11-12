@@ -3,6 +3,9 @@ import { reactive, ref } from 'vue'
 import { useUserInfoStore } from '@/store/modules/user'
 import { useRoute } from "vue-router";
 import router from "@/router/index.js";
+import {ChatLineSquare} from "@element-plus/icons-vue";
+import {ElMessage} from "element-plus";
+import { removeLocalStorage } from "@/utils/catch.js";
 
 // 使用状态管理获取用户信息
 const userStore = useUserInfoStore()
@@ -31,6 +34,8 @@ const toggleDropdown = () => {
 const logout = () => {
   try {
     userStore.clearUserInfo()
+    removeLocalStorage('token')
+    ElMessage.success('退出登录成功！')
   } catch (error) {
     console.error('退出登录失败：', error);
   }
@@ -123,7 +128,7 @@ const goToEdit = () => {
             </template>
           </el-popover>
           <el-dropdown trigger="click" :visible.sync="isDropdownVisible" @visible-change="toggleDropdown">
-            <span class="el-dropdown-link">
+            <span class="el-dropdown-link" style="cursor: pointer; ">
               设置
             </span>
             <template #dropdown>

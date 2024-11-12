@@ -19,7 +19,7 @@ validateChoiceTable();
 </script>
 
 <template>
-  <div style="display: flex; height: 100%; position: relative;">
+  <div style="display: flex; height: 100%; position: relative; margin-top: 20px;">
     <div style="position: absolute; top: 20px; right: 20px; z-index: 1;">
       <el-radio-group v-model="choiceTable" size="large" @change="validateChoiceTable">
         <el-radio-button label="项目数据" value="choiceTable" />

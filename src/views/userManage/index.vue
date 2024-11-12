@@ -23,6 +23,7 @@ import quyi3 from "@/assets/lt/quyi/3.webp";
 import quyi4 from "@/assets/lt/quyi/4.webp";
 import {useUserInfoStore} from "@/store/modules/user.js";
 import router from "@/router/index.js";
+import {forumArticleGetPersonalGetApi} from "@/api/forum/forum.js";
 
 const userStore = useUserInfoStore();
 const activeIndex = ref('1')
@@ -266,6 +267,14 @@ if (!userStore.userInfo) {
 const goToUserInfo = () => {
   router.push({name: 'userInfo', params: {infoId: userStore.userInfo.username}})
 }
+const forumArticleGetPersonalData = ref([])
+const forumArticleGetPersonal = async() => {
+  const res = await forumArticleGetPersonalGetApi(1,100,userStore.userInfo.id)
+  forumArticleGetPersonalData.value = res.data.data.records
+  console.log(forumArticleGetPersonalData.value)
+}
+forumArticleGetPersonal()
+
 
 </script>
 <template>
@@ -344,15 +353,15 @@ const goToUserInfo = () => {
               <el-menu-item index="4">收藏列表</el-menu-item>
             </el-menu>
           </template>
-          <div class="article-list" v-for="(item, index) in articles" :key="index">
-            <h2 class="article-title">我是标题</h2>
+          <div class="article-list" v-for="(item, index) in forumArticleGetPersonalData" :key="index">
+            <h2 class="article-title">{{item.title}}</h2>
             <p class="article-content">
-              我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容</p>
+              {{item.content}}</p>
             <div class="article-footer">
-              <p>123阅读 ·</p>
-              <p>12点赞 ·</p>
-              <p>1评论 ·</p>
-              <p>6收藏</p>
+              <p>{{item.articleCountDTO.commentCount}}阅读 ·</p>
+              <p>{{item.articleCountDTO.likeCount}}点赞 ·</p>
+              <p>{{item.articleCountDTO.commentCount}}评论 ·</p>
+              <p>{{item.articleCountDTO.commentCount}}收藏</p>
             </div>
           </div>
         </el-card>
@@ -374,7 +383,7 @@ const goToUserInfo = () => {
   padding: 20px;
 
   .user-info-card {
-    background-color: skyblue;
+
     height: 140px;
 
     .user-avatar {

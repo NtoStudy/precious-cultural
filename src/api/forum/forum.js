@@ -10,17 +10,17 @@ import requests from "@/http/index.js";
  * @param id
  * @returns {*}
  */
-export const forumArticlePageGetApi = (currentPage,pageSize,title,labelIds,createUser,id) => requests({
-    url:'/forum/article/page',
-    method:'get',
-    data:{
-        currentPage,
-        pageSize,
-        title,
-        labelIds,
-        createUser,
-        id
-    }
+export const forumArticlePageGetApi = (currentPage, pageSize, title, labelIds, createUser, id) => requests({
+  url: '/forum/article/page',
+  method: 'get',
+  data: {
+    currentPage,
+    pageSize,
+    title,
+    labelIds,
+    createUser,
+    id
+  }
 })
 
 /**
@@ -30,14 +30,14 @@ export const forumArticlePageGetApi = (currentPage,pageSize,title,labelIds,creat
  * @param userId
  * @returns {*}
  */
-export const forumArticleGetPersonalGetApi = (current,size,userId) => requests({
-    url:'/forum/article/getPersonal',
-    method:'get',
-    params:{
-        current,
-        size,
-        userId
-    }
+export const forumArticleGetPersonalGetApi = (current, size, userId) => requests({
+  url: '/forum/article/getPersonal',
+  method: 'get',
+  params: {
+    current,
+    size,
+    userId
+  }
 })
 
 /**
@@ -47,14 +47,14 @@ export const forumArticleGetPersonalGetApi = (current,size,userId) => requests({
  * @param likeUser
  * @returns {*}
  */
-export const formArticleGetLikesGetApi = (current,size,likeUser) => requests({
-    url:'/forum/article/getLikes',
-    method:'get',
-    params:{
-        current,
-        size,
-        likeUser
-    }
+export const formArticleGetLikesGetApi = (current, size, likeUser) => requests({
+  url: '/forum/article/getLikes',
+  method: 'get',
+  params: {
+    current,
+    size,
+    likeUser
+  }
 })
 
 
@@ -64,19 +64,26 @@ export const formArticleGetLikesGetApi = (current,size,likeUser) => requests({
  * @param isPv
  * @returns {*}
  */
-export const forumArticleGetApi = (ids,isPv) => requests({
-    url:'/forum/article',
-    method:'get',
-    params:{
-        ids,
-        isPv
-    }
+export const forumArticleGetApi = (ids, isPv) => requests({
+  url: '/forum/article',
+  method: 'get',
+  params: {
+    ids,
+    isPv
+  }
 })
-// TODO :写文章参数待确定
 
-export const forumArticlePostApi = () => requests({
-    url:'/forum/article',
-    method:'post',
+export const forumArticlePostApi = (title, titleMap, content, labelIds) => requests({
+  url: '/forum/article',
+  method: 'post',
+  params: {
+    labelIds
+  },
+  data: {
+    title,
+    titleMap,
+    content,
+  }
 })
 
 /**
@@ -85,11 +92,11 @@ export const forumArticlePostApi = () => requests({
  * @returns {*}
  */
 export const forumArticleDeleteApi = (id) => requests({
-    url:'/forum/article',
-    method:'delete',
-    params: {
-        id
-    }
+  url: '/forum/article',
+  method: 'delete',
+  params: {
+    id
+  }
 })
 
 
