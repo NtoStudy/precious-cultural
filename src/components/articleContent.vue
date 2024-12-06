@@ -1,9 +1,37 @@
 <template>
-  <MarkdownRenderer :source="markdown" />
+  <div id="main" class="markdow-page">
+    <Viewer ref="markDownRef" :locale="zh" :value="value" :plugins="plugins"/>
+  </div>
 </template>
-
 <script setup>
-import MarkdownRenderer from "@/components/MarkdownRenderer.vue"
+import {reactive, toRefs, onMounted} from 'vue'
+import {Viewer} from '@bytemd/vue-next'
+import gfm from '@bytemd/plugin-gfm'
+import gemoji from '@bytemd/plugin-gemoji'
+import highlight from '@bytemd/plugin-highlight' // 代码高亮
+import frontmatter from '@bytemd/plugin-frontmatter' // 解析前题
+import mediumZoom from '@bytemd/plugin-medium-zoom' // 缩放图片
+import breaks from '@bytemd/plugin-breaks'
+import zhHans from 'bytemd/locales/zh_Hans.json'
+import 'bytemd/dist/index.css'
+import 'highlight.js/styles/default.css'
+import 'juejin-markdown-themes/dist/juejin.min.css'
+
+const state = reactive({
+  value: '',
+  plugins: [gfm(), gemoji(), highlight(), frontmatter(), mediumZoom(), breaks()],
+  zh: zhHans,
+  cateList: [], // 目录内容
+  offsetTopList: [], //文档流中锚点距离顶部距离集合
+  anchor: 0,
+})
+const { value, plugins, zh, markDownRef } = toRefs(state)
+
+onMounted(() => {
+  state.value = markdown
+})
+
+
 const markdown = `
 # 一. WebSocket 基本概念
 
@@ -57,7 +85,7 @@ WebSocket 是基于 TCP 的一种新的应用层网络协议。它提供了一�
 ping 、pong 的操作，对应的是 WebSocket 的两个控制帧
 
 3. 关闭阶段
-   当不再需要WebSocket连接时，需要进行关闭阶段。关闭阶段包括以下几个步骤：
+当不再需要WebSocket连接时，需要进行关闭阶段。关闭阶段包括以下几个步骤：
 
 - 客户端向服务端发送关闭请求，请求中包含一个WebSocket的随机密钥
 
@@ -71,16 +99,16 @@ ping 、pong 的操作，对应的是 WebSocket 的两个控制帧
 
 WebSocket 数据帧主要包括两个部分：帧头和有效载荷。以下是 WebSocket 数据帧结构的简要介绍：
 
-  -  帧头：帧头包括四个部分：fin、rsv1、rsv2、rsv3、opcode、masked 和 payload_length。其中，fin 表示数据帧的结束标志，rsv1、rsv2、rsv3 表示保留字段，opcode 表示数据帧的类型，masked 表示是否进行掩码处理，payload_length 表示有效载荷的长度
-  -  有效载荷：有效载荷是数据帧中实际的数据部分，它由客户端和服务端进行数据传输
+-  帧头：帧头包括四个部分：fin、rsv1、rsv2、rsv3、opcode、masked 和 payload_length。其中，fin 表示数据帧的结束标志，rsv1、rsv2、rsv3 表示保留字段，opcode 表示数据帧的类型，masked 表示是否进行掩码处理，payload_length 表示有效载荷的长度
+-  有效载荷：有效载荷是数据帧中实际的数据部分，它由客户端和服务端进行数据传输
 
 2. 控制帧结构
 
 除了数据帧之外，WebSocket 协议还包括一些控制帧，主要包括 Ping、Pong 和 Close 帧。以下是 WebSocket 控制帧结构的简要介绍：
 
-  -  Ping 帧：Ping 帧用于测试客户端和服务端之间的连接状态，客户端向服务端发送 Ping 帧，服务端收到后需要向客户端发送 Pong 帧进行响应
-  -  Pong 帧：Pong 帧用于响应客户端的 Ping 帧，它用于测试客户端和服务端之间的连接状态
-  -  Close 帧：Close 帧用于关闭客户端和服务端之间的连接，它包括四个部分：fin、rsv1、rsv2、rsv3、opcode、masked 和 payload_length。其中，opcode 的值为 8，表示 Close 帧
+-  Ping 帧：Ping 帧用于测试客户端和服务端之间的连接状态，客户端向服务端发送 Ping 帧，服务端收到后需要向客户端发送 Pong 帧进行响应
+-  Pong 帧：Pong 帧用于响应客户端的 Ping 帧，它用于测试客户端和服务端之间的连接状态
+-  Close 帧：Close 帧用于关闭客户端和服务端之间的连接，它包括四个部分：fin、rsv1、rsv2、rsv3、opcode、masked 和 payload_length。其中，opcode 的值为 8，表示 Close 帧
 
 
 #  三.  JavaScript 中 WebSocket 对象的属性和方法，以及如何创建和连接 WebSocket
@@ -111,7 +139,7 @@ var socket = new WebSocket('ws://example.com');
 
 ~~~js
 socket.onopen = function() {
-    console.log('WebSocket connected');
+console.log('WebSocket connected');
 };
 ~~~
 
@@ -120,8 +148,8 @@ socket.onopen = function() {
 使用 WebSocket.onmessage 事件处理程序接收来自 WebSocket 的消息。
 
 ~~~js
- socket.onmessage = function(event) {
-    console.log('WebSocket message:', event.data);
+socket.onmessage = function(event) {
+console.log('WebSocket message:', event.data);
 };
 ~~~
 
@@ -157,13 +185,13 @@ socket.close();
 <!DOCTYPE html>
 <html>
 <head>
-   <meta charset="UTF-8">
-   <title>WebSocket 示例</title>
+  <meta charset="UTF-8">
+  <title>WebSocket 示例</title>
 </head>
 <body>
-   <button id="sendBtn">发送消息</button>
-   <textarea id="messageBox" readonly></textarea>
-   <script src="main.js" />
+<button id="sendBtn">发送消息</button>
+<textarea id="messageBox" readonly></textarea>
+<script src="main.js" />
 </body>
 </html>
 \`\`\`
@@ -353,11 +381,23 @@ export default webSocketClass;
 
 ~~~
 
+
+
 `
 
 </script>
-
-<style lang="scss">
+<style lang="scss" scoped>
+.markdow-page {
+  width: 100%;
+  height: 100%;
+  :deep(pre code.hljs) {
+    background-color: #e5e7ec; /* 深灰色背景 */
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 10px;
+  }
+}
 
 </style>
+
 

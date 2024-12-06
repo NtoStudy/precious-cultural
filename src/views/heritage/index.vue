@@ -4,12 +4,11 @@ import {ref, computed, onMounted, watch} from 'vue';
 import {useRouter} from "vue-router";
 import {hallNonHeritagePageGetApi} from "@/api/heritage/nonHertage.js";
 import {forumLabelGetApi} from "@/api/forum/label.js";
-
 const router = useRouter();
 
 // 定义导航项
 const navItems = ref([]); // 导航项数组
-const activeItem = ref(navItems[0]); // 当前激活的导航项
+const activeItem = ref(null); // 当前激活的导航项
 const showAll = ref(false); // 是否显示所有导航项
 const visibleItems = computed(() => showAll.value ? navItems.value : navItems.value.slice(0, 5)); // 计算可见的导航项
 const activeItemIndex = computed(() => navItems.value.indexOf(activeItem.value));
@@ -32,27 +31,24 @@ const userNonHeritagePage = async () => {
   NonHeritagePageData.value = data.records;
 };
 
+/**
+ * 获取论坛标签
+ * @returns {Promise<void>}
+ */
 const forumLabel = async () => {
   const res = await forumLabelGetApi();
   const data = res.data.data;
   navItems.value = data.map(item => item.labelName);
+  // 确保 navItems 不为空后设置 activeItem
+  if (navItems.value.length > 0) {
+    activeItem.value = navItems.value[0];
+  }
 }
 
 // 跳转到详情页面
 const goToDetail = (item) => {
   router.push(`/menu/heritage/heritageDetail/${item.id}`);
 };
-
-// 组件挂载时获取数据
-onMounted(() => {
-  userNonHeritagePage()
-  forumLabel()
-})
-
-// 监听激活项索引变化
-watch(activeItemIndex, () => {
-  userNonHeritagePage()
-})
 
 // 处理鼠标进入事件
 const handleMouseEnter = (index) => {
@@ -68,6 +64,17 @@ const handleMouseLeave = () => {
 const changeItemActive = (index) => {
   activeItem.value = navItems.value[index];
 }
+
+// 组件挂载时获取数据
+onMounted(() => {
+  forumLabel()
+  userNonHeritagePage()
+})
+
+// 监听激活项索引变化
+watch(activeItemIndex, () => {
+  userNonHeritagePage()
+})
 </script>
 
 <template>
@@ -213,7 +220,6 @@ const changeItemActive = (index) => {
       img {
         transform: scale(1.5);
       }
-
 
       .hovered {
         opacity: 1;

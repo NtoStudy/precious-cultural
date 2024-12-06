@@ -310,7 +310,6 @@ const goToArticleDetail = (article, event) => {
         <el-menu
             mode="vertical"
             :default-active="activeIndex"
-            class="image-navigation"
             background-color="#fff"
             text-color="#3f7ef7"
         >
@@ -388,6 +387,7 @@ const goToArticleDetail = (article, event) => {
     .article-left {
       margin: 20px 0;
       width: 20%;
+
 
       .image-navigation .el-menu-item {
         transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */

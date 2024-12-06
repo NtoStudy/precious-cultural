@@ -15,6 +15,12 @@ export const userLoginPostApi = (account,password) => requests({
     }
 })
 
+/**
+ * 用户注册
+ * @param account
+ * @param password
+ * @returns {*}
+ */
 export const userRegisterPostApi = (account, password) => requests({
     url:"/user/register",
     method:"post",

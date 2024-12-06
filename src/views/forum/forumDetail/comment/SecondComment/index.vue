@@ -1,62 +1,58 @@
 <script setup>
-import { defineProps, defineEmits } from "vue";
-import ChildComment from "../ChildComment/index.vue";
-// 接收父组件传过来的值
+import {defineProps, defineEmits, ref } from "vue";
+// import {useUserInfoStore} from "@/stores/index.js";
+
+// 获取用户信息
+// const userInfo = useUserInfoStore();
+// const name = ref(userInfo.userInfo.name || '');
+
+// 定义属性
 const props = defineProps({
-  childComments: {
+  secondComments: {
     type: Array,
-    default: [],
+    default: () => [],
   },
   parentName: {
     type: String,
     required: true,
   }
 });
-const childComments = props.childComments;
-const parentName = props.parentName;
 
-// console.log("🚀 ~ parentName:", parentName);
-// console.log("🚀 ~ childComments:", childComments);
+// 将属性简化赋值
+const { secondComments = [], parentName, replyComment } = props;
 
-// 声明需要抛出的事件
+// 初始化评论列表
+const commentList = ref([{ comments: secondComments, parent: parentName}]);
+const showInput = ref({});
+
 const emit = defineEmits(["to-reply"]);
 
-const handleReply = (rootCommentId, parentId) => {
-  // 【注意】这里不以对象形式包裹发送，会导致嵌套；父组件中回复一级评论与子级评论共用一个传值方法
-  emit("to-reply", rootCommentId, parentId);
+// 处理回复操作
+const handleReply = (parentId, tagerrName) => {
+  console.log(parentId, tagerrName)
+  emit("to-reply", parentId, tagerrName);
 };
 </script>
 
-
-<!-- 三级及以上评论 -->
 <template>
-  <div class="sub-reply-container" v-if="childComments && childComments.length">
-    <div class="sub-reply" v-for="(child, index) in childComments" :key="index">
-      <!-- 渲染内容 -->
+  <div class="sub-reply-container" v-if="commentList[0].comments.length">
+    <div class="sub-reply" v-for="(item, index) in commentList[0].comments" :key="index">
       <div class="listbox-top-user">
-<!--        <el-avatar :size="30" :src="child.userImg" />-->
-        <el-avatar :size="30" src="#" />
+        <!--头像部分-->
+        <el-avatar :size="30" :src="item.touxiang"/>
+        <!--姓名，回复框-->
         <p>
-<!--          <span>{{ child.createdBy }}</span>-->
-<!--          <span>{{ child.roleName }}</span>-->
-          回复
-          <span>@{{ parentName }}</span>
+          <span>{{ item.name }}</span>
+          <span v-if="item.tagerrName === commentList[0].parent">回复</span>
+          <span style="color: #0c9dd2;" v-if="item.tagerrName === commentList[0].parent">@{{ parentName }}</span>
         </p>
+        <!--内容-->
       </div>
-      <div class="listbox-middle-root">{{ child.comment }}</div>
+      <div class="listbox-middle-root">{{ item.context }}</div>
       <div class="listbox-bottom">
-<!--        <span>发布时间：{{ child.createdAt }}</span>-->
-        <span>发布时间：123</span>
-        <span @click="handleReply(child.rootCommentId, child.id)">回复</span>
+        <span>发布时间：{{ item.createTiem }}</span>
+        <span v-show="item.name !== name" @click="handleReply(item.id, item.tagerrName)">回复</span>
       </div>
-
-      <!-- 递归地渲染子评论的子评论：调用自己 -->
-<!--      :parentName="child.createdBy"-->
-      <ChildComment
-          :childComments="child.children"
-          :parentName="123"
-          @to-reply="handleReply"
-      />
     </div>
   </div>
 </template>
@@ -71,27 +67,12 @@ $title-color: #0c9dd2;
   p {
     margin-left: 10px;
     width: 100%;
-
+    span {
+      margin-right: 10px;
+    }
     // 姓名条
     span:first-child {
       color: $second-text;
-    }
-
-    // 身份标签
-    span:nth-child(2) {
-      margin-left: 5px;
-      font-size: 8px;
-      padding: 2px;
-      background-color: $title-color;
-      color: white;
-      border-radius: 5px;
-      position: relative;
-      bottom: 4px;
-    }
-
-    // 父级姓名条
-    span:last-child {
-      color: #0c9dd2;
     }
   }
 }
