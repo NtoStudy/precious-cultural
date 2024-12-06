@@ -68,14 +68,14 @@ const routes = [
                 path: 'forum/forumDetail/:articleId',
                 component: () => import('@/views/forum/forumDetail/index.vue'),
                 props: true,
+            },
+            {
+                name: 'fictitiousDetail',
+                path: 'fictitious/fictitiousDetail/:fictitiousId',
+                component: () => import('@/views/fictitious/fictitiousDetail/index.vue'),
+                props: true,
             }
         ]
-    },
-    {
-        name: 'fictitiousDetail',
-        path: '/menu/fictitious/fictitiousDetail/:fictitiousId',
-        component: () => import('@/views/fictitious/fictitiousDetail/index.vue'),
-        props: true,
     }
 ]
 

@@ -1,21 +1,18 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import { useUserInfoStore } from '@/store/modules/user'
 import { useRoute } from "vue-router";
-import router from "@/router/index.js";
 import {ChatLineSquare} from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
 import { removeLocalStorage } from "@/utils/catch.js";
 
 // 使用状态管理获取用户信息
 const userStore = useUserInfoStore()
-const activeIndex = ref('home')
-const route = useRoute();
+const route = useRoute()
+const activeIndex = computed(() => route.path)
 
 // 初始化激活的菜单索引
-if (route.name) {
-  activeIndex.value = route.name;
-}
+activeIndex.value = route.path || ''
 
 // 定义响应式状态
 const state = reactive({
@@ -44,11 +41,12 @@ const logout = () => {
 // 导航到用户管理页面
 const goToUserManage = () => {
   try {
-    if (!userStore.userInfo) {
+    const { userInfo } = userStore
+    if (!userInfo) {
       console.log('未登录');
       router.push({ name: 'login' });
     } else {
-      router.push({ name: 'userManage', params: { infoId: userStore.userInfo.username } });
+      router.push({ name: 'userManage', params: { infoId: userInfo.username } });
     }
   } catch (error) {
     console.error('导航到个人中心失败：', error);
@@ -56,9 +54,7 @@ const goToUserManage = () => {
 }
 
 // 导航到编辑页面
-const goToEdit = () => {
-  router.push('/menu/editor')
-}
+const goToEdit = () => router.push('/menu/editor')
 </script>
 
 <template>
@@ -66,7 +62,7 @@ const goToEdit = () => {
     <el-header class="header">
       <div class="left-header">遗珍非往</div>
       <div class="left-header-text" v-if="userStore.userInfo">
-        尊敬的 {{ userStore.userInfo.username }} ，欢迎来到遗珍非往！
+        尊敬的 {{ userStore.userInfo.username }} ，欢迎来到到遗珍非往！
       </div>
       <div class="left-header-text" v-else>
         欢迎来到遗珍非往！点这里进行
@@ -79,13 +75,12 @@ const goToEdit = () => {
           mode="horizontal"
           :ellipsis="false"
           active-text-color="#ffd04b"
-          router
         >
-          <el-menu-item index="home">首页</el-menu-item>
-          <el-menu-item index="heritage">文化遗产</el-menu-item>
-          <el-menu-item index="fictitious">vr展厅</el-menu-item>
-          <el-menu-item index="forum">论坛</el-menu-item>
-          <el-menu-item index="about">关于</el-menu-item>
+          <el-menu-item @click="$router.push({ name: 'home' })" class="menu-item">首页</el-menu-item>
+          <el-menu-item @click="$router.push({ name: 'heritage' })" class="menu-item">文化遗产</el-menu-item>
+          <el-menu-item @click="$router.push({ name: 'fictitious' })" class="menu-item">vr厅</el-menu-item>
+          <el-menu-item @click="$router.push({ name: 'forum' })" class="menu-item">论坛</el-menu-item>
+          <el-menu-item @click="$router.push({ name: 'about' })" class="menu-item">关于</el-menu-item>
         </el-menu>
         <div class="header-right-content">
           <el-button type="primary" round @click="goToEdit">
@@ -97,14 +92,14 @@ const goToEdit = () => {
           </el-icon>
           <el-popover placement="bottom" :width="220" trigger="hover">
             <template #reference>
-              <el-avatar slot="reference" :size="26" :src="state.circleUrl" />
+              <el-avatar :size="26" :src="state.circleUrl" />
             </template>
             <template #default>
-              <div slot="header" style="text-align: center; font-size: 16px;">
+              <div class="header" style="text-align: center; font-size: 16px;">
                 <p>{{ userStore.userInfo ? userStore.userInfo.username : '未登录' }}</p>
               </div>
               <el-divider style="margin: 10px 0;" />
-              <div slot="body" style="display: flex; justify-content: space-around;">
+              <div class="body" style="display: flex; justify-content: space-around;">
                 <div>
                   <p style="font-weight: bold; font-size: 18px;">100</p>
                   <p style="text-align: center; font-size: 14px;">粉丝</p>
@@ -119,7 +114,7 @@ const goToEdit = () => {
                 </div>
               </div>
               <el-divider style="margin: 10px 0;" />
-              <div slot="footer" @click="goToUserManage()">
+              <div class="footer" @click="goToUserManage()">
                 <div style="display: flex; cursor: pointer;">
                   <el-icon size="20" style="margin-left: 20px; margin-right: 10px;"><User /></el-icon>
                   <p style="font-size: 16px;">个人中心</p>
@@ -127,8 +122,8 @@ const goToEdit = () => {
               </div>
             </template>
           </el-popover>
-          <el-dropdown trigger="click" :visible.sync="isDropdownVisible" @visible-change="toggleDropdown">
-            <span class="el-dropdown-link" style="cursor: pointer; ">
+          <el-dropdown trigger="click" v-model:visible="isDropdownVisible" @visible-change="toggleDropdown">
+            <span class="el-dropdown-link" style="cursor: pointer;">
               设置
             </span>
             <template #dropdown>
@@ -206,12 +201,14 @@ const goToEdit = () => {
 .el-menu {
   background-color: transparent !important;
 }
+.el-menu--horizontal .el-menu-item {
+  position: relative; 
+}
 .el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
 .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
-  background-color: transparent !important;
-  color: rgb(201, 176, 154);
+
+  transition: color 0.3s; 
 }
-.el-menu--horizontal > .el-sub-menu .el-sub-menu title:hover {
-  background-color: rgb(201, 176, 154) !important;
-}
+
+
 </style>

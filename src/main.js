@@ -36,9 +36,5 @@ app.use(mavonEditor);
 // 使用路由
 app.use(router)
 
-// 使用Element Plus并设置语言为中文
-app.use(ElementPlus, {
-locale: zhCn,
-})
 // 挂载应用到#app元素
 app.mount('#app')
