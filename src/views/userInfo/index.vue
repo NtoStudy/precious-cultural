@@ -140,7 +140,7 @@ const confirmResetPassword = async() => {
   <div class="info-list-container">
     <el-card class="last-page"
              @click="router.push({ name: 'userManage', params: { infoId: userInfo.userInfo.username } })">
-      < 返回个人主页
+      &lt; 返回个人主页
     </el-card>
     <div class="info-container">
       <div class="info-left">

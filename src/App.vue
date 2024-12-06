@@ -7,7 +7,7 @@ import {aiAudioGetApi, aiChatGetApi, aiImageGetApi} from "@/api/common/ai/ai.js"
 
 // 初始化聊天消息数组，包含AI的欢迎语
 const messages = ref([
-  { text: '你好，我是非遗文化遗产网站的客服小姐姐，有什么可以帮助您？', self: false },
+  { text: '你好，我是非遗文化遗产网站的客服小姐姐，有什么可以帮助您？', self: false  },
 ]);
 // 用户输入消息
 const inputMessage = ref('');
@@ -80,7 +80,6 @@ watch(() => messages.value, async () => {
 <template>
   <router-view />
   <CharacterAvatar @open-dialog="dialogVisible = true" />
-
   <el-dialog
       v-model="dialogVisible"
       width="50%"

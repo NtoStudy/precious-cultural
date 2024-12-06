@@ -122,7 +122,7 @@ forumLabelGet();
     <mavon-editor :toolbars="markdownOption" v-model="content" style="height: 80vh;"/>
     <div class="blog-post">
       <div class="foot-left">
-        <p style="margin-right: 40px; cursor: pointer" @click="toLastPage"> < 返回首页</p>
+        <p style="margin-right: 40px; cursor: pointer" @click="toLastPage"> &lt; 返回首页</p>
         <p style="margin-right: 40px">共 {{ length }} 个字</p>
         <el-button size="large" type="primary" round @click="dialogTableVisible = true">发文设置</el-button>
       </div>

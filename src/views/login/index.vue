@@ -186,9 +186,7 @@ const register = async () => {
                       :underline="false"
                       style="margin-left: 80px"
                       @click="switchToLogin"
-                  >已有账号？请直接登录<-
-                  </el-link
-                  >
+                  >已有账号？请直接登录 &lt;-</el-link>
                 </el-form-item>
                 <el-form-item style="margin-top: 40px">
                   <el-button type="primary" @click="register">注册</el-button>

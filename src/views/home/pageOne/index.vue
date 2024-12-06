@@ -14,8 +14,8 @@
         {{ currentText }}
       </p>
     </div>
-    <el-button class="control-button" @click="prevItem"> < </el-button>
-    <el-button class="control-button" @click="nextItem"> > </el-button>
+    <el-button class="control-button" @click="prevItem"> &lt; </el-button>
+    <el-button class="control-button" @click="nextItem"> &gt; </el-button>
     <div class="footer">
       目前活跃用户：<span ref="userCount"></span>,
       访问量：<span ref="writeCount"></span> ,

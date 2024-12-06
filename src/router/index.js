@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router'
+import { useUserInfoStore } from '@/store/modules/user'
 
-// 定义路由配置
 const routes = [
     {
         path: '/',
@@ -9,18 +9,24 @@ const routes = [
     {
         name: 'login',
         path: '/login',
-        component: () => import('@/views/login/index.vue')
+        component: () => import('@/views/login/index.vue'),
+        meta: { 
+            title: '登录',
+            requiresAuth: false 
+        }
     },
     {
         name: 'menu',
         path: '/menu',
         component: () => import('@/views/menu/index.vue'),
         redirect: '/menu/home',
+        meta: { requiresAuth: true },
         children: [
             {
                 name: 'home',
                 path: 'home',
                 component: () => import('@/views/home/index.vue'),
+                meta: { title: '首页' }
             },
             {
                 name: 'heritage',
@@ -79,16 +85,29 @@ const routes = [
     }
 ]
 
-// 创建路由实例
 const router = createRouter({
     history: createWebHistory(),
     routes,
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { top: 0 }
+        }
+    }
 })
 
-// 添加全局错误处理
-router.onError((error) => {
-    console.error('路由错误:', error);
-    // 这里可以添加更多的错误处理逻辑，例如通知用户
-});
+router.beforeEach(async (to, from, next) => {
+    document.title = to.meta.title ? `${to.meta.title} - 遗珍非往` : '遗珍非往'
+    
+    const userStore = useUserInfoStore()
+    const isAuthenticated = userStore.userInfo?.token
+    
+    if (to.meta.requiresAuth && !isAuthenticated) {
+        next('/login')
+    } else {
+        next()
+    }
+})
 
 export default router

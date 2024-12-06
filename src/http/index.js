@@ -5,7 +5,7 @@ const userStore = useUserInfoStore()
 const requests = axios.create({
     // baseURL: 'http://maddfu.natappfree.cc',
     baseURL: 'http://localhost:8080',
-    timeout: 5000,
+    timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
         'token': userStore.userInfo?.token

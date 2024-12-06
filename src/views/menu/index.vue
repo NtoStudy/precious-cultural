@@ -78,7 +78,7 @@ const goToEdit = () => router.push('/menu/editor')
         >
           <el-menu-item @click="$router.push({ name: 'home' })" class="menu-item">首页</el-menu-item>
           <el-menu-item @click="$router.push({ name: 'heritage' })" class="menu-item">文化遗产</el-menu-item>
-          <el-menu-item @click="$router.push({ name: 'fictitious' })" class="menu-item">vr厅</el-menu-item>
+          <el-menu-item @click="$router.push({ name: 'fictitious' })" class="menu-item">vr展厅</el-menu-item>
           <el-menu-item @click="$router.push({ name: 'forum' })" class="menu-item">论坛</el-menu-item>
           <el-menu-item @click="$router.push({ name: 'about' })" class="menu-item">关于</el-menu-item>
         </el-menu>

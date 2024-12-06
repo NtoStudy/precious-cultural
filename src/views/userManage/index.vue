@@ -72,7 +72,7 @@ const articles = ref([
     id: 5,
     image: minsu1,
     title: '民俗文化节庆：春节的传承与创新',
-    content: '春节作为中国最重要的民俗节日之一，承载了丰富的文化传统和家庭团聚的意义。随着时代的变迁，庆祝春节的方式也在不断地发展和创新。从传统的放鞭炮、贴春联到现代的网络拜年、电子红包，春节的庆祝形式更加多样化。这些新的庆祝方式不仅让春节的传统得以延续，也为年轻一代提供了新的参与和体验机会。',
+    content: '春节作为中国最重要的民俗节���之一，承载了丰富的文化传统和家庭团聚的意义。随着时代的变迁，庆祝春节的方式也在不断地发展和创新。从传统的放鞭炮、贴春联到现代的网络拜年、电子红包，春节的庆祝形式更加多样化。这些新的庆祝方式不仅让春节的传统得以延续，也为年轻一代提供了新的参与和体验机会。',
     liked: false,
     category: '民俗',
     likeNumber: 42,
@@ -92,7 +92,7 @@ const articles = ref([
     id: 7,
     image: minsu3,
     title: '民俗节日的保护：端午节的文化意义',
-    content: '端午节作为中国的重要民俗节日，有着悠久的历史和丰富的文化内涵。它不仅是纪念屈原的日子，也是家人团聚、驱邪避疫的重要时刻。在现代社会，端午节的传统习俗如赛龙舟、吃粽子、挂艾草等仍然被广泛传承。同时，通过各种文化活动和教育项目，端午节的文化意义得到了更广泛的传播和认识。',
+    content: '端午节作为中国的重要民俗节日，有着悠久的历史和丰富的文化内涵。它不仅是纪念屈原的日子，也是家人团聚、驱邪避疫的��要时刻。在现代社会，端午节的传统习俗如赛龙舟、吃粽子、挂艾草等仍然被广泛传承。同时，通过各种文化活动和教育项目，端午节的文化意义得到了更广泛的传播和认识。',
     liked: false,
     category: '民俗',
     likeNumber: 29,
@@ -182,7 +182,7 @@ const articles = ref([
     id: 16,
     image: wudao4,
     title: '维吾尔族舞蹈的热情奔放',
-    content: '维吾尔族舞蹈以其热情奔放和快速旋转的动作而受到人们的喜爱。现代维吾尔族舞蹈在传承中不断创新，结合现代音乐和舞蹈元素，展现出更加活力四射的舞蹈风格。',
+    content: '维吾尔族舞蹈以其热情奔放和快速旋转的动作而受到人们的喜爱。现代维吾尔族舞蹈在传承中不断创新，��合现代音乐和舞蹈元素，展现出更加活力四射的舞蹈风格。',
     liked: false,
     category: '传统舞蹈',
     likeNumber: 28,
@@ -323,7 +323,7 @@ forumArticleGetPersonal()
       <div class="article-left">
         <el-card class="interest-card">
           <div class="interest-title">
-            <p>兴趣领域</p>
+            <p>兴��领域</p>
             <p style="cursor: pointer" @click="dialogTableVisible = true">管理></p>
           </div>
           <el-divider style="margin: 16px 0;"/>
@@ -409,6 +409,7 @@ forumArticleGetPersonal()
 
       button, [type=button], [type=reset], [type=submit] {
         -webkit-appearance: button;
+        appearance: button;
         border-radius: 50px;
       }
     }
