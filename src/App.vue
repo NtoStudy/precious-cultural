@@ -7,7 +7,7 @@ import {aiAudioGetApi, aiChatGetApi, aiImageGetApi} from "@/api/common/ai/ai.js"
 
 // 初始化聊天消息数组，包含AI的欢迎语
 const messages = ref([
-  { text: '你好，我是非遗文化遗产网站的客服小姐姐，有什么可以帮助您？', self: false  },
+  { text: '你好，我是非遗文化遗产网站的客服小姐姐，有什么可以帮助您？', self: false , type: 'text' },
 ]);
 // 用户输入消息
 const inputMessage = ref('');
@@ -34,24 +34,51 @@ const typeSelect = (index) => {
   typeIndex.value = index
 }
 // 处理响应结果
+// const responseMessage = async() => {
+//   try {
+//     if(typeIndex.value === 1){
+//       const data = await aiChatGetApi(inputMessage.value, 1);
+//       messages.value.push({ text: data.data, self: false, type: 'text' });
+//     } else if(typeIndex.value === 2){
+//       const data = await aiImageGetApi(inputMessage.value);
+//       messages.value.push({ text: data.data, self: false, type: 'image' });
+//     } else if(typeIndex.value === 3){
+//       const data = await aiAudioGetApi(inputMessage.value);
+//       messages.value.push({ text: data.data, self: false, type: 'audio' });
+//     }
+//   } catch (error) {
+//     ElMessage.error('消息发送失败，请稍后再试。');
+//     console.error(error); // 记录错误信息
+//   }
+//
+// }
+
 const responseMessage = async() => {
-  if(typeIndex.value === 1){
-    // 文生文API调用
-    const data = await aiChatGetApi( inputMessage.value,1)
-    console.log(data)
-    messages.value.push({ text: data.data, self: false });
-  }else if(typeIndex.value === 2){
-    // 文生图API调用
-    const data = await aiImageGetApi( inputMessage.value )
-    console.log(data)
-    messages.value.push({ text: data.data, self: false });
-  }else if(typeIndex.value === 3){
-    // 文生音频API调用
-    const data = await aiAudioGetApi( inputMessage.value )
-    console.log(data)
-    messages.value.push({ text: data.data, self: false });
+  try {
+    const userMessage = inputMessage.value.toLowerCase(); // 将用户输入的消息转换为小写
+
+    // 自定义回复逻辑
+    if (userMessage.includes('你好')) {
+       setTimeout(() => {
+         messages.value.push({ text: '你好！很高兴见到你。', self: false, type: 'text' });
+       }, 1000)
+    } else if (userMessage.includes('帮助')) {
+      setTimeout(() => {
+        messages.value.push({ text: '当然可以！请告诉我你需要什么帮助。', self: false, type: 'text' });
+      },1000)
+    } else if(userMessage.includes('这个网址有什么功能')){
+      setTimeout(() => {
+        messages.value.push({ text: '这个网站主要提供非遗文化遗产的查询、收藏、分享,非遗全景图以及论坛交流等功能。', self: false, type: 'text' });
+      },1000)
+    }
+  } catch (error) {
+    ElMessage.error('消息发送失败，请稍后再试。');
+    console.error(error); // 记录错误信息
   }
 }
+
+
+
 
 // 发送消息
 const sendMessage = () => {
@@ -61,7 +88,7 @@ const sendMessage = () => {
     return;
   }
   // 添加用户消息
-  messages.value.push({ text: trimmedMessage, self: true });
+  messages.value.push({ text: trimmedMessage, self: true , type: 'text' });
 
   responseMessage()
   // 发送消息
@@ -93,7 +120,7 @@ watch(() => messages.value, async () => {
     </template>
     <el-scrollbar height="300px" class="messages-container" ref="scrollbarRef">
       <div class="messages-wrapper">
-        <div v-for="(message, index) in messages" 
+        <div v-for="(message, index) in messages"
               :key="index"
               class="message"
               :class="{ 'my-message': message.self, 'ai-message': !message.self }">
@@ -139,7 +166,7 @@ watch(() => messages.value, async () => {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  
+
   .message {
     padding: 12px;
     border-radius: 4px;

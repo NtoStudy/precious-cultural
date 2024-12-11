@@ -63,6 +63,14 @@ const handleMouseLeave = () => {
 // 处理下拉菜单点击事件
 const changeItemActive = (index) => {
   activeItem.value = navItems.value[index];
+  currentPage.value = 1
+  userNonHeritagePage()
+}
+
+const changeVisibleItem = (item) => {
+  activeItem.value = item
+  currentPage.value = 1
+  userNonHeritagePage()
 }
 
 // 组件挂载时获取数据
@@ -87,7 +95,7 @@ watch(activeItemIndex, () => {
         <li v-for="(item, index) in visibleItems"
             :key="index"
             :class="{ active: activeItem === item }"
-            @click="activeItem = item">
+            @click="changeVisibleItem(item)">
           {{ item }}
         </li>
         <el-dropdown trigger="click" style="cursor: pointer">

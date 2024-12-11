@@ -24,3 +24,8 @@ export const hallPanoramaByIdGetApi = (id) => requests({
     url:`/hall/panorama/${id}`,
     method:'get'
 })
+
+
+
+
+

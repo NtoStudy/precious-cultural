@@ -25,7 +25,7 @@ export const hallNonHeritagePageGetApi = (current,size,categories) =>requests({
 export const hallNonHeritageByIdGetApi   = (id) =>requests({
     url:`/hall/nonHeritage/${id}`,
     method:'get'
-})
+})  
 
 /**
  * 根据id获取非遗图片

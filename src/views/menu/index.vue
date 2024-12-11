@@ -10,7 +10,6 @@ import { removeLocalStorage } from "@/utils/catch.js";
 const userStore = useUserInfoStore()
 const route = useRoute()
 const activeIndex = computed(() => route.path)
-
 // 初始化激活的菜单索引
 activeIndex.value = route.path || ''
 
