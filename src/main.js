@@ -12,7 +12,6 @@ import 'highlight.js/scss/atom-one-dark.scss'
 import "./styles/highLight.scss"
 import 'mavon-editor/dist/css/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
 // 创建Vue应用实例
 const app = createApp(App);
 

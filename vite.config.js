@@ -2,8 +2,6 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve} from 'path'
 const pathResolve = dir => resolve(__dirname, dir)
-
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
   pluginOptions: {
@@ -12,17 +10,8 @@ export default defineConfig({
       patterns: []
     }
   },
-  // server: {
-  //   proxy: {
-  //     '^/api': {
-  //       target: "http://maddfu.natappfree.cc",
-  //       changeOrigin: true, //支持跨域
-  //
-  //     }
-  //   }
-  // },
   server:{
-    open: true
+    open: true,
   },
   resolve:{
     alias: {
