@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import { hallPanoramaPageGetApi } from "@/api/heritage/panorama.js";
 import { ElMessage, ElSkeleton } from 'element-plus';
 import { View, Location, Calendar, Picture } from '@element-plus/icons-vue';
-
+import {fictitiousData} from './fictitious.js'
 const router = useRouter();
 const currentPage = ref(1);
 const pageSize = ref(6);
@@ -26,7 +26,8 @@ const filteredList = computed(() => {
 
 // 处理页码变化
 function handlePageChange() {
-  userPanoramaPage();
+  // userPanoramaPage();
+  console.log(12)
 }
 
 // 点击跳转到景点详情页
@@ -40,6 +41,7 @@ const userPanoramaPage = async () => {
     loading.value = true;
     error.value = false;
     const res = await hallPanoramaPageGetApi(currentPage.value, pageSize.value);
+    console.log(res.data.data)
     const data = res.data.data;
     total.value = data.total;
 
@@ -59,6 +61,32 @@ const userPanoramaPage = async () => {
   }
 };
 
+const loadLocalData = () => {
+  try {
+    loading.value = true;
+    error.value = false;
+
+    // 计算分页数据
+    const start = (currentPage.value - 1) * pageSize.value;
+    const end = start + pageSize.value;
+
+    // 使用本地数据
+    fictitiousList.value = fictitiousData.slice(start, end).map(item => ({
+      ...item,
+      name: item.description?.replace('全景图', '') || '未命名展览', // 从描述中提取名称
+      location: '中国传统文化展馆',  // 添加默认位置
+    }));
+
+  } catch (err) {
+    console.error('加载数据失败:', err);
+    error.value = true;
+    ElMessage.error('加载数据失败，请稍后重试');
+    fictitiousList.value = [];
+  } finally {
+    loading.value = false;
+  }
+  console.log(fictitiousList.value)
+};
 // 搜索功能
 const handleSearch = () => {
   if (filteredList.value.length === 0) {
@@ -79,7 +107,8 @@ const handleMouseLeave = () => {
 
 
 onMounted(() => {
-  userPanoramaPage();
+  // userPanoramaPage();
+  loadLocalData()
 });
 </script>
 
