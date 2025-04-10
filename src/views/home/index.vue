@@ -6,7 +6,7 @@ import pageFour from './pageFour/index.vue'
 </script>
 
 <template>
-  <div>
+  <div class="home-container">
     <pageOne style="height: 100vh;"/>
     <pageTwo style="height: 100vh;"/>
     <pageThree style="height: 100vh;"/>
@@ -15,5 +15,8 @@ import pageFour from './pageFour/index.vue'
 </template>
 
 <style lang="scss" scoped>
+.home-container {
+  scroll-behavior: smooth;
+}
 
 </style>

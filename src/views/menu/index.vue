@@ -2,9 +2,10 @@
 import { reactive, ref, computed } from 'vue'
 import { useUserInfoStore } from '@/store/modules/user'
 import { useRoute } from "vue-router";
-import {ChatLineSquare} from "@element-plus/icons-vue";
-import {ElMessage} from "element-plus";
+import { ChatLineSquare, User, Plus } from "@element-plus/icons-vue";
+import { ElMessage } from "element-plus";
 import { removeLocalStorage } from "@/utils/catch.js";
+import router from "@/router/index.js";
 
 // 使用状态管理获取用户信息
 const userStore = useUserInfoStore()
@@ -32,6 +33,7 @@ const logout = () => {
     userStore.clearUserInfo()
     removeLocalStorage('token')
     ElMessage.success('退出登录成功！')
+    router.push('/login')
   } catch (error) {
     console.error('退出登录失败：', error);
   }
@@ -201,13 +203,12 @@ const goToEdit = () => router.push('/menu/editor')
   background-color: transparent !important;
 }
 .el-menu--horizontal .el-menu-item {
-  position: relative; 
+  position: relative;
 }
 .el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
 .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
-
-  transition: color 0.3s; 
+  background-color: transparent;
+  color: var(--el-menu-active-color);
+  transition: color 0.3s;
 }
-
-
 </style>

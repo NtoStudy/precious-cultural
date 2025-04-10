@@ -11,8 +11,8 @@ function handlePageChange() {
 
 const fictitiousList = ref([])
 // 点击跳转到景点详情页
-function goToDetail(item) {
-  router.push(`/menu/fictitious/fictitiousDetail/${item.id}`);
+function goToDetail(index) {
+  router.push(`/menu/fictitious/fictitiousDetail/${index + 1}`);
 }
 // 获取用户的景点列表
 const userPanoramaPage = async ()=>{
@@ -32,13 +32,13 @@ onMounted(()=>{
       <div class="elCard">
         <el-card
             class="elCard-item"
-            v-for="item in fictitiousList"
+            v-for="(item,index) in fictitiousList"
             :key="item.id"
-            @click="goToDetail(item)"
+            @click="goToDetail(index)"
         >
-          <img :src="item.url" alt="image" style="width: 100%; height: 175px;"/>
+          <img :src="item.url" alt="image"/>
           <div class="overlay">
-            <div class="text">项目介绍：{{ item.description }}</div>
+            <p class="text">项目介绍：{{ item.description }}</p>
           </div>
         </el-card>
       </div>
@@ -81,36 +81,37 @@ onMounted(()=>{
       flex-wrap: wrap;
       justify-content: space-evenly;
       width: 100%;
-      .overlay{
-        position: absolute;
-        bottom: 10px;
-        left: 80px;
-        font-size: 18px;
-        font-weight: bold;
-      }
       .el-card {
         --el-card-padding: 0px;
       }
 
-
       .elCard-item {
         width: 28%;
-        height: 210px;
+        height: 230px; // 调整高度以适应内容
         border-radius: 20px;
         margin-bottom: 20px;
         cursor: pointer;
         position: relative;
-
-
         img {
           width: 100%;
-          height: 100%;
+          height: 180px;
           transition: transform 0.5s ease;
         }
-
+        .overlay {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          font-size: 18px;
+          font-weight: bold;
+          text-align: center;
+          line-height: 30px;
+          padding: 10px;
+          background: rgba(0, 0, 0, 0.5);
+          color: white;
+          border-radius: 0 0 20px 20px;
+        }
       }
-
-
     }
   }
 

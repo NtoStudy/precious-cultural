@@ -1,4 +1,4 @@
-import requests from "@/http/index.js";
+import requests from "@/api/index.js";
 
 /**
  * 获取论坛文章列表 - 分页

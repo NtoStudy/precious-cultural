@@ -1,4 +1,4 @@
-import requests from "@/http/index.js";
+import requests from "@/api/index.js";
 
 /**
  * 获取指定祠堂的继承者列表 -- 分页

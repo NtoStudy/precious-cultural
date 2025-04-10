@@ -1,33 +1,70 @@
 <template>
   <div class="background-image">
+    <!-- 搜索框 -->
     <div class="search-box">
       <input
-          type="text"
-          placeholder="搜索：打开新世界大门"
-          class="search-input"
+        type="text"
+        v-model="searchQuery"
+        placeholder="搜索：打开新世界大门"
+        class="search-input"
+        @keyup.enter="handleSearch"
       />
+      <el-button class="search-button" type="primary" @click="handleSearch">
+        <el-icon><Search /></el-icon>
+      </el-button>
     </div>
+
+    <!-- 内容展示框 -->
     <div class="intro-box">
-      <h2>{{currentTitle}}</h2>
+      <h2>{{ currentTitle }}</h2>
       <el-divider />
       <p ref="introText" class="intro-text">
         {{ currentText }}
       </p>
     </div>
-    <el-button class="control-button" @click="prevItem"> &lt; </el-button>
-    <el-button class="control-button" @click="nextItem"> &gt; </el-button>
+
+    <!-- 控制按钮 -->
+    <el-button class="control-button prev-button" @click="prevItem">
+      <el-icon><ArrowLeft /></el-icon>
+    </el-button>
+    <el-button class="control-button next-button" @click="nextItem">
+      <el-icon><ArrowRight /></el-icon>
+    </el-button>
+
+    <!-- 统计数据 -->
     <div class="footer">
-      目前活跃用户：<span ref="userCount"></span>,
-      访问量：<span ref="writeCount"></span> ,
-      帖子发布量：<span ref="viewCount"></span>
+      <div class="stat-item">
+        <el-icon><User /></el-icon>
+        活跃用户：<span ref="userCount"></span>
+      </div>
+      <div class="stat-item">
+        <el-icon><View /></el-icon>
+        访问量：<span ref="writeCount"></span>
+      </div>
+      <div class="stat-item">
+        <el-icon><Document /></el-icon>
+        帖子发布量：<span ref="viewCount"></span>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 // 导入Vue的功能和计数库
-import {onMounted, ref} from 'vue';
-import {CountUp} from "countup.js";
+import { onMounted, ref,  onUnmounted } from 'vue';
+import { CountUp } from "countup.js";
+import { Search, ArrowLeft, ArrowRight, User, View, Document } from '@element-plus/icons-vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const searchQuery = ref('');
+
+// 处理搜索
+const handleSearch = () => {
+  if (searchQuery.value.trim()) {
+    console.log('1233')
+  }
+};
 
 // 标题和文字数据
 const data = [
@@ -49,11 +86,26 @@ const data = [
   }
 ];
 
-
 // 控制标题的文字内容的更改
 let currentIndex = 0;
 const currentTitle = ref(data[currentIndex].title);
 const currentText = ref(data[currentIndex].text);
+
+// 添加自动轮播功能
+let autoPlayInterval = null;
+const autoPlayDuration = 5000; // 5秒切换一次
+
+const startAutoPlay = () => {
+  autoPlayInterval = setInterval(() => {
+    nextItem();
+  }, autoPlayDuration);
+};
+
+const stopAutoPlay = () => {
+  if (autoPlayInterval) {
+    clearInterval(autoPlayInterval);
+  }
+};
 
 // 更新当前标题和文本内容
 function updateContent() {
@@ -74,75 +126,105 @@ function prevItem() {
 }
 
 // 用于引用用户计数、写作计数和查看计数的响应式变量
-const userCount = ref()
-const writeCount = ref()
-const viewCount = ref()
+const userCount = ref();
+const writeCount = ref();
+const viewCount = ref();
 
-// 组件挂载后初始化计数动画
+// 组件挂载后初始化计数动画和自动轮播
 onMounted(() => {
   try {
+    // 初始化计数动画
     new CountUp(userCount.value, 13212).start();
     new CountUp(writeCount.value, 12312).start();
     new CountUp(viewCount.value, 52331231).start();
+
+    // 启动自动轮播
+    startAutoPlay();
   } catch (error) {
-    console.error('计数动画启动失败:', error);
+    console.error('初始化失败:', error);
   }
+});
+
+// 组件卸载前清除自动轮播
+onUnmounted(() => {
+  stopAutoPlay();
 });
 </script>
 
 <style lang="scss" scoped>
 .background-image {
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
+  height: 100%;
   background-image: url('@/assets/home/bg1.jpg');
   background-size: cover;
   background-position: center;
   opacity: 0.8;
-  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .search-box {
     position: absolute;
-    top: 25%;
+    top: 16%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
     display: flex;
     align-items: center;
+    width: 600px;
 
     .search-input {
-      width: 580px;
+      width: 100%;
       height: 30px;
-      padding: 10px;
+      padding: 10px 15px;
       border: 2px solid #ccc;
-      border-radius: 10px;
+      border-radius: 10px 0 0 10px;
       flex-grow: 1;
       outline: none;
       opacity: 0.8;
+      font-size: 16px;
 
       &:focus {
         border-color: #007bff;
         box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
       }
     }
+
+    .search-button {
+      height: 54px;
+      border-radius: 0 10px 10px 0;
+      margin-left: -1px;
+    }
   }
 
   .intro-box {
     position: absolute;
-    top: 60%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
     width: 600px;
     height: 300px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
 
     h2 {
       font-size: 36px;
       margin: 10px 0 20px;
       font-family: '华文新魏', sans-serif;
       text-align: center;
+      color: #333;
     }
 
     .intro-text {
@@ -150,42 +232,66 @@ onMounted(() => {
       text-indent: 2em;
       padding: 0 10px;
       letter-spacing: 1px;
-      line-height: 1.5;
+      line-height: 1.6;
       color: #333;
       font-family: '等线', 'sans-serif';
+      max-height: 200px;
+      overflow-y: auto;
     }
   }
 
   .control-button {
     position: absolute;
-    top: 60%;
+    top: 50%;
     transform: translateY(-50%);
     z-index: 1;
-    padding: 10px 20px;
+    padding: 15px;
     border: none;
-    border-radius: 5px;
+    border-radius: 50%;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.6);
 
     &:hover {
-      background-color: #a7a4b1;
+      background-color: rgba(255, 255, 255, 0.9);
+      transform: translateY(-50%) scale(1.1);
     }
 
-    &:first-of-type {
-      left: 10px;
+    &.prev-button {
+      left: 20px;
     }
 
-    &:last-of-type {
-      right: 10px;
+    &.next-button {
+      right: 20px;
     }
   }
 
   .footer {
     position: absolute;
-    bottom: 40px;
+    bottom: 60px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 22px;
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      color: #333;
+
+      .el-icon {
+        margin-right: 8px;
+        font-size: 20px;
+        color: #409EFF;
+      }
+    }
   }
 }
+
 </style>
